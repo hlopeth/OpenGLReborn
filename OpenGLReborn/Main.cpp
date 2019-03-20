@@ -30,7 +30,7 @@ void draw();
 GLuint initVAO_container();
 GLuint initVAO_lamp();
 GLuint initVAO_plane();
-void renderScene(mat4 view, mat4 proj);
+void renderScene();
 void initShadowMap();
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -50,9 +50,6 @@ float lastX = 400, lastY = 300;
 bool firstMouse = true;
 float cameraYaw=-90.0f, cameraPitch=0.0f;
 
-/*Model* containerModel;
-Model* lampModel;
-Model* planeModel;*/
 vector<PointLight*> lights;
 vector<Model*> actors;
 Model* nanosuit;
@@ -89,37 +86,6 @@ int main()
 	scene.pointLights.push_back(PointLight(vec3(-10.0f, 0.0f, 0.0f), 0.1f*_blue, _blue, _blue));
 
 
-	//plmeModel
-	Material materialPlane(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(0.2f), 1);
-	ShaderProgram shaderProgramPlane("planeVertex.glsl", "planeFragment.glsl");
-	GLuint planeTexture = getTextureJPG("texture/soil_ground.jpg");
-	//planeModel = new Model(initVAO_plane(), shaderProgramPlane, 6, vector<GLuint> {planeTexture, depthMap}, materialPlane);
-
-	//containerModel
-	GLuint VAO = initVAO_container();	
-	ShaderProgram shaderProgram("vertex.glsl", "fragment.glsl");
-	GLuint texture = getTexturePNG("texture/container2.png");
-	GLuint spec_map = getTexturePNG("texture/container2_specular.png");
-	Material material(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 32);
-	//containerModel = new Model(VAO, shaderProgram, 36, vector<GLuint> { texture, spec_map }, material);
-
-	//lampModel
-	ShaderProgram shaderProgramLight("lampVertex.glsl", "lampFragment.glsl");
-	Material lampMaterial;
-	//lampModel = new Model(initVAO_lamp(), shaderProgramLight, 64);
-
-
-
-	//lights
-	glm::vec3 white(1.0f);
-	glm::vec3 red(1.0f, 0.0f, 0.0f);
-	glm::vec3 green(0.0f, 1.0f, 0.0f);
-	glm::vec3 blue(0.0f, 0.0f, 1.0f);
-	lights.push_back(new PointLight(vec3(  0.0f, 0.0f, 10.0f), 0.3f*white, white, white));
-	lights.push_back(new PointLight(vec3(  0.0f, 0.0f,-20.0f), 0.1f*red, red, red));
-	lights.push_back(new PointLight(vec3( 10.0f, 0.0f,  0.0f), 0.1f*green, green, green));
-	lights.push_back(new PointLight(vec3(-10.0f, 0.0f,  0.0f), 0.1f*blue, blue, blue));
-	
 
 
 	while (!glfwWindowShouldClose(window))
@@ -147,7 +113,7 @@ void draw()
 	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	renderScene(shadow_depth_view, proj);
+	renderScene();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
@@ -155,108 +121,14 @@ void draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBindTexture(GL_TEXTURE_2D, depthMap);
 	scene.Draw();
-	//renderScene(view, proj);
+	renderScene();
 
 
 }
 
-void renderScene(mat4 view, mat4 proj)
+void renderScene()
 {
-	//plane
-	/*planeModel->use();
-	mat4 m_model1 = glm::translate(mat4(1.0f), vec3(0.0f, -7.0f, -10.0f));
-	m_model1 = scale(m_model1, vec3(25.0f)); 
-	planeModel->shaderProgram.setUniform("texture_diffuse1", 0);
-	planeModel->shaderProgram.setUniform("depthMap", 1);
-	planeModel->shaderProgram.setUniform("n_pointLights", (int)lights.size());
-	for (int i = 0; i < lights.size(); i++)
-	{
-		char ch_i = '0' + i;
-		planeModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].position", lights[i]->position);
-		planeModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].ambient", lights[i]->ambient);
-		planeModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].diffuse", lights[i]->diffuse);
-		planeModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].specular", lights[i]->specular);
-		planeModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].constant", lights[i]->constant);
-		planeModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].linear", lights[i]->linear);
-		planeModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].quadratic", lights[i]->quadratic);
-	}
-	planeModel->shaderProgram.setUniform("cameraPos", camera->Pos);
-	planeModel->shaderProgram.setUniform("mvp", proj * view * m_model1);
-	planeModel->shaderProgram.setUniform("model", m_model1);
-	planeModel->shaderProgram.setUniform("lightSpaceMat", proj*shadow_depth_view);
-	planeModel->draw();
-
-
-
-	containerModel->use();
-	containerModel->shaderProgram.setUniform("texture_diffuse1", 0);
-	containerModel->shaderProgram.setUniform("texture_specular1", 1);
-	containerModel->shaderProgram.setUniform("n_pointLights", (int)lights.size());
-	for (int i = 0; i < lights.size(); i++)
-	{
-		char ch_i = '0' + i;
-		containerModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].position", lights[i]->position);
-		containerModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].ambient", lights[i]->ambient);
-		containerModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].diffuse", lights[i]->diffuse);
-		containerModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].specular", lights[i]->specular);
-		containerModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].constant", lights[i]->constant);
-		containerModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].linear", lights[i]->linear);
-		containerModel->shaderProgram.setUniform(string("pointLights[") + ch_i + "].quadratic", lights[i]->quadratic);
-	}
-	containerModel->shaderProgram.setUniform("cameraPos", camera->Pos);
-
-	glm::mat4 m_model = glm::translate(glm::mat4(1.0), glm::vec3(0.0f, 0.0f, -10.0f));
-	glm::mat4 mvp = proj * view * m_model;
-	containerModel->shaderProgram.setUniform("mvp", mvp);
-	containerModel->shaderProgram.setUniform("model", m_model);
-	containerModel->draw();
-
-	m_model = glm::translate(glm::mat4(1.0), glm::vec3(-7.0f, -5.0f, -8.0f));
-	m_model = glm::rotate(m_model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-	containerModel->shaderProgram.setUniform("mvp", proj * view * m_model);
-	containerModel->shaderProgram.setUniform("model", m_model);
-	containerModel->draw();
-
-
-	m_model = glm::translate(glm::mat4(1.0), glm::vec3(5.0f, 0.0f, -15.0f));
-	m_model = glm::rotate(m_model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-	containerModel->shaderProgram.setUniform("mvp", proj * view * m_model);
-	containerModel->shaderProgram.setUniform("model", m_model);
-	containerModel->draw();
-
-
-	m_model = glm::translate(glm::mat4(1.0), glm::vec3(2.0f, 5.0f, -9.0f));
-	m_model = glm::rotate(m_model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-	containerModel->shaderProgram.setUniform("mvp", proj * view * m_model);
-	containerModel->shaderProgram.setUniform("model", m_model);
-	containerModel->draw();
-
-
-	m_model = glm::translate(glm::mat4(1.0), glm::vec3(-5.0f, 9.0f, -20.0f));
-	m_model = glm::rotate(m_model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-	containerModel->shaderProgram.setUniform("mvp", proj * view * m_model);
-	containerModel->shaderProgram.setUniform("model", m_model);
-	containerModel->draw();
-
-
-	m_model = glm::translate(glm::mat4(1.0), glm::vec3(5.0f, -3.0f, -5.0f));
-	m_model = glm::rotate(m_model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-	containerModel->shaderProgram.setUniform("mvp", proj * view * m_model);
-	containerModel->shaderProgram.setUniform("model", m_model);
-	containerModel->draw();
-
-
-	//lamps
-	for (int i = 0; i < lights.size(); i++)
-	{
-		m_model = glm::translate(glm::mat4(1.0), lights[i]->position);
-		m_model = glm::scale(m_model, glm::vec3(0.2f));
-		mvp = proj * view * m_model;
-		lampModel->use();
-		lampModel->shaderProgram.setUniform("mvp", mvp);
-		lampModel->shaderProgram.setUniform("lampColor", lights[i]->diffuse);
-		lampModel->draw();
-	}*/
+	
 }
 
 GLFWwindow* initOpenGL()
@@ -620,7 +492,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	float sensitivity = 0.1;
+	float sensitivity = 0.1f;
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 

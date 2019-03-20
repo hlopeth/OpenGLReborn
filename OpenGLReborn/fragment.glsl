@@ -35,10 +35,10 @@ float calcDiffusion(PointLight pointLight)
 
 float calcSpecular(PointLight pointLight)
 {
-	vec3 lightDir = normalize(pointLight.position-fragPos);
-	vec3 view = normalize(cameraPos-fragPos);
-	lightDir = reflect(-lightDir, normal);
-	return pow(max(dot(view,lightDir),0.0f),32);
+	vec3 lightDir   = normalize(pointLight.position - fragPos);
+	vec3 viewDir    = normalize(cameraPos - fragPos);
+	vec3 halfwayDir = normalize(lightDir + viewDir);
+	return pow(max(dot(normal, halfwayDir), 0.0), 16.0);
 }
 
 vec4 calcLightColor()
@@ -52,7 +52,7 @@ vec4 calcLightColor()
 		vec3 materialDiffuse = vec3(1.0);
 		vec4 diffuseColor  = vec4(calcDiffusion(pointLights[i]) * (materialDiffuse * pointLights[i].diffuse)  ,1.0);
 		vec3 materialSpec = texture(material.texture_specular1, texCoord).xyz;
-		vec4 specularColor = vec4(0.0);//vec4(calcSpecular(pointLights[i])  * (materialSpec * pointLights[i].specular) ,1.0);
+		vec4 specularColor = vec4(calcSpecular(pointLights[i])  * (materialSpec * pointLights[i].specular) ,1.0);
 		vec3 materialAmbient = vec3(1.0);
 		vec4 ambientColor = vec4(materialAmbient * pointLights[i].ambient,1.0);
 		resultLight += attenuation*(diffuseColor + specularColor + ambientColor);

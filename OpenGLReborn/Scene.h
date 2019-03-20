@@ -25,7 +25,7 @@ struct Scene
 			ShaderProgram shader = actor.shader;
 			shader.use();
 			shader.setUniform("n_pointLights", (int)pointLights.size());
-			for (int i = 0; i < pointLights.size(); i++)
+			for (unsigned int i = 0; i < pointLights.size(); i++)
 			{
 				char ch_i = '0' + i;
 				shader.setUniform(string("pointLights[") + ch_i + "].position",  pointLights[i].position);

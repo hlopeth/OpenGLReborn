@@ -15,7 +15,7 @@ struct PointLight
 
 	float constant=1.0f;
 	float linear=0.1f;
-	float quadratic=0.02;
+	float quadratic=0.02f;
 
 	PointLight()
 	{
