@@ -13,9 +13,10 @@
 #include "stb_image.h"
 #include "Shader.h"
 #include "Camera.h"
-#include "Model.h"
 #include "PointLight.h"
-#include "Actor.h"
+#include "Model.h"
+#include "Material.h"
+#include "Scene.h"
 
 using namespace std;
 using namespace glm;
@@ -44,18 +45,18 @@ GLuint depthMapFBO;
 GLuint depthMap;
 
 glm::mat4 proj = glm::perspective(glm::radians(60.0f), (float)10000 / (float)10000, 0.1f, 100.0f);
-Camera* camera;
 float lastFrame = 0.0f;
 float lastX = 400, lastY = 300;
 bool firstMouse = true;
 float cameraYaw=-90.0f, cameraPitch=0.0f;
 
-Model* containerModel;
+/*Model* containerModel;
 Model* lampModel;
-Model* planeModel;
+Model* planeModel;*/
 vector<PointLight*> lights;
-vector<Actor*> actors;
-Actor* nanosuit;
+vector<Model*> actors;
+Model* nanosuit;
+Scene scene;
 
 int main()
 {
@@ -63,11 +64,36 @@ int main()
 	if (window == NULL)
 		return -1;
 
+
+	Model nanosuitModel("assets/nanosuit/nanosuit.obj");
+	ShaderProgram nanosuitSP("vertex.glsl", "fragment.glsl");
+	Actor nanosuit(nanosuitModel, nanosuitSP, mat4(1.0f));
+	scene.actors.push_back(nanosuit);
+
+
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	Camera camera(cameraPos, cameraFront, cameraUp);
+	scene.camera = camera;
+	scene.projection = proj;
+
+
+	glm::vec3 _white(1.0f);
+	glm::vec3 _red(1.0f, 0.0f, 0.0f);
+	glm::vec3 _green(0.0f, 1.0f, 0.0f);
+	glm::vec3 _blue(0.0f, 0.0f, 1.0f);
+	scene.pointLights.push_back(PointLight(vec3(0.0f, 0.0f, 10.0f), 0.3f*_white, _white, _white));
+	scene.pointLights.push_back(PointLight(vec3(0.0f, 0.0f, -20.0f), 0.1f*_red, _red, _red));
+	scene.pointLights.push_back(PointLight(vec3(10.0f, 0.0f, 0.0f), 0.1f*_green, _green, _green));
+	scene.pointLights.push_back(PointLight(vec3(-10.0f, 0.0f, 0.0f), 0.1f*_blue, _blue, _blue));
+
+
 	//plmeModel
 	Material materialPlane(glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(0.2f), 1);
 	ShaderProgram shaderProgramPlane("planeVertex.glsl", "planeFragment.glsl");
 	GLuint planeTexture = getTextureJPG("texture/soil_ground.jpg");
-	planeModel = new Model(initVAO_plane(), shaderProgramPlane, 6, vector<GLuint> {planeTexture, depthMap}, materialPlane);
+	//planeModel = new Model(initVAO_plane(), shaderProgramPlane, 6, vector<GLuint> {planeTexture, depthMap}, materialPlane);
 
 	//containerModel
 	GLuint VAO = initVAO_container();	
@@ -75,18 +101,13 @@ int main()
 	GLuint texture = getTexturePNG("texture/container2.png");
 	GLuint spec_map = getTexturePNG("texture/container2_specular.png");
 	Material material(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 32);
-	containerModel = new Model(VAO, shaderProgram, 36, vector<GLuint> { texture, spec_map }, material);
+	//containerModel = new Model(VAO, shaderProgram, 36, vector<GLuint> { texture, spec_map }, material);
 
 	//lampModel
 	ShaderProgram shaderProgramLight("lampVertex.glsl", "lampFragment.glsl");
 	Material lampMaterial;
-	lampModel = new Model(initVAO_lamp(), shaderProgramLight, 64);
+	//lampModel = new Model(initVAO_lamp(), shaderProgramLight, 64);
 
-	//lampModel
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	camera = new Camera(cameraPos, cameraFront, cameraUp);
 
 
 	//lights
@@ -99,8 +120,6 @@ int main()
 	lights.push_back(new PointLight(vec3( 10.0f, 0.0f,  0.0f), 0.1f*green, green, green));
 	lights.push_back(new PointLight(vec3(-10.0f, 0.0f,  0.0f), 0.1f*blue, blue, blue));
 	
-	//nanosiut
-	nanosuit = new Actor("assets/nanosuit/nanosuit.obj");
 
 
 	while (!glfwWindowShouldClose(window))
@@ -124,7 +143,6 @@ glm::mat4 shadow_depth_proj = glm::ortho(-25.0f, 25.0f, -25.0f, 25.0f, near_plan
 
 void draw()
 {
-	glm::mat4 view = camera->getMatrix();
 
 	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
@@ -136,7 +154,8 @@ void draw()
 	glClearColor(0.07f, 0.07f, 0.07f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBindTexture(GL_TEXTURE_2D, depthMap);
-	renderScene(view, proj);
+	scene.Draw();
+	//renderScene(view, proj);
 
 
 }
@@ -144,7 +163,7 @@ void draw()
 void renderScene(mat4 view, mat4 proj)
 {
 	//plane
-	planeModel->use();
+	/*planeModel->use();
 	mat4 m_model1 = glm::translate(mat4(1.0f), vec3(0.0f, -7.0f, -10.0f));
 	m_model1 = scale(m_model1, vec3(25.0f)); 
 	planeModel->shaderProgram.setUniform("texture_diffuse1", 0);
@@ -237,7 +256,7 @@ void renderScene(mat4 view, mat4 proj)
 		lampModel->shaderProgram.setUniform("mvp", mvp);
 		lampModel->shaderProgram.setUniform("lampColor", lights[i]->diffuse);
 		lampModel->draw();
-	}
+	}*/
 }
 
 GLFWwindow* initOpenGL()
@@ -304,12 +323,12 @@ void initShadowMap()
 
 void cleanUp()
 {
-	delete(camera);
-	delete(containerModel);
-	delete(lampModel);
+	//delete(camera);
+	/*delete(containerModel);
+	delete(lampModel);*/
 	for(PointLight* light: lights)
 		delete(light);
-	for (Actor* actor : actors)
+	for (Model* actor : actors)
 		delete(actor);
 	glfwTerminate();
 }
@@ -578,13 +597,13 @@ void processInput(GLFWwindow *window)
 	float cameraSpeed = 10.0f * (currentFrame - lastFrame);
 	lastFrame = currentFrame;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera->Pos += cameraSpeed * camera->Front;
+		scene.camera.Pos += cameraSpeed * scene.camera.Front;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera->Pos -= cameraSpeed * camera->Front;
+		scene.camera.Pos -= cameraSpeed * scene.camera.Front;
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera->Pos -= camera->Right() * cameraSpeed;
+		scene.camera.Pos -= scene.camera.Right() * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera->Pos += camera->Right() * cameraSpeed;
+		scene.camera.Pos += scene.camera.Right() * cameraSpeed;
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
@@ -617,5 +636,5 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	front.x = cos(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
 	front.y = sin(glm::radians(cameraPitch));
 	front.z = sin(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
-	camera->Front = glm::normalize(front);
+	scene.camera.Front = glm::normalize(front);
 }

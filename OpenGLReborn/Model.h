@@ -1,84 +1,36 @@
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <vector>
-
+#include "Mesh.h"
 #include "Shader.h"
-#include "Material.h"
+#include "map"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 class Model
 {
 public:
-	GLuint VAO;
-	ShaderProgram shaderProgram;
-	vector<GLuint> textures;
-	GLint n;
-	Material material;
-	bool useMaterial;
-	bool useTexture;
-
-	Model(GLuint VAO, ShaderProgram shaderProgram, GLint n)
+	/*  Functions   */
+	Model() {}
+	Model(const char *path)
 	{
-		this->VAO = VAO;
-		this->shaderProgram = shaderProgram;
-		this->n = n;
-		useMaterial = false;
-		useTexture = false;
+		loadModel(path);
 	}
-
-	Model(GLuint VAO, ShaderProgram shaderProgram, GLint n, Material material)
-	{
-		this->VAO = VAO;
-		this->shaderProgram = shaderProgram;
-		this->n = n;
-		this->material = material;
-		useMaterial = true;
-		useTexture = false;
-	}
-
-	Model(GLuint VAO, ShaderProgram shaderProgram, GLint n, vector<GLuint> textures)
-	{
-		this->VAO = VAO;
-		this->shaderProgram = shaderProgram;
-		this->n = n;
-		this->textures = textures;
-		useMaterial = false;
-		useTexture = true;
-	}
-
-	Model(GLuint VAO, ShaderProgram shaderProgram, GLint n, vector<GLuint> textures, Material material)
-	{
-		this->VAO = VAO;
-		this->shaderProgram = shaderProgram;
-		this->textures = textures;
-		this->n = n;
-		this->material = material;
-		useMaterial = true;
-		useTexture = true;
-	};
-	void use()
-	{
-		shaderProgram.use();
-		glBindVertexArray(VAO);
-		if(useTexture)
-			for (int i = 0; i < textures.size(); i++)
-			{
-				glActiveTexture(GL_TEXTURE0 + i);
-				glBindTexture(GL_TEXTURE_2D, textures[i]);
-			}
-		if (useMaterial)
-		{
-			shaderProgram.setUniform("material.ambient",  material.ambient);
-			shaderProgram.setUniform("material.diffuse",  material.diffuse);
-			shaderProgram.setUniform("material.specular", material.specular);
-			shaderProgram.setUniform("material.shininess", material.shininess);
-		}
-	}
-	void draw()
-	{
-		glDrawElements(GL_TRIANGLES, n, GL_UNSIGNED_INT, 0);
-	}
+	void Draw(ShaderProgram shader);
+private:
+	/*  Model Data  */
+	vector<Mesh> meshes;
+	vector<Texture> textures_loaded;
+	string directory;
+	/*  Functions   */
+	void loadModel(string path);
+	void processNode(aiNode *node, const aiScene *scene);
+	Mesh processMesh(aiMesh *mesh, const aiScene *scene);
+	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
 };
+
+
+unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);

@@ -1,35 +1,37 @@
 #pragma once
-#include "Mesh.h"
+#include "Model.h"
 #include "Shader.h"
-#include "map"
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+using namespace glm;
 
 class Actor
 {
 public:
-	/*  Functions   */
-	Actor(const char *path)
+	Model model;
+	ShaderProgram shader;
+	glm::mat4 matrix;
+
+	Actor(Model model, ShaderProgram shader, glm::mat4 matrix)
 	{
-		loadModel(path);
+		this->model = model;
+		this->shader = shader;
+		this->matrix = matrix;
 	}
-	void Draw(ShaderProgram shader);
-private:
-	/*  Model Data  */
-	vector<Mesh> meshes;
-	vector<Texture> textures_loaded;
-	string directory;
-	/*  Functions   */
-	void loadModel(string path);
-	void processNode(aiNode *node, const aiScene *scene);
-	Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
+
+	void Draw(glm::mat4 ViewProj)
+	{
+		shader.setUniform("mvp", ViewProj*matrix);
+		shader.setUniform("model", matrix);
+		model.Draw(shader);
+	}
+
+	void Draw(glm::mat4 ViewProj, ShaderProgram override_shader)
+	{
+		shader.setUniform("mvp", ViewProj*matrix);
+		shader.setUniform("model", matrix);
+		model.Draw(override_shader);
+	}
 };
-
-
-unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);

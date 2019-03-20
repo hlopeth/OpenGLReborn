@@ -1,12 +1,12 @@
-#include "Actor.h"
+#include "Model.h"
 
-void Actor::Draw(ShaderProgram shader)
+void Model::Draw(ShaderProgram shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].Draw(shader);
 }
 
-void Actor::loadModel(string path)
+void Model::loadModel(string path)
 {
 	Assimp::Importer import;
 	const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -21,7 +21,7 @@ void Actor::loadModel(string path)
 	processNode(scene->mRootNode, scene);
 }
 
-void Actor::processNode(aiNode *node, const aiScene *scene)
+void Model::processNode(aiNode *node, const aiScene *scene)
 {
 	// process all the node's meshes (if any)
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -36,7 +36,7 @@ void Actor::processNode(aiNode *node, const aiScene *scene)
 	}
 }
 
-Mesh Actor::processMesh(aiMesh *mesh, const aiScene *scene)
+Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 {
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
@@ -93,7 +93,7 @@ Mesh Actor::processMesh(aiMesh *mesh, const aiScene *scene)
 	return Mesh(vertices, indices, textures);
 }
 
-vector<Texture> Actor::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName)
+vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName)
 {
 	vector<Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
