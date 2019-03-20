@@ -13,5 +13,85 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\shaders">
+      <UniqueIdentifier>{c8e45e1c-4eec-44f9-a872-b2184e7ce675}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vertex.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="fragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="lampFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="lampVertex.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="planeVertex.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="planeFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="texture\container.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="texture\norvegiya.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="texture\container2_specular.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="texture\container2.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
