@@ -1,11 +1,11 @@
 #include "Mesh.h"
 
-Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures, glm::vec3 color)
 {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
-
+	this->color = color;
 	setupMesh();
 }
 
@@ -55,6 +55,8 @@ void Mesh::Draw(ShaderProgram shader)
 		shader.setUniform(("material." + name + number), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
+	shader.setUniform(("material.color"), color);
+
 	glActiveTexture(GL_TEXTURE0);
 
 	// draw mesh

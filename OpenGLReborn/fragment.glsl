@@ -9,6 +9,7 @@ in vec3 fragPos;
 struct Material {
 	sampler2D texture_diffuse1;
 	sampler2D texture_specular1;
+	vec3 color;
 };
 
 struct PointLight {
@@ -62,7 +63,8 @@ vec4 calcLightColor()
 
 void main()
 {
+	vec4 diffuseColor = vec4(material.color.r,material.color.g,material.color.b,1.0);
 	vec4 texelColol = texture(material.texture_diffuse1, texCoord);
 	vec4 lightColor = calcLightColor();
-    FragColor = texelColol*lightColor;
+    FragColor = diffuseColor*lightColor;//texelColol*lightColor;
 } 

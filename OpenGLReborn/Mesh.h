@@ -25,8 +25,9 @@ public:
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
 	vector<Texture> textures;
+	glm::vec3 color;
 	/*  Functions  */
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures, glm::vec3 color);
 	void Draw(ShaderProgram shader);
 private:
 	/*  Render data  */

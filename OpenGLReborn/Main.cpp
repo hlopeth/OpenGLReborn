@@ -23,23 +23,17 @@ using namespace vr;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 GLFWwindow* initOpenGL();
+void GenFramebuffer();
+void Draw();
 void cleanUp();
 void addCallbacks(GLFWwindow* window);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void draw();
-void drawVR();
-void genEyeTextures();
-bool initOpenVR();
 GLuint initVAO_container();
 GLuint initVAO_lamp();
 GLuint initVAO_plane();
 void initShadowMap();
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-//GLuint getTextureJPG(string img);
-//GLuint getTexturePNG(string img);
-mat4 getViewPosition(Hmd_Eye nEye);
-vec3 getHeadPosition();
 
 
 const GLuint SCR_WIDTH = 1024, SCR_HEIGHT = 1080;
@@ -53,10 +47,10 @@ float lastFrame = 0.0f;
 float lastX = 400, lastY = 300;
 bool firstMouse = true;
 float cameraYaw=-90.0f, cameraPitch=0.0f;
-GLuint screneFBO;
 unsigned int quadVAO, quadVBO;
 void initQuad();
 ShaderProgram* screenSP = nullptr;
+GLuint screenFBO, screenRBO;
 GLuint screenTexture;
 
 vector<PointLight*> lights;
@@ -65,13 +59,7 @@ Model* nanosuit;
 Scene scene;
 
 //openVR
-vr::IVRSystem* vrSystem;
-
-bool useVR=false;
-GLuint leftEyeTexture=0, rightEyeTexture=0;
-GLuint leftEyeFBO, rightEyeFBO;
 VrRenderer vrRenderer(SCR_WIDTH, SCR_HEIGHT);
-//float cameraOffsetX = 0, cameraOffsetY = 0, cameraOffsetZ = 0;
 
 int main()
 {
@@ -79,37 +67,24 @@ int main()
 	if (window == NULL)
 		return -1;
 
-	useVR = false;//= initOpenVR(); 
-	//genEyeTextures();
 	vrRenderer.Init();
 
 	//frameBuffer
 	initQuad();
 	screenSP = new ShaderProgram("screenVertex.glsl", "screenFragment.glsl");
-	glGenFramebuffers(1, &screneFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, screneFBO);
-	// create a color attachment texture
-	glGenTextures(1, &screenTexture);
-	glBindTexture(GL_TEXTURE_2D, screenTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, screenTexture, 0);
-	// create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
-	unsigned int rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-	// now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	Model nanosuitModel("assets/nanosuit/nanosuit.obj");
+
+	GenFramebuffer();
+
+	/*Model nanosuitModel("assets/nanosuit/nanosuit.obj");
 	ShaderProgram nanosuitSP("vertex.glsl", "fragment.glsl");
 	Actor nanosuit(nanosuitModel, nanosuitSP, scale(mat4(1.0f),vec3(0.11f)));
-	scene.actors.push_back(nanosuit);
+	scene.actors.push_back(nanosuit);*/
+
+	Model drum_setModel("assets/lowpoly_forest_bl/lowpoly_forest.obj");
+	ShaderProgram drum_setSP("vertex.glsl", "fragment.glsl");
+	Actor drum_set(drum_setModel, drum_setSP, scale(mat4(1.0f), vec3(0.11f)));
+	scene.actors.push_back(drum_set);
 
 
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
@@ -124,10 +99,10 @@ int main()
 	glm::vec3 _red(1.0f, 0.0f, 0.0f);
 	glm::vec3 _green(0.0f, 1.0f, 0.0f);
 	glm::vec3 _blue(0.0f, 0.0f, 1.0f);
-	scene.pointLights.push_back(PointLight(vec3(0.0f, 0.0f, 10.0f), 0.3f*_white, _white, _white));
-	scene.pointLights.push_back(PointLight(vec3(0.0f, 0.0f, -20.0f), 0.1f*_red, _red, _red));
-	scene.pointLights.push_back(PointLight(vec3(10.0f, 0.0f, 0.0f), 0.1f*_green, _green, _green));
-	scene.pointLights.push_back(PointLight(vec3(-10.0f, 0.0f, 0.0f), 0.1f*_blue, _blue, _blue));
+	scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f, 0.0f), 0.8f*_white, _white, _white));
+	//scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f, 5.0f), 0.2f*_white, _white, _white));
+	//scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f,-5.0f), 0.2f*_white, _white, _white));
+	//scene.pointLights.push_back(PointLight(vec3(-10.0f, 0.0f, 0.0f), 0.1f*_blue, _blue, _blue));
 
 
 
@@ -136,9 +111,9 @@ int main()
 	{
 		processInput(window);
 
-		//useVR ? drawVR() : draw();
 		vrRenderer.Render(scene);
-
+		Draw();
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
@@ -148,236 +123,55 @@ int main()
 	return 0;
 }
 
-void genEyeTextures()
+void Draw()
 {
-	glGenFramebuffers(1, &leftEyeFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, leftEyeFBO);
-	glGenTextures(1, &leftEyeTexture);
-	glBindTexture(GL_TEXTURE_2D, leftEyeTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, leftEyeTexture, 0);
-
-	unsigned int rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
-
-
-	glGenFramebuffers(1, &rightEyeFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, rightEyeFBO);
-
-	glGenTextures(1, &rightEyeTexture);
-	glBindTexture(GL_TEXTURE_2D, rightEyeTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, rightEyeTexture, 0);
-
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-bool initOpenVR()
-{
-	vr::EVRInitError eError = vr::VRInitError_None;
-	vrSystem = vr::VR_Init(&eError, vr::VRApplication_Scene);
-
-	if (eError != vr::VRInitError_None)
-	{
-		char buf[1024];
-		sprintf_s(buf, sizeof(buf), "Unable to init VR runtime: %s", vr::VR_GetVRInitErrorAsEnglishDescription(eError));
-		cout << buf << endl;
-		return false;
-	}
-
-	eError = vr::VRInitError_None;
-
-	if (!vr::VRCompositor())
-	{
-		printf("Compositor initialization failed. See log file for details\n");
-		return false;
-	}
-
-	return true;
-}
-
-mat4 shadow_depth_view = lookAt(vec3(0.0f, 10.0f, 0.0f), vec3(0.0f, 0.0f, -10.0f), vec3(0.0f, 0.0f, -1.0f));
-float near_plane = 1.0f, far_plane = 40.5f;
-glm::mat4 shadow_depth_proj = glm::ortho(-25.0f, 25.0f, -25.0f, 25.0f, near_plane, far_plane);
-
-void submitFramesOpenGL(GLuint leftEyeTex, GLuint rightEyeTex, bool linear = false)
-{
-	vr::TrackedDevicePose_t trackedDevicePose[vr::k_unMaxTrackedDeviceCount];
-	vr::VRCompositor()->WaitGetPoses(trackedDevicePose, vr::k_unMaxTrackedDeviceCount, nullptr, 0);
-
-	///\todo the documentation on this is completely unclear.  I have no idea which one is correct...
-	/// seems to imply that we always want Gamma in opengl because linear is for framebuffers that have been
-	/// processed by DXGI...
-
-	vr::Texture_t leftEyeTexture  = { (void*)(uintptr_t)leftEyeTex,  vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
-	vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)rightEyeTex, vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
-
-	vr::VRCompositorError error =  vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture);
-	vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture);
-
-	//vr::VRCompositor()->PostPresentHandoff();
-}
-
-void drawVR()
-{
-	mat4 contrMat = mat4(1.0f);
-	for (unsigned int id = 0; id < k_unMaxTrackedDeviceCount; id++) {
-		ETrackedDeviceClass trackedDeviceClass =
-			vrSystem->GetTrackedDeviceClass(id);
-		if (trackedDeviceClass != ETrackedDeviceClass::TrackedDeviceClass_Controller || !vrSystem->IsTrackedDeviceConnected(id))
-			continue;
-
-		//Confirmed that the device in question is a connected controller
-
-		//This is all copied from above:
-		TrackedDevicePose_t trackedDevicePose;
-		VRControllerState_t controllerState;
-		vrSystem->GetControllerStateWithPose(TrackingUniverseStanding, id, &controllerState, sizeof(controllerState), &trackedDevicePose);
-
-		HmdMatrix34_t matPose = trackedDevicePose.mDeviceToAbsoluteTracking;
-
-		 
-		 vec3 x = normalize(vec3(matPose.m[0][0], matPose.m[1][0], matPose.m[2][0]));
-		 vec3 y = normalize(vec3(matPose.m[0][1], matPose.m[1][1], matPose.m[2][1]));
-		 vec3 z = normalize(vec3(matPose.m[0][2], matPose.m[1][2], matPose.m[2][2]));
-
-		 contrMat = mat4(
-			 x.x, x.y, x.z, 0.0f,
-			 y.x, y.y, y.z, 0.0f,
-			 z.x, z.y, z.z, 0.0f,
-			 matPose.m[0][3], matPose.m[1][3], matPose.m[2][3], 1.0f
-		 );
-
-
-		 //scene.actors[0].matrix = contrMat;
-			
-			
-		//scene.actors[0].matrix = scale(scene.actors[0].matrix,vec3(0.03f));
-	}
-
-
-	vr::TrackedDevicePose_t trackedDevicePose_t[vr::k_unMaxTrackedDeviceCount];
-	vr::VRCompositor()->WaitGetPoses(trackedDevicePose_t, vr::k_unMaxTrackedDeviceCount, nullptr, 0);
-	vec3 headPos = getHeadPosition();
-
-	//leftEye
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-	glBindFramebuffer(GL_FRAMEBUFFER, leftEyeFBO);
 	glEnable(GL_DEPTH_TEST);
-
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mat4 viewProj = getViewPosition(Eye_Left);
-	scene.Draw(viewProj,headPos);
-
-
-	vr::Texture_t leftEyeTexture_t = { (void*)(uintptr_t)leftEyeTexture,  vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
-	auto error = vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture_t);
-	if(error != VRCompositorError_None) cout << "Left" << error<< endl;
-
-	//rightEye
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-	glBindFramebuffer(GL_FRAMEBUFFER, rightEyeFBO);
-	glEnable(GL_DEPTH_TEST);
-
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	if (false) { //eye in hand
-		scene.camera.Pos = vec3(contrMat[3][0], contrMat[3][1], contrMat[3][2]);
-		scene.camera.Up = vec3(contrMat[1][0], contrMat[1][1], contrMat[1][2]);
-		scene.camera.Front = -vec3(contrMat[2][0], contrMat[2][1], contrMat[2][2]);
-		scene.Draw();
-	}
-	else {
-		viewProj = getViewPosition(Eye_Right);
-		scene.Draw(viewProj, headPos);
-	}
-
-	vr::Texture_t rightEyeTexture_t = { (void*)(uintptr_t)rightEyeTexture, vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
-	error = vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture_t);
-	if (error != VRCompositorError_None) cout << "Right" << error << endl;
-
-	//submitFramesOpenGL(leftEyeTexture, rightEyeTexture);
-
 	//screeFBO
-	glBindFramebuffer(GL_FRAMEBUFFER, screneFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, screenFBO);
 	// make sure we clear the framebuffer's content
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	scene.Draw();
-
-	
 
 	//screen
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
 	glClear(GL_COLOR_BUFFER_BIT);
-	glViewport(0, 0, SCR_WIDTH/2, SCR_HEIGHT);
-	screenSP->use();
-	glBindVertexArray(quadVAO);
-	glBindTexture(GL_TEXTURE_2D, leftEyeTexture);	// use the color attachment texture as the texture of the quad plane
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	glViewport(SCR_WIDTH/2, 0, SCR_WIDTH/2, SCR_HEIGHT);
-	screenSP->use();
-	glBindVertexArray(quadVAO);
-	glBindTexture(GL_TEXTURE_2D, rightEyeTexture);	// use the color attachment texture as the texture of the quad plane
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-
-
-}
-
-void draw()
-{
-
-	/*glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	glClear(GL_DEPTH_BUFFER_BIT);
-	renderScene();
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-
-	glClearColor(0.07f, 0.07f, 0.07f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glBindTexture(GL_TEXTURE_2D, depthMap);
-	scene.Draw();
-	renderScene();*/
-
-	glBindFramebuffer(GL_FRAMEBUFFER, screneFBO);
-	glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
-
-	// make sure we clear the framebuffer's content
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene.Draw();
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-	glClear(GL_COLOR_BUFFER_BIT);
 	screenSP->use();
 	glBindVertexArray(quadVAO);
 	glBindTexture(GL_TEXTURE_2D, screenTexture);	// use the color attachment texture as the texture of the quad plane
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
+
+void GenFramebuffer()
+{
+	glGenFramebuffers(1, &screenFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, screenFBO);
+	// create a color attachment texture
+	glGenTextures(1, &screenTexture);
+	glBindTexture(GL_TEXTURE_2D, screenTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, screenTexture, 0);
+	// create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
+
+	glGenRenderbuffers(1, &screenRBO);
+	glBindRenderbuffer(GL_RENDERBUFFER, screenRBO);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, screenRBO); // now actually attach it
+																										// now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
+	glBindFramebuffer(GL_FRAMEBUFFER, screenRBO);
+}
+
+mat4 shadow_depth_view = lookAt(vec3(0.0f, 10.0f, 0.0f), vec3(0.0f, 0.0f, -10.0f), vec3(0.0f, 0.0f, -1.0f));
+float near_plane = 1.0f, far_plane = 40.5f;
+glm::mat4 shadow_depth_proj = glm::ortho(-25.0f, 25.0f, -25.0f, 25.0f, near_plane, far_plane);
+
 
 GLFWwindow* initOpenGL()
 {
@@ -448,9 +242,6 @@ void initShadowMap()
 void cleanUp()
 {
 	vr::VR_Shutdown();
-	//delete(camera);
-	/*delete(containerModel);
-	delete(lampModel);*/
 	for(PointLight* light: lights)
 		delete(light);
 	for (Model* actor : actors)
@@ -786,52 +577,4 @@ void initQuad()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-}
-
-mat4 getViewPosition(Hmd_Eye nEye)
-{
-	//proj
-	vr::HmdMatrix44_t mat = vrSystem->GetProjectionMatrix(nEye, 0.1f, 100.0f);
-	mat4 proj(
-		mat.m[0][0], mat.m[1][0], mat.m[2][0], mat.m[3][0],
-		mat.m[0][1], mat.m[1][1], mat.m[2][1], mat.m[3][1],
-		mat.m[0][2], mat.m[1][2], mat.m[2][2], mat.m[3][2],
-		mat.m[0][3], mat.m[1][3], mat.m[2][3], mat.m[3][3]
-	);
-
-	//eye to head transform
-	vr::HmdMatrix34_t mat34 = vrSystem->GetEyeToHeadTransform(nEye);
-	mat4 matrix_eyeToHead(
-		mat34.m[0][0], mat34.m[1][0], mat34.m[2][0], 0.0,
-		mat34.m[0][1], mat34.m[1][1], mat34.m[2][1], 0.0,
-		mat34.m[0][2], mat34.m[1][2], mat34.m[2][2], 0.0,
-		mat34.m[0][3], mat34.m[1][3], mat34.m[2][3], 1.0f
-	);
-	mat4 eyeToHeadTransform = glm::inverse(matrix_eyeToHead);
-
-	//head
-	TrackedDevicePose_t trackedDevicePose;
-	vrSystem->GetDeviceToAbsoluteTrackingPose(TrackingUniverseStanding, 0, &trackedDevicePose, 1);
-	mat34 = trackedDevicePose.mDeviceToAbsoluteTracking;
-	mat4 matrix_head(
-		mat34.m[0][0], mat34.m[1][0], mat34.m[2][0], 0.0,
-		mat34.m[0][1], mat34.m[1][1], mat34.m[2][1], 0.0,
-		mat34.m[0][2], mat34.m[1][2], mat34.m[2][2], 0.0,
-		mat34.m[0][3], mat34.m[1][3], mat34.m[2][3], 1.0f
-	);
-	mat4 headMat = glm::inverse(matrix_head);
-
-	//viewProj
-	mat4 ViewProj = proj * eyeToHeadTransform * headMat;
-	return ViewProj;
-}
-
-vec3 getHeadPosition()
-{
-	TrackedDevicePose_t trackedDevicePose;
-	vrSystem->GetDeviceToAbsoluteTrackingPose(TrackingUniverseStanding, 0, &trackedDevicePose, 1);
-	HmdMatrix34_t mat34 = trackedDevicePose.mDeviceToAbsoluteTracking;
-	vec3 head_pos(mat34.m[0][3],	mat34.m[1][3],	mat34.m[2][3]);
-
-	return head_pos;
 }

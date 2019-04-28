@@ -40,7 +40,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 {
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
-	vector<Texture> textures;
+	vector<Texture> textures; 
+	glm::vec3 color;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -54,10 +55,15 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 		vertex.Position = vector;
 
 		//process vertex normals
-		vector.x = mesh->mNormals[i].x;
-		vector.y = mesh->mNormals[i].y;
-		vector.z = mesh->mNormals[i].z;
-		vertex.Normal = vector;
+		if(true)//if (mesh->mNormals != NULL)
+		{
+			vector.x = mesh->mNormals[i].x;
+			vector.y = mesh->mNormals[i].y;
+			vector.z = mesh->mNormals[i].z;
+			vertex.Normal = vector;
+		}
+		else
+			vertex.Normal = glm::vec3(0.0f);
 
 		//process vertex texture coordinates
 		if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
@@ -69,7 +75,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 		}
 		else
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
-
+		
 		vertices.push_back(vertex);
 	}
 	// process indices
@@ -83,14 +89,23 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 	// process material
 	if (mesh->mMaterialIndex >= 0)
 	{
-		aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+		aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex]; 
+		aiColor4D diffuse; 
+		if (AI_SUCCESS == aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
+			color = glm::vec3(diffuse.r, diffuse.g, diffuse.b);
 		vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+		vector<Texture> ambientMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ambient");
+		textures.insert(textures.end(), ambientMaps.begin(), ambientMaps.end());
+		vector<Texture> emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive");
+		textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
+		vector<Texture> unknownMaps = loadMaterialTextures(material, aiTextureType_UNKNOWN, "texture_unknown");
+		textures.insert(textures.end(), unknownMaps.begin(), unknownMaps.end());
 		vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	return Mesh(vertices, indices, textures);
+	return Mesh(vertices, indices, textures, color);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName)

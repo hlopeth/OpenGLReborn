@@ -5,7 +5,7 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 	string filename = string(path);
 	filename = directory + '/' + filename;
 	
-	int width, height, nrComponents;
+	int width, height;
 	FILE *fp;
 	fopen_s(&fp, filename.c_str(), "rb");
 	if (!fp) {
@@ -57,32 +57,50 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 	}
 
 
+	// Row size in bytes.
+	int rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+	
+	// Allocate the image_data as a big block, to be given to opengl
+	png_byte * image_data = (png_byte*)malloc(rowbytes * height);
+	if (image_data == NULL)
+	{
+		fprintf(stderr, "error: could not allocate memory for PNG image data\n");
+		fclose(fp);
+		return 0;
+	}
 
-	png_bytep *row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
-	for (int y = 0; y < height; y++)
-		row_pointers[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, info_ptr));
+	// row_pointers is for pointing to image_data for reading the png with libpng
+	png_bytep * row_pointers = (png_bytep *)malloc(height * sizeof(png_bytep));
+	if (row_pointers == NULL)
+	{
+		fprintf(stderr, "error: could not allocate memory for PNG row pointers\n");
+		free(image_data);
+		fclose(fp);
+		return 0;
+	}
 
+	// set the individual row_pointers to point at the correct offsets of image_data
+	for (int i = 0; i < height; i++)
+	{
+		row_pointers[height - 1 - i] = image_data + i * rowbytes;
+	}
+
+	// read the png into image_data through row_pointers
 	png_read_image(png_ptr, row_pointers);
+
+
 
 	fclose(fp);
 
-	unsigned char *data;
-	//unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-	if(row_pointers)//if (data)
+	if(image_data)
 	{
 		unsigned int textureID;
 		glGenTextures(1, &textureID);
 
-		GLenum format;
-		if (nrComponents == 1)
-			format = GL_RED;
-		else if (nrComponents == 3)
-			format = GL_RGB;
-		else if (nrComponents == 4)
-			format = GL_RGBA;
+		GLenum format = GL_RGB;
 
 		glBindTexture(GL_TEXTURE_2D, textureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, row_pointers);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
