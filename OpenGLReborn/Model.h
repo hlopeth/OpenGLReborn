@@ -6,9 +6,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include "TextureFromFile.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 class Model
 {
@@ -32,5 +31,3 @@ private:
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
 };
 
-
-unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);

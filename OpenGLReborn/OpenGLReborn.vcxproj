@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\hlopeth\source\repos\OpenGLReborn\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\hlopeth\source\repos\OpenGLReborn\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\VSProgects\OpenGLReborn\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\VSProgects\OpenGLReborn\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -81,7 +81,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>openvr_api.lib;opengl32.lib;glfw3.lib;assimp-vc140-mt.lib;zlibd.lib;libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,11 +121,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="TextureFromFile.cpp" />
+    <ClCompile Include="VrRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
@@ -133,6 +136,8 @@
     <None Include="lampVertex.glsl" />
     <None Include="planeFragment.glsl" />
     <None Include="planeVertex.glsl" />
+    <None Include="screenFragment.glsl" />
+    <None Include="screenVertex.glsl" />
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +150,8 @@
     <ClInclude Include="Model1.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="TextureFromFile.h" />
+    <ClInclude Include="VrRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="texture\container.jpg" />

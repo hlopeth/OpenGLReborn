@@ -21,9 +21,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="glad.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -31,6 +28,18 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="VrRenderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureFromFile.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,12 +62,15 @@
     <None Include="planeFragment.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
+    <None Include="screenFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="screenVertex.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_image.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -83,6 +95,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="VrRenderer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureFromFile.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
