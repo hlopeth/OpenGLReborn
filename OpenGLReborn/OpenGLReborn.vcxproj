@@ -136,8 +136,13 @@
     <None Include="lampVertex.glsl" />
     <None Include="planeFragment.glsl" />
     <None Include="planeVertex.glsl" />
+    <None Include="polyforestf.glsl" />
+    <None Include="polyforestv.glsl" />
     <None Include="screenFragment.glsl" />
     <None Include="screenVertex.glsl" />
+    <None Include="shadowFragment.glsl" />
+    <None Include="shadowGeometry.glsl" />
+    <None Include="shadowVertex.glsl" />
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>

@@ -34,13 +34,23 @@ GLuint initVAO_plane();
 void initShadowMap();
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void calculateShadows();
 
-
+//screen
 const GLuint SCR_WIDTH = 1024, SCR_HEIGHT = 1080;
-//shadowMap
-const GLuint SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
-GLuint depthMapFBO;
-GLuint depthMap;
+ShaderProgram* screenSP = nullptr;
+GLuint screenFBO, screenRBO;
+GLuint screenTexture;
+
+//shadows
+//const GLuint SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
+//GLuint shadowsFBO;
+//GLuint shadowCubeMapTexture;
+//float aspect = (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT;
+//float nearPlane = 1.0f;
+//float farPlane = 25.0f;
+//glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, nearPlane, farPlane);
+ShaderProgram* shadowShaderProgram = nullptr;
 
 glm::mat4 proj = glm::perspective(glm::radians(60.0f), (float)10000 / (float)10000, 0.1f, 100.0f);
 float lastFrame = 0.0f;
@@ -49,10 +59,8 @@ bool firstMouse = true;
 float cameraYaw=-90.0f, cameraPitch=0.0f;
 unsigned int quadVAO, quadVBO;
 void initQuad();
-ShaderProgram* screenSP = nullptr;
-GLuint screenFBO, screenRBO;
-GLuint screenTexture;
 
+//scene
 vector<PointLight*> lights;
 vector<Model*> actors;
 Model* nanosuit;
@@ -76,13 +84,15 @@ int main()
 
 	GenFramebuffer();
 
-	/*Model nanosuitModel("assets/nanosuit/nanosuit.obj");
+
+
+	Model nanosuitModel("assets/nanosuit/nanosuit.obj");
 	ShaderProgram nanosuitSP("vertex.glsl", "fragment.glsl");
 	Actor nanosuit(nanosuitModel, nanosuitSP, scale(mat4(1.0f),vec3(0.11f)));
-	scene.actors.push_back(nanosuit);*/
+	scene.actors.push_back(nanosuit);
 
 	Model drum_setModel("assets/lowpoly_forest_bl/lowpoly_forest.obj");
-	ShaderProgram drum_setSP("vertex.glsl", "fragment.glsl");
+	ShaderProgram drum_setSP("polyforestv.glsl", "polyforestf.glsl");
 	Actor drum_set(drum_setModel, drum_setSP, scale(mat4(1.0f), vec3(0.11f)));
 	scene.actors.push_back(drum_set);
 
@@ -99,7 +109,9 @@ int main()
 	glm::vec3 _red(1.0f, 0.0f, 0.0f);
 	glm::vec3 _green(0.0f, 1.0f, 0.0f);
 	glm::vec3 _blue(0.0f, 0.0f, 1.0f);
-	scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f, 0.0f), 0.8f*_white, _white, _white));
+	scene.pointLights.push_back(PointLight(vec3( -8.0f, 8.0f,  5.0f), 0.8f*_white, _white, _white));
+	scene.pointLights.push_back(PointLight(vec3(8.0f, 8.0f, -5.0f), 0.8f*_white, _white, _white));
+	scene.pointLights.push_back(PointLight(vec3( -8.0f, 8.0f, -5.0f), 0.8f*_white, _white, _white));
 	//scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f, 5.0f), 0.2f*_white, _white, _white));
 	//scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f,-5.0f), 0.2f*_white, _white, _white));
 	//scene.pointLights.push_back(PointLight(vec3(-10.0f, 0.0f, 0.0f), 0.1f*_blue, _blue, _blue));
@@ -110,6 +122,8 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
+
+		calculateShadows();
 
 		vrRenderer.Render(scene);
 		Draw();
@@ -123,10 +137,47 @@ int main()
 	return 0;
 }
 
+void calculateShadows()
+{
+
+	for (auto pointLight : scene.pointLights)
+	{
+		const float aspect = (float)pointLight.SHADOW_WIDTH / (float)pointLight.SHADOW_HEIGHT;
+		const float nearPlane = 1.0f;
+		const glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, nearPlane, pointLight.farPlane);
+		glViewport(0, 0, pointLight.SHADOW_WIDTH, pointLight.SHADOW_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, pointLight.shadowFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		if (pointLight.position == scene.pointLights[0].position)
+			continue;
+		const auto lightPos = pointLight.position;
+		std::vector<glm::mat4> shadowTransforms;
+		shadowTransforms.push_back(shadowProj *	glm::lookAt(lightPos, lightPos + glm::vec3( 1.0, 0.0, 0.0), glm::vec3(0.0,-1.0, 0.0)));
+		shadowTransforms.push_back(shadowProj *	glm::lookAt(lightPos, lightPos + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0,-1.0, 0.0)));
+		shadowTransforms.push_back(shadowProj *	glm::lookAt(lightPos, lightPos + glm::vec3( 0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)));
+		shadowTransforms.push_back(shadowProj *	glm::lookAt(lightPos, lightPos + glm::vec3( 0.0,-1.0, 0.0), glm::vec3(0.0, 0.0,-1.0)));
+		shadowTransforms.push_back(shadowProj *	glm::lookAt(lightPos, lightPos + glm::vec3( 0.0, 0.0, 1.0), glm::vec3(0.0,-1.0, 0.0)));
+		shadowTransforms.push_back(shadowProj *	glm::lookAt(lightPos, lightPos + glm::vec3( 0.0, 0.0,-1.0), glm::vec3(0.0,-1.0, 0.0)));
+
+		shadowShaderProgram->use();
+		for (int i = 0; i < shadowTransforms.size(); i++)
+		{
+			shadowShaderProgram->setUniform("shadowMatrices[" + to_string(i) + "]", shadowTransforms[i]);
+		}
+		shadowShaderProgram->setUniform("lightPos", lightPos);
+		shadowShaderProgram->setUniform("far_plane", pointLight.farPlane);
+		for (auto actor : scene.actors)
+		{
+			shadowShaderProgram->setUniform("model", actor.matrix);
+			actor.model.Draw(*shadowShaderProgram);
+		}
+	}
+}
+
 void Draw()
 {
-	glEnable(GL_DEPTH_TEST);
 	//screeFBO
+	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 	glBindFramebuffer(GL_FRAMEBUFFER, screenFBO);
 	// make sure we clear the framebuffer's content
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -143,6 +194,7 @@ void Draw()
 	glBindVertexArray(quadVAO);
 	glBindTexture(GL_TEXTURE_2D, screenTexture);	// use the color attachment texture as the texture of the quad plane
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void GenFramebuffer()
@@ -165,12 +217,9 @@ void GenFramebuffer()
 																										// now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
+	   	 
 	glBindFramebuffer(GL_FRAMEBUFFER, screenRBO);
 }
-
-mat4 shadow_depth_view = lookAt(vec3(0.0f, 10.0f, 0.0f), vec3(0.0f, 0.0f, -10.0f), vec3(0.0f, 0.0f, -1.0f));
-float near_plane = 1.0f, far_plane = 40.5f;
-glm::mat4 shadow_depth_proj = glm::ortho(-25.0f, 25.0f, -25.0f, 25.0f, near_plane, far_plane);
 
 
 GLFWwindow* initOpenGL()
@@ -220,27 +269,32 @@ GLFWwindow* initOpenGL()
 
 void initShadowMap()
 {
-	glGenFramebuffers(1, &depthMapFBO);
+	/*glGenFramebuffers(1, &shadowsFBO);
 
-	glGenTextures(1, &depthMap);
-	glBindTexture(GL_TEXTURE_2D, depthMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);//может линеар?
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	glGenTextures(1, &shadowCubeMapTexture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, shadowCubeMapTexture);
+	for (int i = 0; i < 6; i++)
+	{
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowsFBO);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowCubeMapTexture, 0);
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
+
+	shadowShaderProgram = new ShaderProgram("shadowVertex.glsl", "shadowFragment.glsl", "shadowGeometry.glsl");
 }
 
 void cleanUp()
 {
+	delete shadowShaderProgram;
 	vr::VR_Shutdown();
 	for(PointLight* light: lights)
 		delete(light);
@@ -436,59 +490,7 @@ GLuint initVAO_plane()
 
 	return VAO;
 }
-/*
-GLuint getTextureJPG(string img)
-{
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	int width, height, nrChannels;
-	unsigned char *data = stbi_load(img.c_str(), &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture " << img << std::endl;
-	}
-	stbi_image_free(data);
-
-	return texture;
-}
-
-GLuint getTexturePNG(string img)
-{
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	int width, height, nrChannels;
-	unsigned char *data = stbi_load(img.c_str(), &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture " << img << std::endl;
-	}
-	stbi_image_free(data);
-
-	return texture;
-}
-*/
 void addCallbacks(GLFWwindow* window)
 {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);

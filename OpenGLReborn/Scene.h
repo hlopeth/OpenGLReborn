@@ -15,7 +15,7 @@ struct Scene
 	vector<PointLight> pointLights;
 	Camera camera;
 	glm::mat4 projection;
-
+	
 	Scene()	{}
 
 	void Draw();

@@ -68,6 +68,21 @@
     <None Include="screenVertex.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
+    <None Include="polyforestf.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="polyforestv.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="shadowVertex.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="shadowFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="shadowGeometry.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">

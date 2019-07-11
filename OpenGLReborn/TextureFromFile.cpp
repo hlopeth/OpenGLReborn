@@ -82,7 +82,8 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 	// set the individual row_pointers to point at the correct offsets of image_data
 	for (int i = 0; i < height; i++)
 	{
-		row_pointers[height - 1 - i] = image_data + i * rowbytes;
+		//row_pointers[height - 1 - i] = image_data + i * rowbytes;
+		row_pointers[i] = image_data + i * rowbytes;
 	}
 
 	// read the png into image_data through row_pointers

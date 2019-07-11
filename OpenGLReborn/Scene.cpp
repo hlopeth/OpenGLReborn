@@ -17,6 +17,14 @@ void Scene::Draw()
 			shader.setUniform(string("pointLights[") + ch_i + "].constant", pointLights[i].constant);
 			shader.setUniform(string("pointLights[") + ch_i + "].linear", pointLights[i].linear);
 			shader.setUniform(string("pointLights[") + ch_i + "].quadratic", pointLights[i].quadratic);
+			if (i == 0) {
+				unsigned int textureUnit = 3 + i;
+				glActiveTexture(GL_TEXTURE0 + textureUnit);
+				glBindTexture(GL_TEXTURE_CUBE_MAP, pointLights[i].shadowCubeMap);
+				shader.setUniform(string("shadowCubeMaps[") + ch_i + "]", textureUnit);
+			}
+			//shader.setUniform(string("shadowCubeMap") + ch_i, 3 + i);
+			shader.setUniform(string("pointLights[") + ch_i + "].farPlane", pointLights[i].farPlane);
 		}
 		shader.setUniform("cameraPos", camera.Pos);
 		actor.Draw(projection*camera.getMatrix());

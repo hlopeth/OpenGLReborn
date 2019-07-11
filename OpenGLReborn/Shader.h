@@ -19,33 +19,34 @@ public:
 	{
 		id = -1;
 	}
-	ShaderProgram(string vertexShaderFileName, string fragmentShaderFileName)
+	ShaderProgram(string vertexShaderFileName, string fragmentShaderFileName, string geomertyShaderFileName = "")
 	{
-		id = createShaderProgram(vertexShaderFileName, fragmentShaderFileName);
+		id = createShaderProgram(vertexShaderFileName, fragmentShaderFileName, geomertyShaderFileName);
 	}
 	void use();
 	void setUniform(string name, unsigned int val)
 	{
-		glUniform1ui(glGetUniformLocation(id, name.c_str()), val);
+		glUniform1ui(findLocation(name), val);
 	}
 	void setUniform(string name, int val)
 	{
-		glUniform1i(glGetUniformLocation(id, name.c_str()), val);
+		glUniform1i(findLocation(name), val);
 	}
 	void setUniform(string name, float val)
 	{
-		glUniform1f(glGetUniformLocation(id, name.c_str()), val);
+		glUniform1f(findLocation(name), val);
 	}
 	void setUniform(string name, glm::mat4 val)
 	{
-		glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(val));
+		glUniformMatrix4fv(findLocation(name), 1, GL_FALSE, glm::value_ptr(val));
 	}
 	void setUniform(string name, glm::vec3 val)
 	{
-		glUniform3fv(glGetUniformLocation(id, name.c_str()),1, glm::value_ptr(val));
+		glUniform3fv(findLocation(name),1, glm::value_ptr(val));
 	}
 private:
-	GLuint createShaderProgram(string vertexShaderFileName, string fragmentShaderFileName);
+	GLuint createShaderProgram(string vertexShaderFileName, string fragmentShaderFileName, string geomertyShaderFileName = "");
 	GLuint compileShader(const string source, GLenum type);
 	string getSource(string fileName);
+	GLint findLocation(string name);
 };
