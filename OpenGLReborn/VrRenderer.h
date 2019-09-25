@@ -21,8 +21,8 @@ protected:
 	bool initialized;
 	GLuint leftEyeTexture;
 	GLuint rightEyeTexture;
-	GLuint leftEyeRbo;
-	GLuint rightEyeRbo;
+	GLuint leftEyeRbo{};
+	GLuint rightEyeRbo{};
 	GLuint leftEyeFBO;
 	GLuint rightEyeFBO;
 	GLuint scr_width, scr_height;

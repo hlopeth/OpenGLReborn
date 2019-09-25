@@ -1,11 +1,8 @@
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
-#include <fstream>
-#include <sstream>
 #include <vector>
 #include <iostream>
 //#pragma comment(lib, "libname.lib")
@@ -13,7 +10,6 @@
 #include "Camera.h"
 #include "PointLight.h"
 #include "Model.h"
-#include "Material.h"
 #include "Scene.h"
 #include "VrRenderer.h"
 
@@ -43,16 +39,12 @@ GLuint screenFBO, screenRBO;
 GLuint screenTexture;
 
 //shadows
-//const GLuint SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
-//GLuint shadowsFBO;
-//GLuint shadowCubeMapTexture;
-//float aspect = (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT;
-//float nearPlane = 1.0f;
-//float farPlane = 25.0f;
-//glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, nearPlane, farPlane);
+GLuint shadowArrayTexture;
+GLuint shadowFrameBuffer;
+const GLuint SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
 ShaderProgram* shadowShaderProgram = nullptr;
 
-glm::mat4 proj = glm::perspective(glm::radians(60.0f), (float)10000 / (float)10000, 0.1f, 100.0f);
+glm::mat4 proj = glm::perspective(glm::radians(60.0f), 10000.f / 10000.f, 0.1f, 100.0f);
 float lastFrame = 0.0f;
 float lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -81,10 +73,7 @@ int main()
 	initQuad();
 	screenSP = new ShaderProgram("screenVertex.glsl", "screenFragment.glsl");
 
-
 	GenFramebuffer();
-
-
 
 	Model nanosuitModel("assets/nanosuit/nanosuit.obj");
 	ShaderProgram nanosuitSP("vertex.glsl", "fragment.glsl");
@@ -96,7 +85,6 @@ int main()
 	Actor drum_set(drum_setModel, drum_setSP, scale(mat4(1.0f), vec3(0.11f)));
 	scene.actors.push_back(drum_set);
 
-
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -104,20 +92,17 @@ int main()
 	scene.camera = camera;
 	scene.projection = proj;
 
-
 	glm::vec3 _white(1.0f);
 	glm::vec3 _red(1.0f, 0.0f, 0.0f);
 	glm::vec3 _green(0.0f, 1.0f, 0.0f);
 	glm::vec3 _blue(0.0f, 0.0f, 1.0f);
-	scene.pointLights.push_back(PointLight(vec3( -8.0f, 8.0f,  5.0f), 0.8f*_white, _white, _white));
-	scene.pointLights.push_back(PointLight(vec3(8.0f, 8.0f, -5.0f), 0.8f*_white, _white, _white));
-	scene.pointLights.push_back(PointLight(vec3( -8.0f, 8.0f, -5.0f), 0.8f*_white, _white, _white));
-	//scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f, 5.0f), 0.2f*_white, _white, _white));
-	//scene.pointLights.push_back(PointLight(vec3( 0.0f, 8.0f,-5.0f), 0.2f*_white, _white, _white));
-	//scene.pointLights.push_back(PointLight(vec3(-10.0f, 0.0f, 0.0f), 0.1f*_blue, _blue, _blue));
+	scene.pointLights.emplace_back(vec3( -4.0f, 3.5f,  -2.0f), 0.8f*_white, _white, _white);
+	scene.pointLights.emplace_back(vec3(4.0f, 3.5f, -2.0f), 0.8f*_white, _white, _white);/*
+	scene.pointLights.emplace_back(vec3( -8.0f, 8.0f, -5.0f), 0.8f*_white, _white, _white);
+	scene.pointLights.emplace_back(vec3( 0.0f, 8.0f, 5.0f), 0.2f*_white, _white, _white);
+	scene.pointLights.emplace_back(vec3( 0.0f, 8.0f,-5.0f), 0.2f*_white, _white, _white);*/
 
-
-
+	initShadowMap();
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -139,17 +124,18 @@ int main()
 
 void calculateShadows()
 {
-
-	for (auto pointLight : scene.pointLights)
+	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowFrameBuffer);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowArrayTexture, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	for(int i = 0; i < scene.pointLights.size(); i++)
 	{
-		const float aspect = (float)pointLight.SHADOW_WIDTH / (float)pointLight.SHADOW_HEIGHT;
+		auto pointLight = scene.pointLights[i];
+		const float aspect = (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT;
 		const float nearPlane = 1.0f;
 		const glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, nearPlane, pointLight.farPlane);
-		glViewport(0, 0, pointLight.SHADOW_WIDTH, pointLight.SHADOW_HEIGHT);
-		glBindFramebuffer(GL_FRAMEBUFFER, pointLight.shadowFBO);
-		glClear(GL_DEPTH_BUFFER_BIT);
-		if (pointLight.position == scene.pointLights[0].position)
-			continue;
 		const auto lightPos = pointLight.position;
 		std::vector<glm::mat4> shadowTransforms;
 		shadowTransforms.push_back(shadowProj *	glm::lookAt(lightPos, lightPos + glm::vec3( 1.0, 0.0, 0.0), glm::vec3(0.0,-1.0, 0.0)));
@@ -164,6 +150,7 @@ void calculateShadows()
 		{
 			shadowShaderProgram->setUniform("shadowMatrices[" + to_string(i) + "]", shadowTransforms[i]);
 		}
+		shadowShaderProgram->setUniform("cubeMapIndex", i);
 		shadowShaderProgram->setUniform("lightPos", lightPos);
 		shadowShaderProgram->setUniform("far_plane", pointLight.farPlane);
 		for (auto actor : scene.actors)
@@ -229,8 +216,8 @@ GLFWwindow* initOpenGL()
 		cout << "Failed to init GLFW" << endl;
 		return NULL;
 	}
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//buff for antyaliasing MSAA
@@ -259,9 +246,7 @@ GLFWwindow* initOpenGL()
 	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
-
-	initShadowMap();
-
+	
 	addCallbacks(window);
 
 	return window;
@@ -269,25 +254,13 @@ GLFWwindow* initOpenGL()
 
 void initShadowMap()
 {
-	/*glGenFramebuffers(1, &shadowsFBO);
-
-	glGenTextures(1, &shadowCubeMapTexture);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, shadowCubeMapTexture);
-	for (int i = 0; i < 6; i++)
-	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	
-	glBindFramebuffer(GL_FRAMEBUFFER, shadowsFBO);
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowCubeMapTexture, 0);
-	glDrawBuffer(GL_NONE);
-	glReadBuffer(GL_NONE);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
+	glGenTextures(1, &shadowArrayTexture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY, shadowArrayTexture);
+	std::cout << "glTexStorage3D 1 " << glGetError() << std::endl;
+	glTexStorage3D(GL_TEXTURE_CUBE_MAP_ARRAY, 1, GL_DEPTH_COMPONENT32F, SHADOW_WIDTH, SHADOW_HEIGHT, scene.pointLights.size() * 6);
+	std::cout << "glTexStorage3D 2 " << glGetError() << std::endl;
+	glGenFramebuffers(1, &shadowFrameBuffer);
+	scene.shadowMaps = shadowArrayTexture;
 
 	shadowShaderProgram = new ShaderProgram("shadowVertex.glsl", "shadowFragment.glsl", "shadowGeometry.glsl");
 }
@@ -522,6 +495,11 @@ void processInput(GLFWwindow *window)
 		scene.camera.Pos -= scene.camera.Right() * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		scene.camera.Pos += scene.camera.Right() * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+		scene.camera.Pos += cameraSpeed * vec3(0.0, 1.0, 0.0);
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+		scene.camera.Pos += cameraSpeed * vec3(0.0, -1.0, 0.0);
+	std::cout << scene.camera.Pos.x<< " " << scene.camera.Pos.y << " " << scene.camera.Pos.z << std::endl;
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)

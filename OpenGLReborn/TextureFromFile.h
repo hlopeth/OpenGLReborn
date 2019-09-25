@@ -1,11 +1,8 @@
 #pragma once
 #include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <libpng/png.h>
 #include <iostream>
-
-//#pragma comment(lib, "libpng16_staticd.lib")
+#include <libpng/png.h>
+#include <glad/glad.h>
 
 using std::string;
 

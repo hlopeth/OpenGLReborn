@@ -15,18 +15,18 @@ VrRenderer::VrRenderer(GLuint scr_width, GLuint scr_height)
 
 void VrRenderer::Init()
 {
-	vr::EVRInitError eError = vr::VRInitError_None;
-	vrSystem = vr::VR_Init(&eError, vr::VRApplication_Scene);
+	EVRInitError eError = VRInitError_None;
+	vrSystem = VR_Init(&eError, VRApplication_Scene);
 
-	if (eError != vr::VRInitError_None)
+	if (eError != VRInitError_None)
 	{
 		initialized = false;
 		return;
 	}
 
-	eError = vr::VRInitError_None;
+	eError = VRInitError_None;
 
-	if (!vr::VRCompositor())
+	if (!VRCompositor())
 	{
 		initialized = false;
 		return;
@@ -104,8 +104,8 @@ void VrRenderer::Render(Scene scene)
 	if (!initialized)
 		return;
 
-	vr::TrackedDevicePose_t trackedDevicePose_t[vr::k_unMaxTrackedDeviceCount];
-	vr::VRCompositor()->WaitGetPoses(trackedDevicePose_t, vr::k_unMaxTrackedDeviceCount, nullptr, 0);
+	TrackedDevicePose_t trackedDevicePose_t[k_unMaxTrackedDeviceCount];
+	VRCompositor()->WaitGetPoses(trackedDevicePose_t, k_unMaxTrackedDeviceCount, nullptr, 0);
 	vec3 headPos = getHeadPosition();
 
 	//leftEye
@@ -118,8 +118,8 @@ void VrRenderer::Render(Scene scene)
 	mat4 viewProj = getViewPosition(Eye_Left);
 	scene.Draw(viewProj, headPos);
 
-	vr::Texture_t leftEyeTexture_t = { (void*)(uintptr_t)leftEyeTexture,  vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
-	vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture_t);
+	Texture_t leftEyeTexture_t = { (void*)(uintptr_t)leftEyeTexture,  TextureType_OpenGL, ColorSpace_Gamma };
+	VRCompositor()->Submit(Eye_Left, &leftEyeTexture_t);
 
 	//rightEye
 	glViewport(0, 0, scr_width, scr_height);
@@ -131,8 +131,8 @@ void VrRenderer::Render(Scene scene)
 	viewProj = getViewPosition(Eye_Right);
 	scene.Draw(viewProj, headPos);
 
-	vr::Texture_t rightEyeTexture_t = { (void*)(uintptr_t)rightEyeTexture, vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
-	vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture_t);
+	Texture_t rightEyeTexture_t = { (void*)(uintptr_t)rightEyeTexture, TextureType_OpenGL, ColorSpace_Gamma };
+	VRCompositor()->Submit(Eye_Right, &rightEyeTexture_t);
 }
 
 vec3 VrRenderer::getHeadPosition()
@@ -148,7 +148,7 @@ vec3 VrRenderer::getHeadPosition()
 mat4 VrRenderer::getViewPosition(Hmd_Eye nEye)
 {
 	//proj
-	vr::HmdMatrix44_t mat = vrSystem->GetProjectionMatrix(nEye, 0.1f, 100.0f);
+	HmdMatrix44_t mat = vrSystem->GetProjectionMatrix(nEye, 0.1f, 100.0f);
 	mat4 proj(
 		mat.m[0][0], mat.m[1][0], mat.m[2][0], mat.m[3][0],
 		mat.m[0][1], mat.m[1][1], mat.m[2][1], mat.m[3][1],
@@ -157,14 +157,14 @@ mat4 VrRenderer::getViewPosition(Hmd_Eye nEye)
 	);
 
 	//eye to head transform
-	vr::HmdMatrix34_t mat34 = vrSystem->GetEyeToHeadTransform(nEye);
+	HmdMatrix34_t mat34 = vrSystem->GetEyeToHeadTransform(nEye);
 	mat4 matrix_eyeToHead(
 		mat34.m[0][0], mat34.m[1][0], mat34.m[2][0], 0.0,
 		mat34.m[0][1], mat34.m[1][1], mat34.m[2][1], 0.0,
 		mat34.m[0][2], mat34.m[1][2], mat34.m[2][2], 0.0,
 		mat34.m[0][3], mat34.m[1][3], mat34.m[2][3], 1.0f
 	);
-	mat4 eyeToHeadTransform = glm::inverse(matrix_eyeToHead);
+	mat4 eyeToHeadTransform = inverse(matrix_eyeToHead);
 
 	//head
 	TrackedDevicePose_t trackedDevicePose;
@@ -176,7 +176,7 @@ mat4 VrRenderer::getViewPosition(Hmd_Eye nEye)
 		mat34.m[0][2], mat34.m[1][2], mat34.m[2][2], 0.0,
 		mat34.m[0][3], mat34.m[1][3], mat34.m[2][3], 1.0f
 	);
-	mat4 headMat = glm::inverse(matrix_head);
+	mat4 headMat = inverse(matrix_head);
 
 	//viewProj
 	mat4 ViewProj = proj * eyeToHeadTransform * headMat;
