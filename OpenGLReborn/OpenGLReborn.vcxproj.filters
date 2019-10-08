@@ -42,6 +42,12 @@
     <ClCompile Include="TextureFromFile.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="TerrainGenerator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -83,6 +89,12 @@
     <None Include="shadowGeometry.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
+    <None Include="terrainVertex.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="terrainFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -116,6 +128,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="TextureFromFile.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainGenerator.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,6 +12,7 @@
 #include "Model.h"
 #include "Scene.h"
 #include "VrRenderer.h"
+#include "TerrainGenerator.h"
 
 using namespace std;
 using namespace glm;
@@ -75,15 +76,15 @@ int main()
 
 	GenFramebuffer();
 
-	Model nanosuitModel("assets/nanosuit/nanosuit.obj");
-	ShaderProgram nanosuitSP("vertex.glsl", "fragment.glsl");
-	Actor nanosuit(nanosuitModel, nanosuitSP, scale(mat4(1.0f),vec3(0.11f)));
-	scene.actors.push_back(nanosuit);
-
-	Model drum_setModel("assets/lowpoly_forest_bl/lowpoly_forest.obj");
-	ShaderProgram drum_setSP("polyforestv.glsl", "polyforestf.glsl");
-	Actor drum_set(drum_setModel, drum_setSP, scale(mat4(1.0f), vec3(0.11f)));
-	scene.actors.push_back(drum_set);
+	Model terrainModel = TerrainGenerator::generate(80, 80, 200);
+	ShaderProgram terrainSP("terrainVertex.glsl", "terrainFragment.glsl");
+	Actor terrain(terrainModel, terrainSP, translate(mat4(1.0f), vec3(-50, -5.0, -50)));
+	scene.actors.push_back(terrain);
+	
+	Model forestModel("assets/lowpoly_forest_bl/lowpoly_forest.obj");
+	ShaderProgram forestSP("polyforestv.glsl", "polyforestf.glsl");
+	Actor forest(forestModel, forestSP, scale(mat4(1.0f), vec3(0.11f)));
+	//scene.actors.push_back(forest);
 
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -97,16 +98,28 @@ int main()
 	glm::vec3 _green(0.0f, 1.0f, 0.0f);
 	glm::vec3 _blue(0.0f, 0.0f, 1.0f);
 	scene.pointLights.emplace_back(vec3( -4.0f, 3.5f,  -2.0f), 0.8f*_white, _white, _white);
-	scene.pointLights.emplace_back(vec3(4.0f, 3.5f, -2.0f), 0.8f*_white, _white, _white);/*
-	scene.pointLights.emplace_back(vec3( -8.0f, 8.0f, -5.0f), 0.8f*_white, _white, _white);
-	scene.pointLights.emplace_back(vec3( 0.0f, 8.0f, 5.0f), 0.2f*_white, _white, _white);
-	scene.pointLights.emplace_back(vec3( 0.0f, 8.0f,-5.0f), 0.2f*_white, _white, _white);*/
+	scene.pointLights.emplace_back(vec3(4.0f, 3.5f, -2.0f), 0.8f*_white, _white, _white);
 
 	initShadowMap();
 
+	int dir = -1;
+	float speed = 0.01f;
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
+
+		PointLight& pl = scene.pointLights[0];
+		pl.position.x += dir * speed;
+		if(pl.position.x < -4)
+		{
+			dir = 1;
+		}
+		if (pl.position.x > 4)
+		{
+			dir = -1;
+		}
+
 
 		calculateShadows();
 
@@ -499,7 +512,6 @@ void processInput(GLFWwindow *window)
 		scene.camera.Pos += cameraSpeed * vec3(0.0, 1.0, 0.0);
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		scene.camera.Pos += cameraSpeed * vec3(0.0, -1.0, 0.0);
-	std::cout << scene.camera.Pos.x<< " " << scene.camera.Pos.y << " " << scene.camera.Pos.z << std::endl;
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
