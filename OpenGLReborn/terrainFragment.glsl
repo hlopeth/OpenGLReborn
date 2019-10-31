@@ -6,12 +6,6 @@ in vec2 texCoord;
 in vec3 normal;
 in vec3 fragPos;
 
-struct Material {
-	sampler2D texture_diffuse1;
-	sampler2D texture_specular1;
-	vec3 color;
-};
-
 struct PointLight {
 	vec3 position;
 	vec3 ambient;
@@ -24,8 +18,8 @@ struct PointLight {
     float farPlane;
 };
 
+uniform vec3 directinalLight;
 uniform vec3 cameraPos;
-uniform Material material;
 uniform int n_pointLights;
 uniform PointLight pointLights[max_pointLights];
 uniform samplerCubeArray shadowCubeMaps;
@@ -38,23 +32,6 @@ float calcShadow(PointLight pointLight, samplerCubeArray shadowCubeMap, int leve
 	float currentDepth = length(fragToLight);
     float bias = 0.1; 
     float shadow = currentDepth -  bias > closestDepth ? 0.0 : 1.0;
-
-//	float offset  = 0.1;
-//	float samples = 4.0;
-//	for(float x = -offset; x < offset; x += offset / (samples * 0.5))
-//	{
-//	    for(float y = -offset; y < offset; y += offset / (samples * 0.5))
-//	    {
-//	        for(float z = -offset; z < offset; z += offset / (samples * 0.5))
-//	        {
-//	            float closestDepth = texture(shadowCubeMap, vec4(fragToLight + vec3(x, y, z), level)).r; 
-//	            closestDepth *= pointLight.farPlane;   // Undo mapping [0;1]
-//	            if(currentDepth - bias < closestDepth)
-//	                shadow += 1.0;
-//	        }
-//	    }
-//	}
-//	shadow /= (samples * samples * samples);
     return shadow;
 }
 
@@ -72,7 +49,7 @@ float calcSpecular(PointLight pointLight)
 	return pow(max(dot(normal, halfwayDir), 0.0), 16.0);
 }
 
-vec4 calcLightColor()
+vec4 calcPointLightsColor()
 {
 	vec4 resultLight = vec4(0.0);
 	int n = min(n_pointLights, max_pointLights);
@@ -88,18 +65,17 @@ vec4 calcLightColor()
 		float shadow = calcShadow(pointLights[i], shadowCubeMaps, i);
 		resultLight += shadow*attenuation*(diffuseColor + specularColor + ambientColor)/n_pointLights;
 	}
-//	vec3 fragToLight = fragPos - pointLights[0].position; 
-//    resultLight = vec4(vec3(texture(shadowCubeMaps, vec4(fragToLight, 0)).r),0.0);
-//	vec3 fragToLight = fragPos - pointLights[1].position; 
-//    resultLight = vec4(vec3(texture(shadowCubeMaps, vec4(fragToLight, 1)).r),0.0);
 	return resultLight;
+}
+
+vec4 calcDirLightColor() {
+	vec3 diffuseColor = vec3(max(dot(normal,directinalLight), 0.0f));
+	return vec4(0.5 * diffuseColor, 1.0);
 }
 
 void main()
 {
-	vec4 diffuseColor = vec4(material.color.r,material.color.g,material.color.b,1.0);
-	vec4 texelColol = texture(material.texture_diffuse1, texCoord);
-	vec4 lightColor = calcLightColor();
-    FragColor = diffuseColor*lightColor;
-//	FragColor = lightColor;
+	vec4 diffuseColor = vec4(1.0);
+	vec4 lightColor = calcPointLightsColor() + calcDirLightColor();
+    FragColor = diffuseColor * lightColor;
 } 

@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "PointLight.h"
 #include "Camera.h"
+#include "DirectinalLight.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -13,11 +14,12 @@ struct Scene
 {
 	vector<Actor> actors;
 	vector<PointLight> pointLights;
+	DirectinalLight directinalLight;
 	Camera camera;
 	glm::mat4 projection;
 	GLuint shadowMaps;
 	
-	Scene()	{}
+	Scene() {};
 
 	void Draw();
 

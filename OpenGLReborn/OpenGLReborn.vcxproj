@@ -129,8 +129,10 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="TerrainGenerator.cpp" />
     <ClCompile Include="TextureFromFile.cpp" />
     <ClCompile Include="VrRenderer.cpp" />
   </ItemGroup>
@@ -147,18 +149,23 @@
     <None Include="shadowFragment.glsl" />
     <None Include="shadowGeometry.glsl" />
     <None Include="shadowVertex.glsl" />
+    <None Include="terrainFragment.glsl" />
+    <None Include="terrainVertex.glsl" />
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="DirectinalLight.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Model1.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="TerrainGenerator.h" />
     <ClInclude Include="TextureFromFile.h" />
     <ClInclude Include="VrRenderer.h" />
   </ItemGroup>

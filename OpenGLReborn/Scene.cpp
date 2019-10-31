@@ -6,6 +6,7 @@ void Scene::Draw()
 	{
 		ShaderProgram shader = actor.shader;
 		shader.use();
+		shader.setUniform("directinalLight", directinalLight.direction);
 		shader.setUniform("n_pointLights", (int)pointLights.size());
 		for (unsigned int i = 0; i < pointLights.size(); i++)
 		{

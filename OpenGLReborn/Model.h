@@ -13,6 +13,7 @@ class Model
 public:
 	/*  Functions   */
 	Model() {}
+	Model(vector<Mesh> meshes);
 	Model(const char *path)
 	{
 		loadModel(path);

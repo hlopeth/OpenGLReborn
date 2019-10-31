@@ -1,5 +1,13 @@
 #include "Model.h"
 
+Model::Model(vector<Mesh> meshes)
+{
+	for(auto mesh: meshes)
+	{
+		this->meshes.push_back(mesh);
+	}
+}
+
 void Model::Draw(ShaderProgram shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++) 
