@@ -16,11 +16,23 @@
     <Filter Include="Исходные файлы\shaders">
       <UniqueIdentifier>{c8e45e1c-4eec-44f9-a872-b2184e7ce675}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Managers">
+      <UniqueIdentifier>{f58f4c00-cde9-4a1e-a283-4c6489c40a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Exeptions">
+      <UniqueIdentifier>{033067b7-aba1-4cf9-80d7-df3f21bb2c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Managers">
+      <UniqueIdentifier>{ecba99d2-cc02-4de1-a0f7-5508480c9701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Exeptions">
+      <UniqueIdentifier>{f4c71209-a333-4592-b827-2e6d7b4bbd90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Events">
+      <UniqueIdentifier>{133b9367-5582-416b-8d7c-dd519ce24b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -46,6 +58,33 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="InitialisationExeption.cpp">
+      <Filter>Исходные файлы\Exeptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Main1.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,6 +177,36 @@
     </ClInclude>
     <ClInclude Include="DirectinalLight.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="RendererManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InitialisationExeption.h">
+      <Filter>Файлы заголовков\Exeptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Trace.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ResizeEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
