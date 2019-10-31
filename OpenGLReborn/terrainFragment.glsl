@@ -18,6 +18,7 @@ struct PointLight {
     float farPlane;
 };
 
+uniform vec3 directinalLight;
 uniform vec3 cameraPos;
 uniform int n_pointLights;
 uniform PointLight pointLights[max_pointLights];
@@ -48,7 +49,7 @@ float calcSpecular(PointLight pointLight)
 	return pow(max(dot(normal, halfwayDir), 0.0), 16.0);
 }
 
-vec4 calcLightColor()
+vec4 calcPointLightsColor()
 {
 	vec4 resultLight = vec4(0.0);
 	int n = min(n_pointLights, max_pointLights);
@@ -67,9 +68,14 @@ vec4 calcLightColor()
 	return resultLight;
 }
 
+vec4 calcDirLightColor() {
+	vec3 diffuseColor = vec3(max(dot(normal,directinalLight), 0.0f));
+	return vec4(0.5 * diffuseColor, 1.0);
+}
+
 void main()
 {
 	vec4 diffuseColor = vec4(1.0);
-	vec4 lightColor = calcLightColor();
+	vec4 lightColor = calcPointLightsColor() + calcDirLightColor();
     FragColor = diffuseColor * lightColor;
 } 

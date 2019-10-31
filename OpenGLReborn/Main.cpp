@@ -34,7 +34,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void calculateShadows();
 
 //screen
-const GLuint SCR_WIDTH = 1024, SCR_HEIGHT = 1080;
+const GLuint SCR_WIDTH = 1920, SCR_HEIGHT = 1080;
 ShaderProgram* screenSP = nullptr;
 GLuint screenFBO, screenRBO;
 GLuint screenTexture;
@@ -45,7 +45,7 @@ GLuint shadowFrameBuffer;
 const GLuint SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
 ShaderProgram* shadowShaderProgram = nullptr;
 
-glm::mat4 proj = glm::perspective(glm::radians(60.0f), 10000.f / 10000.f, 0.1f, 100.0f);
+glm::mat4 proj = glm::perspective(glm::radians(60.0f), SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
 float lastFrame = 0.0f;
 float lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -76,9 +76,9 @@ int main()
 
 	GenFramebuffer();
 
-	Model terrainModel = TerrainGenerator::generate(80, 80, 200);
+	Model terrainModel = TerrainGenerator::generate(300, 300, 200);
 	ShaderProgram terrainSP("terrainVertex.glsl", "terrainFragment.glsl");
-	Actor terrain(terrainModel, terrainSP, translate(mat4(1.0f), vec3(-50, -5.0, -50)));
+	Actor terrain(terrainModel, terrainSP, translate(mat4(1.0f), vec3(-50, -50.0, -50)));
 	scene.actors.push_back(terrain);
 	
 	Model forestModel("assets/lowpoly_forest_bl/lowpoly_forest.obj");
@@ -97,13 +97,14 @@ int main()
 	glm::vec3 _red(1.0f, 0.0f, 0.0f);
 	glm::vec3 _green(0.0f, 1.0f, 0.0f);
 	glm::vec3 _blue(0.0f, 0.0f, 1.0f);
-	scene.pointLights.emplace_back(vec3( -4.0f, 3.5f,  -2.0f), 0.8f*_white, _white, _white);
-	scene.pointLights.emplace_back(vec3(4.0f, 3.5f, -2.0f), 0.8f*_white, _white, _white);
+	scene.pointLights.emplace_back(vec3( -4.0f, 50.5f,  -2.0f), 0.8f*_white, _white, _white);
+	scene.pointLights.emplace_back(vec3(4.0f, 50.5f, -2.0f), 0.8f*_white, _white, _white);
+	scene.directinalLight = DirectinalLight(vec3(0.0, 0.5, 0.5));
 
 	initShadowMap();
 
 	int dir = -1;
-	float speed = 0.01f;
+	float speed = 0.02f;
 	
 	while (!glfwWindowShouldClose(window))
 	{
@@ -111,11 +112,11 @@ int main()
 
 		PointLight& pl = scene.pointLights[0];
 		pl.position.x += dir * speed;
-		if(pl.position.x < -4)
+		if(pl.position.x < -10)
 		{
 			dir = 1;
 		}
-		if (pl.position.x > 4)
+		if (pl.position.x > 40)
 		{
 			dir = -1;
 		}
