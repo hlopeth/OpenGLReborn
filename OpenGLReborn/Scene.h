@@ -10,19 +10,31 @@
 
 using namespace std;
 
-struct Scene
+//struct Scene
+//{
+//	vector<Actor> actors;
+//	vector<PointLight> pointLights;
+//	DirectinalLight directinalLight;
+//	Camera camera;
+//	glm::mat4 projection;
+//	GLuint shadowMaps;
+//	
+//	Scene() {};
+//
+//	void Draw();
+//
+//	void Draw(mat4 matr, vec3 pos);
+//
+//};
+
+#include <list>
+#include "GameObject.h"
+
+class Scene
 {
-	vector<Actor> actors;
-	vector<PointLight> pointLights;
-	DirectinalLight directinalLight;
-	Camera camera;
-	glm::mat4 projection;
-	GLuint shadowMaps;
-	
-	Scene() {};
-
-	void Draw();
-
-	void Draw(mat4 matr, vec3 pos);
-
+public:
+	list<GameObject&>& getGameObjects();
+	void addGameObject(GameObject& gameObject);
+private:
+	list<GameObject&> gameObjects;
 };

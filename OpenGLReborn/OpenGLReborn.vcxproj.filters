@@ -31,6 +31,15 @@
     <Filter Include="Файлы заголовков\Events">
       <UniqueIdentifier>{133b9367-5582-416b-8d7c-dd519ce24b55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Components">
+      <UniqueIdentifier>{5af301b1-5759-443c-ad64-bb904037a3f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GameObjects">
+      <UniqueIdentifier>{1e8e73f7-d588-4903-821e-fc1c55dad91e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameObjects">
+      <UniqueIdentifier>{c23b8182-240a-411e-aae6-0e22132abedd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -86,6 +95,21 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Trace.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Nanosuit.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +231,27 @@
     </ClInclude>
     <ClInclude Include="ResizeEvent.h">
       <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Nanosuit.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

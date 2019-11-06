@@ -1,6 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include "Scene.h"
+#include "Level.h"
 #include "ResizeEvent.h"
 #include "EventHandler.h"
 
@@ -9,13 +9,13 @@ class Renderer : EventHandler
 public:
 	Renderer(GLFWwindow& window);
 	~Renderer();
-	void draw(Scene& scene);
+	void draw(Level& level);
 	void call(Event& event) override;
 
 	static const int glMajorVersion = 4;
 	static const int glMinorVersion = 4;
-	const int screenWidth = 1920;
-	const int screenHeight = 1080;
 private:
-	const GLFWwindow& window;
+	GLFWwindow& window;
+	int viewportWidth = 0;
+	int viewportHeight = 0;
 };

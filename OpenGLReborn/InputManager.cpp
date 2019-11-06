@@ -1,19 +1,20 @@
 #include "InputManager.h"
 #include "WindowManager.h"
 
-Input* InpuManager::input = nullptr;
+Input* InputManager::input = nullptr;
 
-void InpuManager::initialise()
+void InputManager::initialise()
 {
 	input = new Input(WindowManager().getWindow());
 }
 
-void InpuManager::destroy()
+void InputManager::destroy()
 {
+	delete(input);
 	input = nullptr;
 }
 
-Input& InpuManager::getInput()
+Input& InputManager::getInput()
 {
 	return *input;
 }

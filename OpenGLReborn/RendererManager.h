@@ -1,6 +1,10 @@
 #pragma once
 #include "Renderer.h"
 
+#ifndef RENDERER
+#define RENDERER RendererManager().getRenderer()
+#endif // !RENDERER
+
 /*
 	require WindowManager
 */

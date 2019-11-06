@@ -1,6 +1,11 @@
 #pragma once
 #include <GLFW/glfw3.h>
 
+#ifndef WINDOW
+#define WINDOW WindowManager().getWindow()
+#endif // !WINDOW
+
+
 class WindowManager
 {
 public:

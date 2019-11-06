@@ -1,6 +1,7 @@
 #include "WindowManager.h"
 #include "RendererManager.h"
 #include "InputManager.h"
+#include "LevelManager.h"
 #include "InitialisationExeption.h"
 #include "Trace.h"
 
@@ -23,8 +24,9 @@ bool initialiseManagers()
 	try
 	{
 		WindowManager().initialise();
-		InpuManager().initialise();
+		InputManager().initialise();
 		RendererManager().initialise();
+		LevelManager().initialize();
 	}
 	catch (InitialisationExeption ex)
 	{
@@ -36,16 +38,18 @@ bool initialiseManagers()
 
 void destroyManagers()
 {
-	InpuManager().destroy();
+	LevelManager().destroy();
+	InputManager().destroy();
 	RendererManager().destroy();
 	WindowManager().destroy();
 }
 
 void startGameLoop()
 {
-	GLFWwindow& window = WindowManager().getWindow();
-	while (!glfwWindowShouldClose(&window))
+	while (!glfwWindowShouldClose(&WINDOW))
 	{
-		glfwPollEvents();
+		INPUT.pullEvents();
+		LEVEL.update();
+		RENDERER.draw(LEVEL);
 	}
 }

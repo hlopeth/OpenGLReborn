@@ -5,7 +5,7 @@ class Input
 {
 public:
 	Input(GLFWwindow& window);
-
+	void pullEvents();
 private:
 	void addCallbacks(GLFWwindow* window);
 };

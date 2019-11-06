@@ -126,14 +126,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="InitialisationExeption.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Main1.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Nanosuit.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RendererManager.cpp" />
@@ -141,6 +145,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TerrainGenerator.cpp" />
     <ClCompile Include="TextureFromFile.cpp" />
+    <ClCompile Include="Trace.cpp" />
     <ClCompile Include="VrRenderer.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -164,11 +169,17 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="DirectinalLight.h" />
+    <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="InitialisationExeption.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="ModelComponent.h" />
+    <ClInclude Include="Nanosuit.h" />
     <ClInclude Include="ResizeEvent.h" />
     <ClInclude Include="Trace.h" />
     <ClInclude Include="Model.h" />
@@ -184,6 +195,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TerrainGenerator.h" />
     <ClInclude Include="TextureFromFile.h" />
+    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="VrRenderer.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>

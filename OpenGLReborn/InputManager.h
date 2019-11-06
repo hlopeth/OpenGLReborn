@@ -1,7 +1,12 @@
 #pragma once
 #include "Input.h"
 
-class InpuManager
+#ifndef INPUT
+#define INPUT InputManager().getInput()
+#endif // !INPUT
+
+
+class InputManager
 {
 public:
 	void initialise();

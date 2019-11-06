@@ -1,14 +1,15 @@
 #include "Renderer.h"
 #include "InitialisationExeption.h"
 #include "ResizeEvent.h"
+#include "WindowManager.h"
+#include "Trace.h"
 
 Renderer::Renderer( GLFWwindow &window) : window(window)
 {
 	glfwMakeContextCurrent(&window);
 
-	glViewport(0, 0, screenWidth, screenHeight);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_MULTISAMPLE);
+	viewportWidth = WindowManager::windowWidth;
+	viewportHeight = WindowManager::windowHeight;
 }
 
 Renderer::~Renderer()
@@ -16,9 +17,23 @@ Renderer::~Renderer()
 
 }
 
-void Renderer::draw(Scene& scene)
+void Renderer::draw(Level& level)
 {
-	throw "TODO";
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
+	glViewport(0, 0, viewportHeight, viewportHeight);
+	glClearColor(1.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	auto gameObjects = level.getScene().getGameObjects();
+	auto camera = level.getCamera();
+
+	for (auto gameObject : gameObjects)
+	{
+		gameObject.draw(camera);
+	}
+
+	glfwSwapBuffers(&window);
 }
 
 void Renderer::call(Event& event)
@@ -27,7 +42,8 @@ void Renderer::call(Event& event)
 	{
 	case EventType::RESIZE_EVENT:
 		auto re = (ResizeEvent&)(event);
-		glViewport(0, 0, re.width, re.height);
+		viewportWidth = re.width;
+		viewportHeight = re.height;
 		break;
 	}
 }

@@ -29,3 +29,8 @@ Input::Input(GLFWwindow& window)
 	addCallbacks(&window);
 }
 
+void Input::pullEvents()
+{
+	glfwPollEvents();
+}
+
