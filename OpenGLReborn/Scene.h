@@ -1,14 +1,14 @@
 #pragma once
-#include "Actor.h"
-#include "PointLight.h"
-#include "Camera.h"
-#include "DirectinalLight.h"
-#include <vector>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-using namespace std;
+//#include "Actor.h"
+//#include "PointLight.h"
+//#include "Camera.h"
+//#include "DirectinalLight.h"
+//#include <vector>
+//#include <glm/glm.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
+//#include <glm/gtc/type_ptr.hpp>
+//
+//using namespace std;
 
 //struct Scene
 //{
@@ -27,14 +27,16 @@ using namespace std;
 //
 //};
 
-#include <list>
+#include <vector>
 #include "GameObject.h"
+
+using std::vector;
 
 class Scene
 {
 public:
-	list<GameObject&>& getGameObjects();
-	void addGameObject(GameObject& gameObject);
+	vector<GameObject*>& getGameObjects();
+	void addGameObject(GameObject* gameObject);
 private:
-	list<GameObject&> gameObjects;
+	vector<GameObject*> gameObjects;
 };

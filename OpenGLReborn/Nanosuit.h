@@ -11,5 +11,5 @@ public:
 private:
 	void setModel(Model& model) override;
 	Model model;
-	const string pathToModel = "assets/nanosuit/nanosuit.obj";
+	ShaderProgram shaderProgram;
 };

@@ -111,14 +111,17 @@
     <ClCompile Include="Nanosuit.cpp">
       <Filter>Исходные файлы\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseMoveEvent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertex.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
-    <None Include="fragment.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
     <None Include="lampFragment.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
@@ -156,6 +159,18 @@
       <Filter>Исходные файлы\shaders</Filter>
     </None>
     <None Include="terrainFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="TriangleVertex.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="TriangleFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="NanosuitFragment.glsl">
+      <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="NanosuitVertex.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
   </ItemGroup>
@@ -251,6 +266,12 @@
       <Filter>Файлы заголовков\Components</Filter>
     </ClInclude>
     <ClInclude Include="Nanosuit.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseMoveEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

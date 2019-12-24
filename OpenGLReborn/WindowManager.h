@@ -13,8 +13,8 @@ public:
 	void destroy();
 	GLFWwindow& getWindow();
 
-	static const int windowWidth = 200;
-	static const int windowHeight = 300;
+	static const int windowWidth = 800;
+	static const int windowHeight = 600;
 private:
 	static GLFWwindow* window;
 };

@@ -6,6 +6,7 @@ class Input
 public:
 	Input(GLFWwindow& window);
 	void pullEvents();
+	static float sensitivity;
 private:
 	void addCallbacks(GLFWwindow* window);
 };

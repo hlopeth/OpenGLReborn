@@ -12,5 +12,5 @@ public:
 	void destroy();
 	Level& getLevel();
 private:
-	Level level;
+	static Level* level;
 };

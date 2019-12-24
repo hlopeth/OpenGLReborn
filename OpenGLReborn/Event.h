@@ -2,7 +2,9 @@
 
 enum EventType
 {
-	RESIZE_EVENT
+	RESIZE_EVENT,
+	MOUSE_MOVE_EVENT,
+
 };
 
 class Event 
