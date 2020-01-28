@@ -17,4 +17,5 @@ private:
 	Camera camera;
 	Scene scene;
 	UIRoot uiRoot;
+	double time = 0;
 };

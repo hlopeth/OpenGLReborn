@@ -9,35 +9,41 @@
 #include "VerticalLayout.h"
 #include "UIRoot.h"
 
-Level::Level():
-	camera(vec3(0.0), vec3(0.0), vec3(0.0))
+void setupUI(UIRoot& uiRoot)
 {
-	Triangle* triangle = new Triangle();
-
 	Canvas& c = uiRoot.getCanvas();
-	WindowManager wm = WindowManager();
+
 	UI::VerticalLayout* layout = new UI::VerticalLayout();
-	layout->setSize(vec2(500, wm.windowHeight));
+	layout->setSize(vec2(50, WindowManager().windowHeight));
 	layout->spacing = 10;
 	c.addChild(layout);
 
+
 	UI::UIRect* rect1 = new UI::UIRect();
-	rect1->setSize(vec2(layout->transform.width, 100));
+	rect1->setSize(vec2(layout->transform.width, 50));
 	rect1->color = glm::vec4(1.0, 0.0, 0.0, 1.0);
 	layout->addChild(rect1);
 
 	UI::UIRect* rect2 = new UI::UIRect();
-	rect2->setSize(vec2(layout->transform.width, 100));
+	rect2->setSize(vec2(layout->transform.width, 50));
 	rect2->color = glm::vec4(0.0, 1.0, 0.0, 1.0);
 	layout->addChild(rect2);
 
 	UI::Button* btn = new UI::Button();
-	btn->setSize(vec2(layout->transform.width, 100));
+	btn->setSize(vec2(layout->transform.width, 50));
 	layout->addChild(btn);
 
 	auto background = new UI::UIRect();
 	background->setSize(btn->getSize());
 	btn->addChild(background);
+}
+
+Level::Level():
+	camera(vec3(0.0), vec3(0.0), vec3(0.0))
+{
+	setupUI(uiRoot);
+
+	Triangle* triangle = new Triangle();
 
 	scene.addGameObject(triangle);
 
@@ -49,6 +55,11 @@ Level::Level():
 
 void Level::update()
 {
+	double prevTime = time;
+	time = glfwGetTime();
+	double deltaTime = time - prevTime;
+
+	camera.update(time, deltaTime);
 }
 
 Camera& Level::getCamera()
@@ -79,6 +90,13 @@ void Level::call(Event& event)
 		break;
 	case EXIT_EVENT:
 		glfwSetWindowShouldClose(&WINDOW, GLFW_TRUE);
+	case KEY_EVENT:
+	{
+		camera.call(event);
+		auto ev = (KeyEvent&)event;
+		if(ev.key == GLFW_KEY_ESCAPE && ev.action == GLFW_PRESS)
+			glfwSetWindowShouldClose(&WINDOW, GLFW_TRUE);
+	}
 	default:
 		break;
 	}

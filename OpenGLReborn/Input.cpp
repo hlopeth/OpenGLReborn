@@ -2,6 +2,7 @@
 #include "RendererManager.h"
 #include "ResizeEvent.h"
 #include "MouseMoveEvent.h"
+#include "KeyEvent.h"
 #include "MouseClickEvent.h"
 #include "LevelManager.h"
 
@@ -19,6 +20,8 @@ void resizeCallback(GLFWwindow* window, int width, int height)
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	KeyEvent ev = KeyEvent(key, action);
+	LEVEL.call(ev);
 }
 
 void mouseCallback(GLFWwindow* window, double xpos, double ypos)

@@ -132,9 +132,9 @@
     <ClCompile Include="ExitEvent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="KeyEvent.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
     <ClCompile Include="Rect.cpp" />
-    <ClCompile Include="SimpleBehavior.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
     <ClCompile Include="UIEvent.cpp" />
     <ClCompile Include="UIRect.cpp" />
@@ -187,7 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="SimpleBehavior.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="DirectinalLight.h" />
@@ -196,9 +195,9 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="ExitEvent.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="MouseClickEvent.h" />
     <ClInclude Include="Rect.h" />
-    <ClInclude Include="UIBehaviorComponent.h" />
     <ClInclude Include="UIEvent.h" />
     <ClInclude Include="UIRoot.h" />
     <ClInclude Include="UIWiget.h" />
