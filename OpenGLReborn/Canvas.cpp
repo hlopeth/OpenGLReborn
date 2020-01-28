@@ -5,7 +5,7 @@ int UI::Canvas::getMaxChildren()
 	return maxChildren;
 }
 
-void UI::Canvas::draw(const Rect& renderArea)
+void UI::Canvas::draw()
 {
-	drawChildren(renderArea);
+	drawChildren();
 }

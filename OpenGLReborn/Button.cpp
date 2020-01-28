@@ -5,16 +5,13 @@
 
 UI::Button::Button() : UIWiget()
 {
-	auto background = new UIRect(vec4(0,0,0,1));
-	
-	addChild(background);
 }
 
 void UI::Button::call(UIEvent& event)
 {
 	UIWiget::call(event);
 
-	if (globalTransform.hasPoint(event.x, event.y))
+	if (transform.containPoint(event.x, event.y))
 	{
 		switch (event.getType())
 		{
@@ -36,7 +33,7 @@ int UI::Button::getMaxChildren()
 	return 1;
 }
 
-void UI::Button::draw(const Rect& renderArea)
+void UI::Button::draw()
 {
-	drawChildren(globalTransform);
+	drawChildren();
 }

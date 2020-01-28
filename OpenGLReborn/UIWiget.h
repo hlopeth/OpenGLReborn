@@ -23,28 +23,20 @@ namespace UI
 		void setSize(float width, float height);
 		std::vector<const UIWiget*> getChildren();
 		//UIEvent в локальных координатах
-		virtual void call(UIEvent& event);
+		//добавляет дочерний элемент, если это возможно
 		virtual bool addChild(UIWiget* wiget);
+		virtual void call(UIEvent& event);
 		virtual int getMaxChildren() = 0;
 		//renderArea - координаты родительского контейнера
-		virtual void draw(const Rect& renderArea) = 0;
-		//пересчитывает положение элемента в звисимости от положения родителя
-		virtual void align(Rect parentTransform);
+		virtual void draw() = 0;
 
 		UIWiget* parent = nullptr;
-		vec4 useNormalizedCoords = vec4(false, false, false, false);
-		bool alignChildren = true;
+		Rect transform;
 	protected:
-		void drawChildren(const Rect& renderArea);
+		void drawChildren();
 
 		//позиция в локальных координатаъ элемента
-		Rect transform;
-		//положение элемента в координатах экрана
-		Rect globalTransform;
 		ShaderProgram shader;
 		std::list<UIWiget*> children;
-
-	private:
-		bool inShape(UIEvent& event);
 	};
 }

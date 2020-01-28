@@ -49,6 +49,9 @@
     <Filter Include="Исходные файлы\shaders\TriangleShaders">
       <UniqueIdentifier>{b1a2cde0-e1ea-44be-9f4c-369395c01c3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Behavior">
+      <UniqueIdentifier>{8a0c89b5-17f1-410d-9c4b-a787c4737ec1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -160,6 +163,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Transform2DComponent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleBehavior.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -354,6 +360,12 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBehaviorComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleBehavior.h">
+      <Filter>Файлы заголовков\Behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

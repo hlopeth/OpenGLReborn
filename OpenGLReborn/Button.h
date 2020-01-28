@@ -9,6 +9,6 @@ namespace UI
 		Button();
 		void call(UIEvent& event) override;
 		int getMaxChildren() override;
-		void draw(const Rect& renderArea) override;
+		void draw() override;
 	};
 }

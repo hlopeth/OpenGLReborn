@@ -12,7 +12,7 @@ Rect::Rect(float _x, float _y, float _width, float _height) : x(_x), y(_y), widt
 {
 }
 
-bool Rect::hasPoint(float px, float py)
+bool Rect::containPoint(float px, float py)
 {
 	return px >= x && px <= (x + width) && py >= y && py <= (y + height);
 }

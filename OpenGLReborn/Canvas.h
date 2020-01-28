@@ -8,7 +8,7 @@ namespace UI
 	public:
 
 		int getMaxChildren() override;
-		void draw(const Rect& renderArea) override;
+		void draw() override;
 	private:
 		int maxChildren = 100;
 	};

@@ -12,7 +12,7 @@ UIRoot::UIRoot()
 
 void UIRoot::draw(Camera& camera)
 {
-	canvas.draw(renderArea);
+	canvas.draw();
 }
 
 Canvas& UIRoot::getCanvas()

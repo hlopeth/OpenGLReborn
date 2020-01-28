@@ -54,18 +54,11 @@ std::vector<const UIWiget*> UIWiget::getChildren()
 	return childrenCopy;
 }
 
-bool UI::UIWiget::inShape(UIEvent& event)
-{
-	vec2 pos = getPosition();
-	vec2 size = getSize();
-	return  event.x >= pos.x && event.x <= pos.x + size.x && event.y >= pos.y && event.y <= pos.y + size.y;
-}
-
 //событие в экранных координатах(если он есть) 
 void UI::UIWiget::call(UIEvent& event)
 {
 	//проверка попадания события
-	if (globalTransform.hasPoint(event.x, event.y))
+	if (transform.containPoint(event.x, event.y))
 	{
 		for (auto child : children)
 		{
@@ -83,29 +76,15 @@ bool UI::UIWiget::addChild(UIWiget* wiget)
 
 	children.push_back(wiget);
 	wiget->parent = this;
+	wiget->transform.x += transform.x;
+	wiget->transform.y += transform.y;
 	return true;
 }
 
-void UI::UIWiget::align(Rect parentTransform)
-{
-	globalTransform.x = parentTransform.x + useNormalizedCoords.x ? transform.x * parentTransform.width : transform.x;
-	globalTransform.y = parentTransform.y + useNormalizedCoords.y ? transform.y * parentTransform.height: transform.y;
-	globalTransform.width = useNormalizedCoords.z ? transform.width * parentTransform.width : transform.width;
-	globalTransform.height = useNormalizedCoords.w ? transform.height * parentTransform.height : transform.height;
-
-	if (alignChildren)
-	{
-		for (auto child : children)
-		{
-			child->align(globalTransform);
-		}
-	}
-}
-
-void UI::UIWiget::drawChildren(const Rect& renderArea)
+void UI::UIWiget::drawChildren()
 {
 	for (auto i = children.begin(); i != children.end(); i++)
 	{
-		(*i)->draw(renderArea);
+		(*i)->draw();
 	}
 }

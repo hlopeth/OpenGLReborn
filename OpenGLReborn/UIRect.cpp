@@ -57,16 +57,11 @@ int UI::UIRect::getMaxChildren()
 	return 0;
 }
 
-void onMouseMove()
-{
-
-}
-
 void UI::UIRect::call(UIEvent& event)
 {
 	UIWiget::call(event);
 
-	if (globalTransform.hasPoint(event.x, event.y))
+	if (transform.containPoint(event.x, event.y))
 	{
 		switch (event.getType())
 		{
@@ -79,14 +74,14 @@ void UI::UIRect::call(UIEvent& event)
 	}
 }
 
-void UIRect::draw(const Rect& renderArea)
+void UIRect::draw()
 {
 	shader.use();
 	vec4 u_transform = vec4(
-		globalTransform.x,
-		globalTransform.y,
-		globalTransform.width,
-		globalTransform.height
+		transform.x,
+		transform.y,
+		transform.width,
+		transform.height
 	);
 	shader.setUniform("u_transform", u_transform);
 	shader.setUniform("u_viewportSize", vec2(WindowManager().windowWidth, WindowManager().windowHeight));
