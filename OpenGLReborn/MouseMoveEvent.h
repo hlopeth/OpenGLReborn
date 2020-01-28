@@ -1,12 +1,10 @@
 #pragma once
-#include "Event.h"
+#include "UIEvent.h"
 
-class MouseMoveEvent: public Event
+class MouseMoveEvent: public UIEvent
 {
 public:
 	MouseMoveEvent(float _xPosition, float _yPosition, float _xOffset = 0, float _yOffset = 0);
-	int xPosition;
-	int yPosition;
 	int xOffset;
 	int yOffset;
 };

@@ -125,10 +125,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="ExitEvent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="MouseRightEvent.cpp" />
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Transform2DComponent.cpp" />
+    <ClCompile Include="UIEvent.cpp" />
+    <ClCompile Include="UIRect.cpp" />
+    <ClCompile Include="UIRoot.cpp" />
+    <ClCompile Include="UIWiget.cpp" />
     <ClCompile Include="InitialisationExeption.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -149,6 +159,7 @@
     <ClCompile Include="TextureFromFile.cpp" />
     <ClCompile Include="Trace.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="VerticalLayout.cpp" />
     <ClCompile Include="VrRenderer.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -170,14 +181,24 @@
     <None Include="TriangleFragment.glsl" />
     <None Include="TriangleVertex.glsl" />
     <None Include="NanosuitVertex.glsl" />
+    <None Include="UIRectFragment.glsl" />
+    <None Include="UIRectVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Canvas.h" />
     <ClInclude Include="DirectinalLight.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="ExitEvent.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="MouseClickEvent.h" />
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="UIEvent.h" />
+    <ClInclude Include="UIRoot.h" />
+    <ClInclude Include="UIWiget.h" />
     <ClInclude Include="InitialisationExeption.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
@@ -201,8 +222,11 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TerrainGenerator.h" />
     <ClInclude Include="TextureFromFile.h" />
-    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="Transform2DComponent.h" />
+    <ClInclude Include="Transform3DComponent.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="UIRect.h" />
+    <ClInclude Include="VerticalLayout.h" />
     <ClInclude Include="VrRenderer.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>

@@ -40,6 +40,15 @@
     <Filter Include="Исходные файлы\GameObjects">
       <UniqueIdentifier>{c23b8182-240a-411e-aae6-0e22132abedd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\UIWigets">
+      <UniqueIdentifier>{6f53d8c6-c628-4cd1-aa32-0dba4a653570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\UIRectShaders">
+      <UniqueIdentifier>{150d4dc2-9734-421b-81fe-3636f799ae8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\TriangleShaders">
+      <UniqueIdentifier>{b1a2cde0-e1ea-44be-9f4c-369395c01c3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -120,6 +129,39 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>Исходные файлы\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="UIWiget.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UIRect.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UIRoot.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="VerticalLayout.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UIEvent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseRightEvent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitEvent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform2DComponent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -161,17 +203,23 @@
     <None Include="terrainFragment.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
-    <None Include="TriangleVertex.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
-    <None Include="TriangleFragment.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
     <None Include="NanosuitFragment.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
     <None Include="NanosuitVertex.glsl">
       <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="UIRectFragment.glsl">
+      <Filter>Исходные файлы\shaders\UIRectShaders</Filter>
+    </None>
+    <None Include="UIRectVertex.glsl">
+      <Filter>Исходные файлы\shaders\UIRectShaders</Filter>
+    </None>
+    <None Include="TriangleFragment.glsl">
+      <Filter>Исходные файлы\shaders\TriangleShaders</Filter>
+    </None>
+    <None Include="TriangleVertex.glsl">
+      <Filter>Исходные файлы\shaders\TriangleShaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -253,9 +301,6 @@
     <ClInclude Include="Level.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Файлы заголовков\Components</Filter>
-    </ClInclude>
     <ClInclude Include="DrawComponent.h">
       <Filter>Файлы заголовков\Components</Filter>
     </ClInclude>
@@ -273,6 +318,42 @@
     </ClInclude>
     <ClInclude Include="Triangle.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform3DComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform2DComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UIRect.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWiget.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="UIRoot.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalLayout.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseClickEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

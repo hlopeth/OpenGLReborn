@@ -69,6 +69,8 @@ void Renderer::draw(Level& level)
 		gameObject->draw(camera);
 	}
 
+	level.getUIRoot().draw(camera);
+
 	checkGLErrors();
 	glfwSwapBuffers(&window);
 }

@@ -3,7 +3,7 @@
 
 using glm::vec3;
 
-class TransformComponent
+class Transform3DComponent
 {
 public:
 	virtual vec3 getPosition() = 0;

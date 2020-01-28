@@ -1,10 +1,10 @@
 #pragma once
-#include "TransformComponent.h"
+#include "Transform3DComponent.h"
 #include "DrawComponent.h"
 
 using glm::mat4;
 
-class GameObject: TransformComponent, DrawComponent
+class GameObject: Transform3DComponent, DrawComponent
 {
 public:
 	GameObject();

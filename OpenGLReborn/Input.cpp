@@ -2,6 +2,7 @@
 #include "RendererManager.h"
 #include "ResizeEvent.h"
 #include "MouseMoveEvent.h"
+#include "MouseClickEvent.h"
 #include "LevelManager.h"
 
 float lastX = 0;
@@ -38,7 +39,29 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos)
 	yoffset *= Input::sensitivity;
 
 	MouseMoveEvent ev = MouseMoveEvent(xpos, ypos, xoffset, yoffset);
-	LEVEL.getCamera().call(ev);
+	LEVEL.call(ev);
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	bool pressed = action == GLFW_PRESS;
+	switch (button)
+	{
+	case GLFW_MOUSE_BUTTON_LEFT:
+	{
+		MouseLeftClickEvent ev = MouseLeftClickEvent(lastX, lastY, pressed);
+		LEVEL.call(ev);
+		break;
+	}
+	case GLFW_MOUSE_BUTTON_RIGHT:
+	{
+		MouseRightClickEvent ev = MouseRightClickEvent(lastX, lastY, pressed);
+		LEVEL.call(ev);
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Input::addCallbacks(GLFWwindow* window)
@@ -46,6 +69,7 @@ void Input::addCallbacks(GLFWwindow* window)
 	glfwSetFramebufferSizeCallback(window, resizeCallback);
 	glfwSetKeyCallback(window, keyCallback);
 	glfwSetCursorPosCallback(window, mouseCallback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 }
 
 Input::Input(GLFWwindow& window)
