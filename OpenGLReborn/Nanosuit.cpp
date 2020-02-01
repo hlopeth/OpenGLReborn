@@ -15,12 +15,26 @@ Model& Nanosuit::getModel()
 	return model;
 }
 
-void Nanosuit::draw(Camera& camera)
+void Nanosuit::draw(RenderData& rd)
 {
 	shaderProgram.use();
-	shaderProgram.setUniform("mvp", camera.getViewProjection()*getModelMatrix());
+	shaderProgram.setUniform("mvp", rd.camera.getViewProjection()*getModelMatrix());
+	PointLight* pointLight = nullptr;
+	for (unsigned int i = 0; i < rd.pointLights.size(); i++)
+	{
+		pointLight = rd.pointLights[i];
+		char ch_i = '0' + i;
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].position", pointLight->position);
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].ambient", pointLight->ambient);
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].diffuse", pointLight->diffuse);
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].specular", pointLight->specular);
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].constant", pointLight->constant);
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].linear", pointLight->linear);
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].quadratic", pointLight->quadratic);
+		shaderProgram.setUniform(string("pointLights[") + ch_i + "].farPlane", pointLight->farPlane);
+	}
 	shaderProgram.setUniform("model", getModelMatrix());
-	shaderProgram.setUniform("cameraPos", camera.Pos);
+	shaderProgram.setUniform("cameraPos", rd.camera.Pos);
 	model.Draw(shaderProgram);
 }
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "Camera.h"
+#include "RenderData.h"
 
 class DrawComponent
 {
 public:
-	virtual void draw(Camera& camera) = 0;
+	virtual void draw(RenderData& renderData) = 0;
 };
 

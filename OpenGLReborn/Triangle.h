@@ -8,7 +8,7 @@ class Triangle : public GameObject
 public:
 	Triangle();
 	~Triangle();
-	void draw(Camera& camera) override;
+	void draw(RenderData& renderData) override;
 private:
 	ShaderProgram shaderProgram;
 	GLuint VBO;

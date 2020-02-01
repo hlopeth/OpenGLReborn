@@ -25,21 +25,21 @@ vec3 GameObject::getRotation()
 void GameObject::setPosition(const vec3 position)
 {
 	this->position= position;
-	glm::translate(modelMatrix, position);
+	modelMatrix = glm::translate(modelMatrix, position);
 }
 
 void GameObject::setScale(const vec3 scale)
 {
 	this->scale = scale;
-	glm::scale(modelMatrix, scale);
+	modelMatrix = glm::scale(modelMatrix, scale);
 }
 
 void GameObject::setRotation(const vec3 rotation)
 {
 	this->rotation = rotation;
-	glm::rotate(modelMatrix, rotation.x, vec3(1.0, 0.0, 0.0));
-	glm::rotate(modelMatrix, rotation.y, vec3(0.0, 1.0, 0.0));
-	glm::rotate(modelMatrix, rotation.z, vec3(0.0, 0.0, 1.0));
+	modelMatrix = glm::rotate(modelMatrix, rotation.x, vec3(1.0, 0.0, 0.0));
+	modelMatrix = glm::rotate(modelMatrix, rotation.y, vec3(0.0, 1.0, 0.0));
+	modelMatrix = glm::rotate(modelMatrix, rotation.z, vec3(0.0, 0.0, 1.0));
 }
 
 mat4 GameObject::getModelMatrix()

@@ -6,6 +6,7 @@
 #include "Nanosuit.h"
 #include "UIRect.h"
 #include "Button.h"
+#include "Box.h"
 #include "VerticalLayout.h"
 #include "UIRoot.h"
 
@@ -43,9 +44,13 @@ Level::Level():
 {
 	setupUI(uiRoot);
 
-	Triangle* triangle = new Triangle();
+	//Triangle* triangle = new Triangle();
+	Nanosuit* nanosuit = new Nanosuit();
+	Box* box = new Box();
 
-	scene.addGameObject(triangle);
+	//scene.addGameObject(triangle);
+	scene.addGameObject(nanosuit);
+	scene.addGameObject(box);
 
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);

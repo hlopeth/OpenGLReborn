@@ -4,7 +4,7 @@
 #include "UIRoot.h"
 #include "EventHandler.h"
 
-class Level: EventHandler
+class Level: public EventHandler
 {
 public:
 	Level();

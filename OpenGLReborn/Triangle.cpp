@@ -30,7 +30,7 @@ Triangle::~Triangle()
 	glDeleteBuffers(1, &VBO);
 }
 
-void Triangle::draw(Camera& camera)
+void Triangle::draw(RenderData& renderData)
 {
 	shaderProgram.use();
 	glBindVertexArray(VAO);

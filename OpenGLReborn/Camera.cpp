@@ -42,8 +42,8 @@ void Camera::call(Event& event)
 	case MOUSE_MOVE_EVENT:
 	{
 		MouseMoveEvent& me = (MouseMoveEvent&)event;
-		cameraYaw += me.xOffset;
-		cameraPitch += me.yOffset;
+		cameraYaw += me.xOffset * 4;
+		cameraPitch += me.yOffset * 4;
 
 		if (cameraPitch > 89.0f)
 			cameraPitch = 89.0f;
@@ -82,7 +82,7 @@ void Camera::update(double time, double deltaTime)
 	{
 		Pos += cameraSpeed * Right();
 	}
-	std::cout << Pos.x << " " << Pos.y << " " << Pos.z << "\n";
+	//std::cout << Pos.x << " " << Pos.y << " " << Pos.z << "\n";
 }
 
 void Camera::onKey(KeyEvent& event)

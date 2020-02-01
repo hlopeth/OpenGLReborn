@@ -62,14 +62,14 @@ void Renderer::draw(Level& level)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	vector<GameObject*> gameObjects = level.getScene().getGameObjects();
-	Camera& camera = level.getCamera();
+	RenderData renderData(level.getCamera(), level.getScene().getPointLights());
 
 	for (auto gameObject : gameObjects)
 	{
-		gameObject->draw(camera);
+		gameObject->draw(renderData);
 	}
 
-	level.getUIRoot().draw(camera);
+	level.getUIRoot().draw(renderData);
 
 	checkGLErrors();
 	glfwSwapBuffers(&window);

@@ -77,7 +77,7 @@ void Input::addCallbacks(GLFWwindow* window)
 
 Input::Input(GLFWwindow& window)
 {
-	//glfwSetInputMode(&window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(&window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	addCallbacks(&window);
 }
 

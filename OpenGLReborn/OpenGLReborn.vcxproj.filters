@@ -49,6 +49,9 @@
     <Filter Include="Исходные файлы\shaders\TriangleShaders">
       <UniqueIdentifier>{b1a2cde0-e1ea-44be-9f4c-369395c01c3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\shaders\BoxShader">
+      <UniqueIdentifier>{95d7e50f-a4f7-4317-8d6f-415e29401c61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -165,6 +168,12 @@
     <ClCompile Include="KeyEvent.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="RenderData.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -223,6 +232,12 @@
     </None>
     <None Include="TriangleVertex.glsl">
       <Filter>Исходные файлы\shaders\TriangleShaders</Filter>
+    </None>
+    <None Include="BoxVertex.glsl">
+      <Filter>Исходные файлы\shaders\BoxShader</Filter>
+    </None>
+    <None Include="BoxFragment.glsl">
+      <Filter>Исходные файлы\shaders\BoxShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +375,15 @@
     </ClInclude>
     <ClInclude Include="KeyEvent.h">
       <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderData.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

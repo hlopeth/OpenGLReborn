@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Canvas.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="KeyEvent.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="RenderData.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
     <ClCompile Include="UIEvent.cpp" />
     <ClCompile Include="UIRect.cpp" />
@@ -165,6 +167,8 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BoxFragment.glsl" />
+    <None Include="BoxVertex.glsl" />
     <None Include="NanosuitFragment.glsl" />
     <None Include="lampFragment.glsl" />
     <None Include="lampVertex.glsl" />
@@ -187,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="DirectinalLight.h" />
@@ -198,6 +203,7 @@
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="MouseClickEvent.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="RenderData.h" />
     <ClInclude Include="UIEvent.h" />
     <ClInclude Include="UIRoot.h" />
     <ClInclude Include="UIWiget.h" />
@@ -228,6 +234,7 @@
     <ClInclude Include="Transform3DComponent.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UIRect.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="VerticalLayout.h" />
     <ClInclude Include="VrRenderer.h" />
     <ClInclude Include="WindowManager.h" />
