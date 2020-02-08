@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "MouseMoveEvent.h"
+#include "MouseClickEvent.h"
 #include "ResizeEvent.h"
 #include "ExitEvent.h"
 #include "Triangle.h"
@@ -9,6 +10,7 @@
 #include "Box.h"
 #include "VerticalLayout.h"
 #include "UIRoot.h"
+#include "Lamp.h"
 
 void setupUI(UIRoot& uiRoot)
 {
@@ -42,15 +44,27 @@ void setupUI(UIRoot& uiRoot)
 Level::Level():
 	camera(vec3(0.0), vec3(0.0), vec3(0.0))
 {
+
 	setupUI(uiRoot);
 
-	//Triangle* triangle = new Triangle();
 	Nanosuit* nanosuit = new Nanosuit();
-	Box* box = new Box();
+	Lamp* lampWhite = new Lamp();
+	lampWhite->pointLight.diffuse = vec3(0.8);
+	Lamp* lampRed = new Lamp();
+	lampRed->setPosition(vec3(0.0, 5.0, -5.0));
+	lampRed->pointLight.diffuse = vec3(0.8, 0.1, 0.1);
+	Lamp* lampBlue = new Lamp();
+	lampBlue->setPosition(vec3(0.0, 5.0, 5.0));
+	lampBlue->pointLight.diffuse = vec3(0.1, 0.1, 0.8);
+	
 
-	//scene.addGameObject(triangle);
 	scene.addGameObject(nanosuit);
-	scene.addGameObject(box);
+	scene.addGameObject(lampWhite);
+	scene.addGameObject(lampRed);
+	scene.addGameObject(lampBlue);
+	scene.addPointLight(&(lampWhite->pointLight));
+	scene.addPointLight(&(lampRed->pointLight));
+	scene.addPointLight(&(lampBlue->pointLight));
 
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -87,7 +101,7 @@ void Level::call(Event& event)
 	switch (event.getType())
 	{
 	case RESIZE_EVENT:
-	case MOUSE_MOVE_EVENT: 
+	case MOUSE_MOVE_EVENT:
 	case MOUSE_CLICK_LEFT:
 	case MOUSE_CLICK_RIGHT:
 		uiRoot.getCanvas().call((UIEvent&)event);

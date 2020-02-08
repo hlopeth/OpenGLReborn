@@ -70,15 +70,13 @@ Box::Box()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	shader = ShaderProgram("BoxVertex.glsl", "BoxFragment.glsl");
-	this->setScale(vec3(0.5));
-	this->setRotation(vec3(glm::radians(30.0)));
 }
 
 void Box::draw(RenderData& renderData)
 {
 	shader.use();
 	auto model = getModelMatrix();
-	auto mvp = renderData.camera.getViewProjection() * getModelMatrix();
+	auto mvp = renderData.camera.getViewProjection() * model;
 	shader.setUniform("model", model);
 	shader.setUniform("mvp", mvp);
 	glBindVertexArray(vao);

@@ -1,7 +1,8 @@
 #include "Camera.h"
-#include "MouseMoveEvent.h"
+#include "MouseClickEvent.h"
 #include "Trace.h"
-#include <iostream>
+
+bool moveCamera = false;
 
 Camera::Camera(vec3 _Pos, vec3 _Front, vec3 _Up) :
 	Pos(_Pos), 
@@ -40,22 +41,14 @@ void Camera::call(Event& event)
 	switch (event.getType())
 	{
 	case MOUSE_MOVE_EVENT:
-	{
-		MouseMoveEvent& me = (MouseMoveEvent&)event;
-		cameraYaw += me.xOffset * 4;
-		cameraPitch += me.yOffset * 4;
-
-		if (cameraPitch > 89.0f)
-			cameraPitch = 89.0f;
-		if (cameraPitch < -89.0f)
-			cameraPitch = -89.0f;
-
-		glm::vec3 front;
-		front.x = cos(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
-		front.y = sin(glm::radians(cameraPitch));
-		front.z = sin(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
-		Front = glm::normalize(front);
+		if (moveCamera) {
+			onMouse((MouseMoveEvent&)event);
+		}
 		break;
+	case MOUSE_CLICK_RIGHT:
+	{
+		auto ev = (MouseRightClickEvent&)event;
+		moveCamera = ev.pressed;
 	}
 	case KEY_EVENT:
 		onKey((KeyEvent&)event);
@@ -82,7 +75,23 @@ void Camera::update(double time, double deltaTime)
 	{
 		Pos += cameraSpeed * Right();
 	}
-	//std::cout << Pos.x << " " << Pos.y << " " << Pos.z << "\n";
+}
+
+void Camera::onMouse(MouseMoveEvent& event)
+{
+	cameraYaw += event.xOffset;
+	cameraPitch += event.yOffset;
+
+	if (cameraPitch > 89.0f)
+		cameraPitch = 89.0f;
+	if (cameraPitch < -89.0f)
+		cameraPitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
+	front.y = sin(glm::radians(cameraPitch));
+	front.z = sin(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
+	Front = glm::normalize(front);
 }
 
 void Camera::onKey(KeyEvent& event)
@@ -107,5 +116,4 @@ void Camera::onKey(KeyEvent& event)
 		moveLeft = pressed;
 		break;
 	}
-
 }

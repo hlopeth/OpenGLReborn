@@ -34,7 +34,7 @@ float calcDiffusion(PointLight pointLight)
 	return max(dot(normal,lightDir),0.0f);
 }
 
-float calcSpecular(PointLight pointLight)
+float getSpecular(PointLight pointLight)
 {
 	vec3 lightDir   = normalize(pointLight.position - fragPos);
 	vec3 viewDir    = normalize(cameraPos - fragPos);
@@ -42,18 +42,23 @@ float calcSpecular(PointLight pointLight)
 	return pow(max(dot(normal, halfwayDir), 0.0), 16.0);
 }
 
+float getAtenuantion(PointLight pl, float distanceToLight)
+{
+	return 1.0 / (pl.constant + pl.linear * distanceToLight + pl.quadratic * (distanceToLight * distanceToLight));  
+}
+
 vec4 calcLightColor()
 {
 	vec4 resultLight = vec4(0.0);
 	int n = min(n_pointLights, max_pointLights);
-	for(int i=0;i<n_pointLights;i++)
+	for(int i = 0; i < n_pointLights; i++)
 	{
 		float distanceToLight = length(pointLights[i].position - fragPos);
-		float attenuation = 1.0 / (pointLights[i].constant + pointLights[i].linear * distanceToLight + pointLights[i].quadratic * (distanceToLight * distanceToLight));  
+		float attenuation = getAtenuantion(pointLights[i], distanceToLight);
 		vec3 materialDiffuse = vec3(1.0);
 		vec4 diffuseColor  = vec4(calcDiffusion(pointLights[i]) * (materialDiffuse * pointLights[i].diffuse)  ,1.0);
 		vec3 materialSpec = texture(material.texture_specular1, texCoord).xyz;
-		vec4 specularColor = vec4(calcSpecular(pointLights[i])  * (materialSpec * pointLights[i].specular) ,1.0);
+		vec4 specularColor = vec4(getSpecular(pointLights[i])  * (materialSpec * pointLights[i].specular) ,1.0);
 		vec3 materialAmbient = vec3(1.0);
 		vec4 ambientColor = vec4(materialAmbient * pointLights[i].ambient,1.0);
 		resultLight += attenuation*(diffuseColor + specularColor + ambientColor);
@@ -63,8 +68,8 @@ vec4 calcLightColor()
 
 void main()
 {
-	vec4 diffuseColor = vec4(material.color.r,material.color.g,material.color.b,1.0);
+	vec4 diffuseColor = vec4(material.color.r, material.color.g, material.color.b, 1.0);
 	vec4 texelColol = texture(material.texture_diffuse1, texCoord);
 	vec4 lightColor = calcLightColor();
-    FragColor = texelColol;//*lightColor;
+    FragColor = texelColol * lightColor;
 } 

@@ -33,8 +33,8 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos)
 		firstMouse = false;
 	}
 
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;
+	double xoffset = xpos - lastX;
+	double yoffset = lastY - ypos;
 	lastX = xpos;
 	lastY = ypos;
 
@@ -77,7 +77,7 @@ void Input::addCallbacks(GLFWwindow* window)
 
 Input::Input(GLFWwindow& window)
 {
-	glfwSetInputMode(&window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(&window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	addCallbacks(&window);
 }
 

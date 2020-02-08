@@ -4,7 +4,7 @@
 class MouseMoveEvent: public UIEvent
 {
 public:
-	MouseMoveEvent(float _xPosition, float _yPosition, float _xOffset = 0, float _yOffset = 0);
-	int xOffset;
-	int yOffset;
+	MouseMoveEvent(double _xPosition, double _yPosition, double _xOffset, double _yOffset);
+	double xOffset;
+	double yOffset;
 };

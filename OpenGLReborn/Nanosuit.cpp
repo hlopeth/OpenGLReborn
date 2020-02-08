@@ -18,9 +18,15 @@ Model& Nanosuit::getModel()
 void Nanosuit::draw(RenderData& rd)
 {
 	shaderProgram.use();
-	shaderProgram.setUniform("mvp", rd.camera.getViewProjection()*getModelMatrix());
+	auto modelMat = getModelMatrix();
+	auto mvp = rd.camera.getViewProjection() * modelMat;
+	shaderProgram.setUniform("mvp", mvp);
+	shaderProgram.setUniform("model", modelMat);
+	shaderProgram.setUniform("cameraPos", rd.camera.Pos);
 	PointLight* pointLight = nullptr;
-	for (unsigned int i = 0; i < rd.pointLights.size(); i++)
+	int pointLightsSize = rd.pointLights.size();
+	shaderProgram.setUniform("n_pointLights", pointLightsSize);
+	for (unsigned int i = 0; i < pointLightsSize; i++)
 	{
 		pointLight = rd.pointLights[i];
 		char ch_i = '0' + i;
@@ -33,8 +39,6 @@ void Nanosuit::draw(RenderData& rd)
 		shaderProgram.setUniform(string("pointLights[") + ch_i + "].quadratic", pointLight->quadratic);
 		shaderProgram.setUniform(string("pointLights[") + ch_i + "].farPlane", pointLight->farPlane);
 	}
-	shaderProgram.setUniform("model", getModelMatrix());
-	shaderProgram.setUniform("cameraPos", rd.camera.Pos);
 	model.Draw(shaderProgram);
 }
 

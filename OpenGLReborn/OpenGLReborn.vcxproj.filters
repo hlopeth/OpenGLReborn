@@ -52,6 +52,9 @@
     <Filter Include="Исходные файлы\shaders\BoxShader">
       <UniqueIdentifier>{95d7e50f-a4f7-4317-8d6f-415e29401c61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\shaders\Nanosuit">
+      <UniqueIdentifier>{493defd3-b734-46fb-bf60-b37c3abb7151}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -174,6 +177,9 @@
     <ClCompile Include="Box.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Lamp.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -215,12 +221,6 @@
     <None Include="terrainFragment.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
-    <None Include="NanosuitFragment.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
-    <None Include="NanosuitVertex.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
     <None Include="UIRectFragment.glsl">
       <Filter>Исходные файлы\shaders\UIRectShaders</Filter>
     </None>
@@ -238,6 +238,12 @@
     </None>
     <None Include="BoxFragment.glsl">
       <Filter>Исходные файлы\shaders\BoxShader</Filter>
+    </None>
+    <None Include="NanosuitFragment.glsl">
+      <Filter>Исходные файлы\shaders\Nanosuit</Filter>
+    </None>
+    <None Include="NanosuitVertex.glsl">
+      <Filter>Исходные файлы\shaders\Nanosuit</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -383,6 +389,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Box.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Lamp.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "WindowManager.h"
 #include "KeyEvent.h"
+#include "MouseMoveEvent.h"
 #include "EventHandler.h"
 
 using glm::vec3;
@@ -24,6 +25,7 @@ public:
 	void call(Event& event) override;
 	void update(double time, double deltaTime);
 private:
+	void onMouse(MouseMoveEvent& event);
 	void onKey(KeyEvent& event);
 	glm::mat4 projection;
 	float cameraYaw = -90.0f;

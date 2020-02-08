@@ -134,6 +134,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="KeyEvent.cpp" />
+    <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RenderData.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="ExitEvent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="KeyEvent.h" />
+    <ClInclude Include="Lamp.h" />
     <ClInclude Include="MouseClickEvent.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderData.h" />
