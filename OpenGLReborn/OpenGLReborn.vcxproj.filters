@@ -180,6 +180,15 @@
     <ClCompile Include="Lamp.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="EventComponent.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandlerBase.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -313,9 +322,6 @@
     <ClInclude Include="Event.h">
       <Filter>Файлы заголовков\Events</Filter>
     </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="ResizeEvent.h">
       <Filter>Файлы заголовков\Events</Filter>
     </ClInclude>
@@ -393,6 +399,18 @@
     </ClInclude>
     <ClInclude Include="Lamp.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="EventComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandlerBase.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@ public:
 	void setCanvas(Canvas canvas);
 	void setRenderArea(float x, float y, float width, float height);
 	Rect getRenderArea();
+	void call(const Event& event) override;
 private:
 	Canvas canvas;
 	Rect renderArea;

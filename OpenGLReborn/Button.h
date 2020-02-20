@@ -7,7 +7,6 @@ namespace UI
 	{
 	public:
 		Button();
-		void call(UIEvent& event) override;
 		int getMaxChildren() override;
 		void draw() override;
 	};

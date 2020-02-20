@@ -74,15 +74,15 @@ void Renderer::draw(Level& level)
 	checkGLErrors();
 	glfwSwapBuffers(&window);
 }
-
-void Renderer::call(Event& event)
-{
-	switch (event.getType())
-	{
-	case EventType::RESIZE_EVENT:
-		auto re = (ResizeEvent&)(event);
-		viewportWidth = re.width;
-		viewportHeight = re.height;
-		break;
-	}
-}
+//
+//void Renderer::call(Event& event)
+//{
+//	switch (event.getType())
+//	{
+//	case EventType::RESIZE_EVENT:
+//		auto re = (ResizeEvent&)(event);
+//		viewportWidth = re.width;
+//		viewportHeight = re.height;
+//		break;
+//	}
+//}

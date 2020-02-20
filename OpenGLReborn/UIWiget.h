@@ -3,14 +3,14 @@
 #include <vector>
 #include "Rect.h"
 #include "Transform2DComponent.h"
+#include "EventComponent.h"
 #include "Shader.h"
 #include "MouseMoveEvent.h"
-#include "EventHandler.h"
 
 namespace UI
 {
 	using glm::vec4;
-	class UIWiget : public Transform2DComponent
+	class UIWiget : public Transform2DComponent, public EventComponent
 	{
 	public:
 		UIWiget();
@@ -25,13 +25,14 @@ namespace UI
 		//UIEvent в локальных координатах
 		//добавляет дочерний элемент, если это возможно
 		virtual bool addChild(UIWiget* wiget);
-		virtual void call(UIEvent& event);
+		virtual void call(const Event& event) override;
 		virtual int getMaxChildren() = 0;
 		//renderArea - координаты родительского контейнера
 		virtual void draw() = 0;
 
 		UIWiget* parent = nullptr;
 		Rect transform;
+		bool visible = true;
 	protected:
 		void drawChildren();
 

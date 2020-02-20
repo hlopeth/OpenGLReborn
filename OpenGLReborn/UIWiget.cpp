@@ -55,11 +55,23 @@ std::vector<const UIWiget*> UIWiget::getChildren()
 }
 
 //событие в экранных координатах(если он есть) 
-void UI::UIWiget::call(UIEvent& event)
+void UI::UIWiget::call(const Event& event)
 {
-	//проверка попадания события
-	if (transform.containPoint(event.x, event.y))
+	if (const UIEvent* uiEvent = dynamic_cast<const UIEvent*>(&event))
 	{
+		//проверка попадания события
+		if (transform.containPoint(uiEvent->x, uiEvent->y) && visible)
+		{
+			EventComponent::call(event);
+			for (auto child : children)
+			{
+				child->call(event);
+			}
+		}
+	}
+	else
+	{
+		EventComponent::call(event);
 		for (auto child : children)
 		{
 			child->call(event);
@@ -85,6 +97,9 @@ void UI::UIWiget::drawChildren()
 {
 	for (auto i = children.begin(); i != children.end(); i++)
 	{
-		(*i)->draw();
+		if ((*i)->visible) 
+		{
+			(*i)->draw();
+		}
 	}
 }

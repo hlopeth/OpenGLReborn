@@ -22,7 +22,7 @@ void Nanosuit::draw(RenderData& rd)
 	auto mvp = rd.camera.getViewProjection() * modelMat;
 	shaderProgram.setUniform("mvp", mvp);
 	shaderProgram.setUniform("model", modelMat);
-	shaderProgram.setUniform("cameraPos", rd.camera.Pos);
+	shaderProgram.setUniform("cameraPos", rd.camera.pos);
 	PointLight* pointLight = nullptr;
 	int pointLightsSize = rd.pointLights.size();
 	shaderProgram.setUniform("n_pointLights", pointLightsSize);

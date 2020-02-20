@@ -57,23 +57,6 @@ int UI::UIRect::getMaxChildren()
 	return 0;
 }
 
-void UI::UIRect::call(UIEvent& event)
-{
-	UIWiget::call(event);
-
-	if (transform.containPoint(event.x, event.y))
-	{
-		switch (event.getType())
-		{
-		case MOUSE_CLICK_LEFT:
-			color = vec4(1.0);
-			break;
-		default:
-			break;
-		}
-	}
-}
-
 void UIRect::draw()
 {
 	shader.use();

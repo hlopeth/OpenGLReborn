@@ -6,7 +6,6 @@ namespace UI
 	class Canvas : public UIWiget
 	{
 	public:
-
 		int getMaxChildren() override;
 		void draw() override;
 	private:

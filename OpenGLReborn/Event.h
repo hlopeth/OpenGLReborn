@@ -15,6 +15,7 @@ class Event
 public:
 	EventType getType();
 	Event(EventType _type);
+	virtual ~Event();
 private:
 	EventType type;
 };

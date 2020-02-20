@@ -5,20 +5,24 @@
 bool moveCamera = false;
 
 Camera::Camera(vec3 _Pos, vec3 _Front, vec3 _Up) :
-	Pos(_Pos), 
-	Front(_Front), 
-	Up(_Up)
+	pos(_Pos), 
+	front(_Front), 
+	up(_Up)
 {
 	float aspect = WindowManager::windowWidth / (float)WindowManager::windowHeight;
 	float fov = 60.0;
 	float near = 0.1;
 	float far = 1000.0;
 	projection = glm::perspective(glm::radians(fov), aspect, near, far);
+
+	setEventHandler<Camera, MouseMoveEvent>(this, &Camera::onMouse);
+	setEventHandler<Camera, KeyEvent>(this, &Camera::onKey);
+	setEventHandler<Camera, MouseRightClickEvent>(this, &Camera::onRightClick);
 }
 
 mat4 Camera::getView()
 {
-	return lookAt(Pos, Pos + Front, Up);
+	return lookAt(pos, pos + front, up);
 }
 
 mat4 Camera::getProjection()
@@ -33,27 +37,7 @@ mat4 Camera::getViewProjection()
 
 vec3 Camera::Right()
 {
-	return glm::normalize(glm::cross(Front, Up));
-}
-
-void Camera::call(Event& event)
-{
-	switch (event.getType())
-	{
-	case MOUSE_MOVE_EVENT:
-		if (moveCamera) {
-			onMouse((MouseMoveEvent&)event);
-		}
-		break;
-	case MOUSE_CLICK_RIGHT:
-	{
-		auto ev = (MouseRightClickEvent&)event;
-		moveCamera = ev.pressed;
-	}
-	case KEY_EVENT:
-		onKey((KeyEvent&)event);
-		break;
-	}
+	return glm::normalize(glm::cross(front, up));
 }
 
 void Camera::update(double time, double deltaTime)
@@ -61,24 +45,27 @@ void Camera::update(double time, double deltaTime)
 	float cameraSpeed = 10.0f * deltaTime;
 	if (moveForvard)
 	{
-		Pos += cameraSpeed * Front;
+		pos += cameraSpeed * front;
 	}
 	if (moveBackvard)
 	{
-		Pos -= cameraSpeed * Front;
+		pos -= cameraSpeed * front;
 	}
 	if (moveLeft)
 	{
-		Pos -= cameraSpeed * Right();
+		pos -= cameraSpeed * Right();
 	}
 	if (moveRight)
 	{
-		Pos += cameraSpeed * Right();
+		pos += cameraSpeed * Right();
 	}
 }
 
-void Camera::onMouse(MouseMoveEvent& event)
+void Camera::onMouse(const MouseMoveEvent& event)
 {
+	if (!moveCamera)
+		return;
+	
 	cameraYaw += event.xOffset;
 	cameraPitch += event.yOffset;
 
@@ -87,14 +74,12 @@ void Camera::onMouse(MouseMoveEvent& event)
 	if (cameraPitch < -89.0f)
 		cameraPitch = -89.0f;
 
-	glm::vec3 front;
-	front.x = cos(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
-	front.y = sin(glm::radians(cameraPitch));
-	front.z = sin(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch));
-	Front = glm::normalize(front);
+	front.x = (float)(cos(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch)));
+	front.y = (float)(sin(glm::radians(cameraPitch)));
+	front.z = (float)(sin(glm::radians(cameraYaw)) * cos(glm::radians(cameraPitch)));
 }
 
-void Camera::onKey(KeyEvent& event)
+void Camera::onKey(const KeyEvent& event)
 {
 	bool pressed = event.action == GLFW_PRESS || event.action == GLFW_REPEAT;
 	switch (event.key)
@@ -116,4 +101,9 @@ void Camera::onKey(KeyEvent& event)
 		moveLeft = pressed;
 		break;
 	}
+}
+
+void Camera::onRightClick(const MouseRightClickEvent& event)
+{
+	moveCamera = event.pressed;
 }

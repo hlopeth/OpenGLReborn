@@ -17,11 +17,6 @@ int UI::VerticalLayout::getMaxChildren()
 	return maxChildren;
 }
 
-void UI::VerticalLayout::call(UIEvent& event)
-{
-	UIWiget::call(event);
-}
-
 void UI::VerticalLayout::draw()
 {
 	drawChildren();

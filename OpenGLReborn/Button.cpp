@@ -7,27 +7,6 @@ UI::Button::Button() : UIWiget()
 {
 }
 
-void UI::Button::call(UIEvent& event)
-{
-	UIWiget::call(event);
-
-	if (transform.containPoint(event.x, event.y))
-	{
-		switch (event.getType())
-		{
-		case MOUSE_CLICK_LEFT:
-		{
-			ExitEvent ev = ExitEvent();
-			LEVEL.call(ev);
-			break;
-		}
-		default:
-			break;
-		}
-	}
-
-}
-
 int UI::Button::getMaxChildren()
 {
 	return 1;

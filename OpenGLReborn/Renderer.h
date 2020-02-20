@@ -3,15 +3,14 @@
 #include <GLFW/glfw3.h>
 #include "Level.h"
 #include "ResizeEvent.h"
-#include "EventHandler.h"
+#include "EventComponent.h"
 
-class Renderer : EventHandler
+class Renderer : EventComponent
 {
 public:
 	Renderer(GLFWwindow& window);
 	~Renderer();
 	void draw(Level& level);
-	void call(Event& event) override;
 
 	static const int glMajorVersion = 4;
 	static const int glMinorVersion = 4;

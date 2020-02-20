@@ -37,3 +37,9 @@ Rect UIRoot::getRenderArea()
 {
 	return renderArea;
 }
+
+void UIRoot::call(const Event& event)
+{
+	EventComponent::call(event);
+	canvas.call(event);
+}

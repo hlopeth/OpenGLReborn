@@ -8,7 +8,6 @@ namespace UI
 	public:
 		bool addChild(UIWiget* wiget) override;
 		int getMaxChildren() override;
-		void call(UIEvent& event) override;
 		void draw() override;
 		float spacing = 0;
 	private:

@@ -40,6 +40,15 @@ void GameObject::setRotation(const vec3 rotation)
 	modelMatrixIsDirty = true;
 }
 
+void GameObject::call(const Event& event)
+{
+	EventComponent::call(event);
+	for (auto child : childs)
+	{
+		child->call(event);
+	}
+}
+
 void GameObject::addChild(GameObject* child)
 {
 	childs.push_back(child);

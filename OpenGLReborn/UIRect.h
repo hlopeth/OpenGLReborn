@@ -11,7 +11,6 @@ namespace UI
 		UIRect(vec4 _color);
 		~UIRect();
 		int getMaxChildren() override;
-		void call(UIEvent& event) override;
 		void draw() override; 
 		vec4 color;
 	private:

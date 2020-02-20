@@ -1,8 +1,17 @@
 #pragma once
-#include "Event.h"
+#include "EventHandlerBase.h"
 
-class EventHandler
+template < class T, class EventT > class EventHandler : public EventHandlerBase
 {
 public:
-	virtual void call(Event& event) = 0;
+	typedef void (T::* MemberHandler)(const EventT&);
+	EventHandler(T* instance, MemberHandler handler) : _instance(instance), _handler(handler) {};
+	void intCall(const Event& event) override
+	{
+		(_instance->*_handler)(static_cast<const EventT&>(event));
+	}
+
+private:
+	T* _instance;
+	MemberHandler _handler;
 };
