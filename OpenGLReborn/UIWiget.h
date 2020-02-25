@@ -29,6 +29,7 @@ namespace UI
 		virtual int getMaxChildren() = 0;
 		//renderArea - координаты родительского контейнера
 		virtual void draw() = 0;
+		bool pointInShape(float x, float y);
 
 		UIWiget* parent = nullptr;
 		Rect transform;

@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "UIRoot.h"
 #include "EventComponent.h"
+#include "ExitEvent.h"
 
 class Level: public EventComponent
 {
@@ -19,4 +20,5 @@ private:
 	UIRoot uiRoot;
 	double time = 0;
 	void onKey(const KeyEvent& event);
+	void onExit(const ExitEvent& event);
 };

@@ -51,6 +51,7 @@ Level::Level():
 	camera.front = glm::vec3(0.0f, 0.0f, -1.0f);
 	camera.up = glm::vec3(0.0f, 1.0f, 0.0f);
 	this->setEventHandler<Level, KeyEvent>(this, &Level::onKey);
+	this->setEventHandler<Level, ExitEvent>(this, &Level::onExit);
 }
 
 void Level::update()
@@ -83,6 +84,11 @@ void Level::onKey(const KeyEvent& event)
 	{
 		glfwSetWindowShouldClose(&WINDOW, true);
 	}
+}
+
+void Level::onExit(const ExitEvent& event)
+{
+	glfwSetWindowShouldClose(&WINDOW, true);
 }
 
 void Level::call(const Event& event)
