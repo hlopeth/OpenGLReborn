@@ -2,6 +2,7 @@
 #include "RendererManager.h"
 #include "InputManager.h"
 #include "LevelManager.h"
+#include "PhysicsManager.h"
 #include "InitialisationExeption.h"
 #include "Trace.h"
 
@@ -26,6 +27,7 @@ bool initialiseManagers()
 		WindowManager().initialise();
 		InputManager().initialise();
 		RendererManager().initialise();
+		PhysicsManager().initialise();
 		LevelManager().initialize();
 	}
 	catch (InitialisationExeption ex)
@@ -42,6 +44,7 @@ void destroyManagers()
 	InputManager().destroy();
 	RendererManager().destroy();
 	WindowManager().destroy();
+	PhysicsManager().destroy();
 }
 
 void startGameLoop()

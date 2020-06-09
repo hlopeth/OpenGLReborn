@@ -70,12 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\VSProgects\OpenGLReborn\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\VSProgects\OpenGLReborn\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs/Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>D:\VSProgects\OpenGLReborn\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\VSProgects\OpenGLReborn\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,9 +87,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>openvr_api.lib;opengl32.lib;glfw3.lib;assimp-vc140-mt.lib;zlibd.lib;libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>openvr_api.lib;opengl32.lib;glfw3.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;assimp-vc140-mt.lib;zlibd.lib;libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -94,7 +99,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>openvr_api.lib;opengl32.lib;glfw3.lib;assimp-vc140-mt.lib;zlibd.lib;libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -138,7 +147,11 @@
     <ClCompile Include="KeyEvent.cpp" />
     <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MeshPrimitives.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
+    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RenderData.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
@@ -173,6 +186,7 @@
   <ItemGroup>
     <None Include="BoxFragment.glsl" />
     <None Include="BoxVertex.glsl" />
+    <None Include="DefaultVertex.glsl" />
     <None Include="NanosuitFragment.glsl" />
     <None Include="lampFragment.glsl" />
     <None Include="lampVertex.glsl" />
@@ -198,6 +212,7 @@
     <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="DefaultFragment.glsl" />
     <ClInclude Include="DirectinalLight.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Event.h" />
@@ -209,7 +224,11 @@
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="Lamp.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MeshPrimitives.h" />
     <ClInclude Include="MouseClickEvent.h" />
+    <ClInclude Include="Physics.h" />
+    <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="UIEvent.h" />

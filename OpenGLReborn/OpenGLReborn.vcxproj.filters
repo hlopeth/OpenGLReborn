@@ -55,6 +55,9 @@
     <Filter Include="Исходные файлы\shaders\Nanosuit">
       <UniqueIdentifier>{493defd3-b734-46fb-bf60-b37c3abb7151}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\shaders\Default">
+      <UniqueIdentifier>{6eded244-be86-4296-a4d5-7293d8e57e54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -189,6 +192,18 @@
     <ClCompile Include="EventHandlerBase.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshPrimitives.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -253,6 +268,9 @@
     </None>
     <None Include="NanosuitVertex.glsl">
       <Filter>Исходные файлы\shaders\Nanosuit</Filter>
+    </None>
+    <None Include="DefaultVertex.glsl">
+      <Filter>Исходные файлы\shaders\Default</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -410,6 +428,21 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="EventHandler.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultFragment.glsl">
+      <Filter>Исходные файлы\shaders\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshPrimitives.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

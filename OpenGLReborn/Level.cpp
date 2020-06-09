@@ -13,6 +13,7 @@
 #include "MainMenu.h"
 #include "Trace.h"
 #include "Event.h"
+#include "Plane.h"
 
 void setupUI(UIRoot& uiRoot)
 {
@@ -37,12 +38,15 @@ Level::Level():
 	Lamp* lampBlue = new Lamp();
 	lampBlue->setPosition(vec3(0.0, 15.0, 5.0));
 	lampBlue->pointLight.diffuse = vec3(0.1, 0.1, 0.8);
+	Plane* plane = new Plane();
+	plane->setScale(vec3(100.f, 0.f, 100.f));
 	
 
 	scene.addGameObject(nanosuit);
 	scene.addGameObject(lampWhite);
 	scene.addGameObject(lampRed);
 	scene.addGameObject(lampBlue);
+	scene.addGameObject(plane);
 	scene.addPointLight(&(lampWhite->pointLight));
 	scene.addPointLight(&(lampRed->pointLight));
 	scene.addPointLight(&(lampBlue->pointLight));

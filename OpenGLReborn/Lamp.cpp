@@ -14,5 +14,6 @@ void Lamp::setPosition(const vec3 position)
 
 void Lamp::draw(RenderData& renderData)
 {
+	box.mesh.color = pointLight.diffuse;
 	box.draw(renderData);
 }

@@ -1,14 +1,14 @@
 #pragma once
 #include "GameObject.h"
+#include "Mesh.h"
 #include "Shader.h"
 
 class Box : public GameObject
 {
 public:
-	Box();
+	Box(glm::vec3 color = glm::vec3(0.2));
 	void draw(RenderData& renderData) override;
+	Mesh mesh;
 private:
-	GLuint vao;
-	GLsizei indices_count;
 	ShaderProgram shader;
 };
