@@ -58,6 +58,9 @@
     <Filter Include="Исходные файлы\shaders\Default">
       <UniqueIdentifier>{6eded244-be86-4296-a4d5-7293d8e57e54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\shaders\TexturedShader">
+      <UniqueIdentifier>{6e22ef51-0884-426a-901f-c53d25698992}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -271,6 +274,12 @@
     </None>
     <None Include="DefaultVertex.glsl">
       <Filter>Исходные файлы\shaders\Default</Filter>
+    </None>
+    <None Include="TexturedVertex.glsl">
+      <Filter>Исходные файлы\shaders\TexturedShader</Filter>
+    </None>
+    <None Include="TexturedFragment.glsl">
+      <Filter>Исходные файлы\shaders\TexturedShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

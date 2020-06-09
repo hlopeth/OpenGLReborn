@@ -39,7 +39,7 @@ Level::Level():
 	lampBlue->setPosition(vec3(0.0, 15.0, 5.0));
 	lampBlue->pointLight.diffuse = vec3(0.1, 0.1, 0.8);
 	Plane* plane = new Plane();
-	plane->setScale(vec3(100.f, 0.f, 100.f));
+	plane->setScale(vec3(10.f, 1.f, 10.f));
 	
 
 	scene.addGameObject(nanosuit);

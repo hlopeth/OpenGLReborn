@@ -9,16 +9,12 @@ using namespace std;
 
 struct Vertex {
 	glm::vec3 Position;
-	glm::vec2 TexCoords;
 	glm::vec3 Normal;
-
-	Vertex() {};
-	Vertex(glm::vec3 _Position, glm::vec2 _TexCoord, glm::vec3 _Normal) :
-		Position(_Position), TexCoords(_TexCoord), Normal(_Normal) {};
+	glm::vec2 TexCoords;
 };
 
 struct Texture {
-	unsigned int id;
+	unsigned int id = -1;
 	string type;
 	string path;
 };

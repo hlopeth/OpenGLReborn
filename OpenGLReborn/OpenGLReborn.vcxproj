@@ -201,6 +201,8 @@
     <None Include="shadowVertex.glsl" />
     <None Include="terrainFragment.glsl" />
     <None Include="terrainVertex.glsl" />
+    <None Include="TexturedFragment.glsl" />
+    <None Include="TexturedVertex.glsl" />
     <None Include="TriangleFragment.glsl" />
     <None Include="TriangleVertex.glsl" />
     <None Include="NanosuitVertex.glsl" />

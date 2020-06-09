@@ -17,3 +17,4 @@ void Lamp::draw(RenderData& renderData)
 	box.mesh.color = pointLight.diffuse;
 	box.draw(renderData);
 }
+			
