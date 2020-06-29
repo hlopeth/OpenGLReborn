@@ -36,4 +36,6 @@ private:
 	bool moveBackvard = false;
 	bool moveLeft = false;
 	bool moveRight = false;
+	bool moveUp = false;
+	bool moveDown = false;
 };

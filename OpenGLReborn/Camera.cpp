@@ -59,6 +59,14 @@ void Camera::update(double time, double deltaTime)
 	{
 		pos += cameraSpeed * Right();
 	}
+	if (moveUp)
+	{
+		pos += cameraSpeed * up;
+	}
+	if (moveDown)
+	{
+		pos -= cameraSpeed * up;
+	}
 }
 
 void Camera::onMouse(const MouseMoveEvent& event)
@@ -99,6 +107,12 @@ void Camera::onKey(const KeyEvent& event)
 	case GLFW_KEY_A:
 	case GLFW_KEY_LEFT:
 		moveLeft = pressed;
+		break;
+	case GLFW_KEY_Q:
+		moveDown = pressed;
+		break;
+	case GLFW_KEY_E:
+		moveUp = pressed;
 		break;
 	}
 }

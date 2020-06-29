@@ -87,9 +87,9 @@ Texture RenderingPrimitives::DefaultTexture()
 {
 	if (defaultTexture.id == -1)
 	{
-		int width = 256;
-		int height = 256;
-		int cellSize = 8;
+		int width = 2;
+		int height = 2;
+		int cellSize = 1;
 		unsigned char* textureData = new unsigned char[width * height * 4];
 		int t = cellSize * 2;
 		for(int x = 0; x < width; x++)
