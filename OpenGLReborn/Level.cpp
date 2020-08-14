@@ -14,6 +14,7 @@
 #include "Trace.h"
 #include "Event.h"
 #include "Plane.h"
+#include "BoxPhysicsShape.h"
 
 void setupUI(UIRoot& uiRoot)
 {
@@ -30,6 +31,7 @@ Level::Level():
 	setupUI(uiRoot);
 
 	Nanosuit* nanosuit = new Nanosuit();
+	nanosuit->physicsBody = new BoxPhysicsShape(*nanosuit, 1.f);
 	Lamp* lampWhite = new Lamp();
 	lampWhite->pointLight.diffuse = vec3(0.8);
 	Lamp* lampRed = new Lamp();
@@ -39,7 +41,9 @@ Level::Level():
 	lampBlue->setPosition(vec3(0.0, 15.0, 5.0));
 	lampBlue->pointLight.diffuse = vec3(0.1, 0.1, 0.8);
 	Plane* plane = new Plane();
-	plane->setScale(vec3(10.f, 1.f, 10.f));
+	plane->setPosition(vec3(0.0, -5.0, 0.0));
+	plane->setScale(vec3(50.f, 1.0f, 50.f));
+	plane->physicsBody = new BoxPhysicsShape(*plane, 0.f);
 
 	
 	scene.addGameObject(nanosuit);
@@ -58,11 +62,11 @@ Level::Level():
 	this->setEventHandler<Level, ExitEvent>(this, &Level::onExit);
 }
 
-void Level::update()
+void Level::update(double gameTime, double deltaTime)
 {
-	double prevTime = time;
+	/*double prevTime = time;
 	time = glfwGetTime();
-	double deltaTime = time - prevTime;
+	double deltaTime = time - prevTime;*/
 
 	camera.update(time, deltaTime);
 }
@@ -80,6 +84,14 @@ Scene& Level::getScene()
 UIRoot& Level::getUIRoot()
 {
 	return uiRoot;
+}
+
+void Level::onPhysicsUpdate()
+{
+	auto gameObjects = scene.getGameObjects();
+	for (auto gameObject : gameObjects) {
+		gameObject->onPhysicsUpdate();
+	}
 }
 
 void Level::onKey(const KeyEvent& event)

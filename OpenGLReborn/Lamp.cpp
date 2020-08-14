@@ -1,6 +1,6 @@
 #include "Lamp.h"
 
-Lamp::Lamp()
+Lamp::Lamp(): GameObject()
 {
 	addChild(&box);
 	box.setScale(vec3(0.5));

@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include "LevelManager.h"
 
 Physics::Physics()
 {
@@ -26,11 +27,29 @@ Physics::Physics()
 void Physics::update(double time, double deltaTime)
 {
 	dynamicsWorld->stepSimulation(deltaTime);
+	LEVEL.onPhysicsUpdate();
 }
 
-void Physics::addRigidBody(btRigidBody& body)
+void Physics::addRigitBody(btRigidBody* body)
 {
-	dynamicsWorld->addRigidBody(&body); 
+	dynamicsWorld->addRigidBody(body);
+}
+
+btCollisionShape* Physics::createBoxShape(glm::vec3 size)
+{
+	auto box = new btBoxShape(btVector3(btScalar(size.x), btScalar(size.y), btScalar(size.z)));
+	return box;
+}
+
+void Physics::removeRigidBody(btRigidBody* body)
+{
+	dynamicsWorld->removeRigidBody(body);
+	body = nullptr;
+}
+
+btVector3 Physics::tobtVector3(vec3 vector)
+{
+	return btVector3(btScalar(vector.x), btScalar(vector.y), btScalar(vector.z));
 }
 
 Physics::~Physics()
@@ -53,4 +72,3 @@ Physics::~Physics()
 	delete dispatcher;
 	delete collisionConfiguration;
 }
-

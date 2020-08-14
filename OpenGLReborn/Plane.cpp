@@ -1,7 +1,10 @@
 #include "Plane.h"
 #include "MeshPrimitives.h"
+#include "Trace.h"
 
-Plane::Plane(glm::vec3 color) : mesh(RenderingPrimitives::Plane(vector<Texture> { RenderingPrimitives::DefaultTexture() }, color))
+Plane::Plane(glm::vec3 color) :
+	GameObject(),
+	mesh(RenderingPrimitives::Plane(vector<Texture> { RenderingPrimitives::DefaultTexture() }, color))
 {
 	shader = ShaderProgram("TexturedVertex.glsl", "TexturedFragment.glsl");
 }

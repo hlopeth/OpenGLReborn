@@ -9,10 +9,11 @@ class Level: public EventComponent
 {
 public:
 	Level();
-	void update();
+	void update(double gameTime, double deltaTime);
 	Camera& getCamera();
 	Scene& getScene();
 	UIRoot& getUIRoot();
+	void onPhysicsUpdate();
 	void call(const Event& event) override;
 private:
 	Camera camera;

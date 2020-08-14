@@ -1,23 +1,24 @@
 #include "GameObject.h"
 
-GameObject::GameObject() : 
-	position(0.0), 
-	scale(1.0), 
-	rotation(0.0), 
+GameObject::GameObject() :
+	position(0.0),
+	scale(1.0),
+	rotation(0.0),
 	modelMatrix(1.0)
-{}
+{
+}
 
-vec3 GameObject::getPosition()
+vec3 GameObject::getPosition() const
 {
 	return position;
 }
 
-vec3 GameObject::getScale()
+vec3 GameObject::getScale() const
 {
 	return scale;
 }
 
-vec3 GameObject::getRotation()
+vec3 GameObject::getRotation() const
 {
 	return rotation;
 }
@@ -25,18 +26,27 @@ vec3 GameObject::getRotation()
 void GameObject::setPosition(const vec3 position)
 {
 	this->position= position;
+	if (usePhysics()) {
+		physicsBody->setPosition(position);
+	}
 	modelMatrixIsDirty = true;
 }
 
 void GameObject::setScale(const vec3 scale)
 {
 	this->scale = scale;
+	if (usePhysics()) {
+		physicsBody->setScale(scale);
+	}
 	modelMatrixIsDirty = true;
 }
 
 void GameObject::setRotation(const vec3 rotation)
 {
 	this->rotation = rotation;
+	if (usePhysics()) {
+		physicsBody->setRotation(rotation);
+	}
 	modelMatrixIsDirty = true;
 }
 
@@ -49,10 +59,28 @@ void GameObject::call(const Event& event)
 	}
 }
 
+void GameObject::onPhysicsUpdate()
+{
+	if (usePhysics()) {
+		copyTransform(*physicsBody);
+	}
+}
+
 void GameObject::addChild(GameObject* child)
 {
 	childs.push_back(child);
 	child->parent = this;
+}
+
+bool GameObject::usePhysics()
+{
+	return physicsBody != nullptr;
+}
+
+GameObject::~GameObject()
+{
+	delete physicsBody;
+	physicsBody = nullptr;
 }
 
 mat4 GameObject::getModelMatrix()

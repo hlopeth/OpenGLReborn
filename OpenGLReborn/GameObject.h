@@ -2,22 +2,31 @@
 #include "Transform3DComponent.h"
 #include "DrawComponent.h"
 #include "EventComponent.h"
+#include "AbstractPhysicsBody.h"
 
 using glm::mat4;
 
-class GameObject: public Transform3DComponent, public DrawComponent, public EventComponent
+class GameObject: 
+	public Transform3DComponent, 
+	public DrawComponent, 
+	public EventComponent
 {
 public:
 	GameObject();
-	vec3 getPosition() override;
-	vec3 getScale() override;
-	vec3 getRotation() override;
+	vec3 getPosition() const override;
+	vec3 getScale() const override;
+	vec3 getRotation() const override;
 	virtual void setPosition(const vec3 position) override;
 	void setScale(const vec3 scale) override;
 	void setRotation(const vec3 rotation) override;
 	void call(const Event& event) override;
+	virtual void onPhysicsUpdate();
 	void addChild(GameObject* child);
 	virtual void draw(RenderData& renderData) = 0;
+	bool usePhysics();
+	~GameObject();
+
+	AbstractPhysicsBody* physicsBody = nullptr;
 protected:
 	mat4 getModelMatrix();
 	GameObject* parent = nullptr;

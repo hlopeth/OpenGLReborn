@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Mesh.h"
 #include "Shader.h"
+#include "PhysicsManager.h"
 
 class Plane: public GameObject {
 public:

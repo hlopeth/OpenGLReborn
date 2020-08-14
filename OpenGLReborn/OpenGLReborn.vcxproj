@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="BoxPhysicsShape.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Canvas.cpp" />
@@ -150,11 +151,13 @@
     <ClCompile Include="MeshPrimitives.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="AbstractPhysicsBody.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RenderData.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
+    <ClCompile Include="Transform3DComponent.cpp" />
     <ClCompile Include="UIEvent.cpp" />
     <ClCompile Include="UIRect.cpp" />
     <ClCompile Include="UIRoot.cpp" />
@@ -212,6 +215,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="BoxPhysicsShape.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="DefaultFragment.glsl" />
@@ -228,6 +232,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MeshPrimitives.h" />
     <ClInclude Include="MouseClickEvent.h" />
+    <ClInclude Include="AbstractPhysicsBody.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Plane.h" />
