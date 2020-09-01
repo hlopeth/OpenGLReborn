@@ -8,7 +8,7 @@ Model::Model(vector<Mesh> meshes)
 	}
 }
 
-void Model::Draw(ShaderProgram shader)
+void Model::Draw(ShaderProgram& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++) 
 	{

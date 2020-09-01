@@ -1,7 +1,7 @@
 #pragma once
 #include "Mesh.h"
 #include "Shader.h"
-#include "map"
+#include <map>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -18,7 +18,7 @@ public:
 	{
 		loadModel(path);
 	}
-	void Draw(ShaderProgram shader);
+	void Draw(ShaderProgram& shader);
 private:
 	/*  Model Data  */
 	vector<Mesh> meshes;

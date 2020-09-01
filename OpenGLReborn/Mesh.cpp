@@ -37,11 +37,11 @@ void Mesh::setupMesh()
 	glBindVertexArray(0);
 }
 
-void Mesh::Draw(ShaderProgram shader)
+void Mesh::Draw(ShaderProgram& shader)
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
-	for (unsigned int i = 0; i < textures.size(); i++)
+	for (int i = 0; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
 		// retrieve texture number (the N in diffuse_textureN)

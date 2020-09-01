@@ -14,7 +14,7 @@ struct Vertex {
 };
 
 struct Texture {
-	unsigned int id;
+	unsigned int id = -1;
 	string type;
 	string path;
 };
@@ -28,7 +28,7 @@ public:
 	glm::vec3 color;
 	/*  Functions  */
 	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures, glm::vec3 color);
-	void Draw(ShaderProgram shader);
+	void Draw(ShaderProgram& shader);
 private:
 	/*  Render data  */
 	unsigned int VAO, VBO, EBO;

@@ -70,12 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\VSProgects\OpenGLReborn\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\VSProgects\OpenGLReborn\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs/Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>D:\VSProgects\OpenGLReborn\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\VSProgects\OpenGLReborn\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,9 +87,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>openvr_api.lib;opengl32.lib;glfw3.lib;assimp-vc140-mt.lib;zlibd.lib;libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>openvr_api.lib;opengl32.lib;glfw3.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;assimp-vc140-mt.lib;zlibd.lib;libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -94,7 +99,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>openvr_api.lib;opengl32.lib;glfw3.lib;assimp-vc140-mt.lib;zlibd.lib;libpng16_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -125,19 +134,63 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="BoxPhysicsShape.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventComponent.cpp" />
+    <ClCompile Include="EventHandlerBase.cpp" />
+    <ClCompile Include="ExitEvent.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="KeyEvent.cpp" />
+    <ClCompile Include="Lamp.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MeshPrimitives.cpp" />
+    <ClCompile Include="MouseRightEvent.cpp" />
+    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="AbstractPhysicsBody.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="RenderData.cpp" />
+    <ClCompile Include="Transform2DComponent.cpp" />
+    <ClCompile Include="Transform3DComponent.cpp" />
+    <ClCompile Include="UIEvent.cpp" />
+    <ClCompile Include="UIRect.cpp" />
+    <ClCompile Include="UIRoot.cpp" />
+    <ClCompile Include="UIWiget.cpp" />
+    <ClCompile Include="InitialisationExeption.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Main1.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MouseMoveEvent.cpp" />
+    <ClCompile Include="Nanosuit.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RendererManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TerrainGenerator.cpp" />
     <ClCompile Include="TextureFromFile.cpp" />
+    <ClCompile Include="Trace.cpp" />
+    <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="VerticalLayout.cpp" />
     <ClCompile Include="VrRenderer.cpp" />
+    <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.glsl" />
+    <None Include="BoxFragment.glsl" />
+    <None Include="BoxVertex.glsl" />
+    <None Include="DefaultVertex.glsl" />
+    <None Include="NanosuitFragment.glsl" />
     <None Include="lampFragment.glsl" />
     <None Include="lampVertex.glsl" />
     <None Include="planeFragment.glsl" />
@@ -151,11 +204,53 @@
     <None Include="shadowVertex.glsl" />
     <None Include="terrainFragment.glsl" />
     <None Include="terrainVertex.glsl" />
-    <None Include="vertex.glsl" />
+    <None Include="TexturedFragment.glsl" />
+    <None Include="TexturedVertex.glsl" />
+    <None Include="TriangleFragment.glsl" />
+    <None Include="TriangleVertex.glsl" />
+    <None Include="NanosuitVertex.glsl" />
+    <None Include="UIRectFragment.glsl" />
+    <None Include="UIRectVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="BoxPhysicsShape.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Canvas.h" />
+    <ClInclude Include="DefaultFragment.glsl" />
     <ClInclude Include="DirectinalLight.h" />
+    <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventComponent.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventHandlerBase.h" />
+    <ClInclude Include="ExitEvent.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="KeyEvent.h" />
+    <ClInclude Include="Lamp.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MeshPrimitives.h" />
+    <ClInclude Include="MouseClickEvent.h" />
+    <ClInclude Include="AbstractPhysicsBody.h" />
+    <ClInclude Include="Physics.h" />
+    <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="RenderData.h" />
+    <ClInclude Include="UIEvent.h" />
+    <ClInclude Include="UIRoot.h" />
+    <ClInclude Include="UIWiget.h" />
+    <ClInclude Include="InitialisationExeption.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="ModelComponent.h" />
+    <ClInclude Include="MouseMoveEvent.h" />
+    <ClInclude Include="Nanosuit.h" />
+    <ClInclude Include="ResizeEvent.h" />
+    <ClInclude Include="Trace.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mesh.h" />
@@ -163,11 +258,20 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Model1.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RendererManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TerrainGenerator.h" />
     <ClInclude Include="TextureFromFile.h" />
+    <ClInclude Include="Transform2DComponent.h" />
+    <ClInclude Include="Transform3DComponent.h" />
+    <ClInclude Include="Triangle.h" />
+    <ClInclude Include="UIRect.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="VerticalLayout.h" />
     <ClInclude Include="VrRenderer.h" />
+    <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="texture\container.jpg" />

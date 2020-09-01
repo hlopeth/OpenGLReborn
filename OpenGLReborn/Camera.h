@@ -1,33 +1,41 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "WindowManager.h"
+#include "KeyEvent.h"
+#include "MouseMoveEvent.h"
+#include "MouseClickEvent.h"
+#include "EventComponent.h"
 
-using namespace glm;
+using glm::vec3;
+using glm::vec4;
+using glm::mat4;
 
-class Camera
+class Camera: public EventComponent
 {
 public:
-	glm::vec3 Pos;
-	glm::vec3 Front;
-	glm::vec3 Up;
+	glm::vec3 pos;
+	glm::vec3 front;
+	glm::vec3 up;
 	
-	Camera()
-	{
-		Pos = vec3(0.0f);
-		Front = vec3(0.0f, 0.0f, -1.0f);
-		Up = vec3(0.0f, 1.0f, 0.0f);
-	}
-
-	Camera(vec3 _Pos, vec3 _Front, vec3 _Up) : Pos(_Pos), Front(_Front), Up(_Up)
-	{}
-	mat4 getMatrix()
-	{
-		return  lookAt(Pos, Pos + Front, Up);
-	}
-	vec3 Right()
-	{
-		return glm::normalize(glm::cross(Front, Up));
-	}
-
+	Camera(vec3 _Pos, vec3 _Front, vec3 _Up);
+	mat4 getView();
+	mat4 getProjection();
+	mat4 getViewProjection();
+	vec3 Right();
+	void update(double time, double deltaTime);
+private:
+	void onMouse(const MouseMoveEvent& event);
+	void onKey(const KeyEvent& event);
+	void onRightClick(const MouseRightClickEvent& event);
+	glm::mat4 projection;
+	float cameraYaw = -90.0f;
+	float cameraPitch = 0.0f;
+	double deltaTime = 0;
+	bool moveForvard = false;
+	bool moveBackvard = false;
+	bool moveLeft = false;
+	bool moveRight = false;
+	bool moveUp = false;
+	bool moveDown = false;
 };
-

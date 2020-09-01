@@ -41,9 +41,17 @@ public:
 	{
 		glUniformMatrix4fv(findLocation(name), 1, GL_FALSE, glm::value_ptr(val));
 	}
+	void setUniform(string name, glm::vec2 val)
+	{
+		glUniform2fv(findLocation(name), 1, glm::value_ptr(val));
+	}
 	void setUniform(string name, glm::vec3 val)
 	{
 		glUniform3fv(findLocation(name),1, glm::value_ptr(val));
+	}
+	void setUniform(string name, glm::vec4 val)
+	{
+		glUniform4fv(findLocation(name), 1, glm::value_ptr(val));
 	}
 private:
 	GLuint createShaderProgram(string vertexShaderFileName, string fragmentShaderFileName, string geomertyShaderFileName = "");

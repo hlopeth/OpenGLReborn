@@ -16,11 +16,65 @@
     <Filter Include="Исходные файлы\shaders">
       <UniqueIdentifier>{c8e45e1c-4eec-44f9-a872-b2184e7ce675}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Managers">
+      <UniqueIdentifier>{f58f4c00-cde9-4a1e-a283-4c6489c40a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Exeptions">
+      <UniqueIdentifier>{033067b7-aba1-4cf9-80d7-df3f21bb2c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Managers">
+      <UniqueIdentifier>{ecba99d2-cc02-4de1-a0f7-5508480c9701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Exeptions">
+      <UniqueIdentifier>{f4c71209-a333-4592-b827-2e6d7b4bbd90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Events">
+      <UniqueIdentifier>{133b9367-5582-416b-8d7c-dd519ce24b55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Components">
+      <UniqueIdentifier>{5af301b1-5759-443c-ad64-bb904037a3f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GameObjects">
+      <UniqueIdentifier>{1e8e73f7-d588-4903-821e-fc1c55dad91e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameObjects">
+      <UniqueIdentifier>{c23b8182-240a-411e-aae6-0e22132abedd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\UIWigets">
+      <UniqueIdentifier>{6f53d8c6-c628-4cd1-aa32-0dba4a653570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\UIRectShaders">
+      <UniqueIdentifier>{150d4dc2-9734-421b-81fe-3636f799ae8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\TriangleShaders">
+      <UniqueIdentifier>{b1a2cde0-e1ea-44be-9f4c-369395c01c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\BoxShader">
+      <UniqueIdentifier>{95d7e50f-a4f7-4317-8d6f-415e29401c61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\Nanosuit">
+      <UniqueIdentifier>{493defd3-b734-46fb-bf60-b37c3abb7151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\Default">
+      <UniqueIdentifier>{6eded244-be86-4296-a4d5-7293d8e57e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\TexturedShader">
+      <UniqueIdentifier>{6e22ef51-0884-426a-901f-c53d25698992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Physics">
+      <UniqueIdentifier>{9a6bf136-0546-40da-84c1-538514e6b7a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Physics">
+      <UniqueIdentifier>{004a154e-a1ae-4682-964e-1b71aa139d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Components">
+      <UniqueIdentifier>{dbd23eb5-d783-4ec6-ab6d-3929b4487765}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Events">
+      <UniqueIdentifier>{71f25a88-9fab-403c-8939-edcedd1a0466}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -48,14 +102,134 @@
     <ClCompile Include="PerlinNoise.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="InitialisationExeption.cpp">
+      <Filter>Исходные файлы\Exeptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Main1.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Trace.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Nanosuit.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWiget.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UIRect.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="VerticalLayout.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderData.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandlerBase.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshPrimitives.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Исходные файлы\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Lamp.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="UIRoot.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="EventComponent.cpp">
+      <Filter>Исходные файлы\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform2DComponent.cpp">
+      <Filter>Исходные файлы\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseMoveEvent.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseRightEvent.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitEvent.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="UIEvent.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyEvent.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractPhysicsBody.cpp">
+      <Filter>Исходные файлы\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxPhysicsShape.cpp">
+      <Filter>Исходные файлы\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform3DComponent.cpp">
+      <Filter>Исходные файлы\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertex.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
-    <None Include="fragment.glsl">
-      <Filter>Исходные файлы\shaders</Filter>
-    </None>
     <None Include="lampFragment.glsl">
       <Filter>Исходные файлы\shaders</Filter>
     </None>
@@ -94,6 +268,39 @@
     </None>
     <None Include="terrainFragment.glsl">
       <Filter>Исходные файлы\shaders</Filter>
+    </None>
+    <None Include="UIRectFragment.glsl">
+      <Filter>Исходные файлы\shaders\UIRectShaders</Filter>
+    </None>
+    <None Include="UIRectVertex.glsl">
+      <Filter>Исходные файлы\shaders\UIRectShaders</Filter>
+    </None>
+    <None Include="TriangleFragment.glsl">
+      <Filter>Исходные файлы\shaders\TriangleShaders</Filter>
+    </None>
+    <None Include="TriangleVertex.glsl">
+      <Filter>Исходные файлы\shaders\TriangleShaders</Filter>
+    </None>
+    <None Include="BoxVertex.glsl">
+      <Filter>Исходные файлы\shaders\BoxShader</Filter>
+    </None>
+    <None Include="BoxFragment.glsl">
+      <Filter>Исходные файлы\shaders\BoxShader</Filter>
+    </None>
+    <None Include="NanosuitFragment.glsl">
+      <Filter>Исходные файлы\shaders\Nanosuit</Filter>
+    </None>
+    <None Include="NanosuitVertex.glsl">
+      <Filter>Исходные файлы\shaders\Nanosuit</Filter>
+    </None>
+    <None Include="DefaultVertex.glsl">
+      <Filter>Исходные файлы\shaders\Default</Filter>
+    </None>
+    <None Include="TexturedVertex.glsl">
+      <Filter>Исходные файлы\shaders\TexturedShader</Filter>
+    </None>
+    <None Include="TexturedFragment.glsl">
+      <Filter>Исходные файлы\shaders\TexturedShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +345,141 @@
     </ClInclude>
     <ClInclude Include="DirectinalLight.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="RendererManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InitialisationExeption.h">
+      <Filter>Файлы заголовков\Exeptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Trace.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="ResizeEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Nanosuit.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseMoveEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform3DComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform2DComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UIRect.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWiget.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="UIRoot.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalLayout.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseClickEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderData.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Lamp.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Файлы заголовков\UIWigets</Filter>
+    </ClInclude>
+    <ClInclude Include="EventComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandlerBase.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultFragment.glsl">
+      <Filter>Исходные файлы\shaders\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshPrimitives.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Файлы заголовков\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractPhysicsBody.h">
+      <Filter>Файлы заголовков\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxPhysicsShape.h">
+      <Filter>Файлы заголовков\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

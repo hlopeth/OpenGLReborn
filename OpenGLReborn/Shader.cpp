@@ -27,7 +27,7 @@ GLuint ShaderProgram::createShaderProgram(string vertexShaderFileName, string fr
 	GLint success;
 	char infoLog[512];
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
+	if (success != GL_TRUE) {
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINK_FAILED\n" << infoLog << std::endl;
 	}
@@ -51,7 +51,7 @@ GLuint ShaderProgram::compileShader(const string source, GLenum type)
 	char infoLog[512];
 
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	if (!success)
+	if (success != GL_TRUE)
 	{
 		glGetShaderInfoLog(shader, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
