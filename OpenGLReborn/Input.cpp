@@ -15,7 +15,7 @@ float Input::sensitivity = 0.1f;
 void resizeCallback(GLFWwindow* window, int width, int height)
 {
 	ResizeEvent ev = ResizeEvent(width, height);
-	//RendererManager().getRenderer().call(ev);
+	RendererManager().getRenderer().call(ev);
 }
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)

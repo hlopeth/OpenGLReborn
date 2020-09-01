@@ -7,7 +7,7 @@ class InitialisationExeption
 {
 public:
 	InitialisationExeption(string message);
-	string getMessage();
+	const string& getMessage() const;
 private:
 	string message;
 };

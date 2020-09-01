@@ -27,9 +27,9 @@ void setupUI(UIRoot& uiRoot)
 Level::Level():
 	camera(vec3(0.0), vec3(0.0), vec3(0.0))
 {
-
 	setupUI(uiRoot);
 
+	//уровень пока строится прямо в конструкторе
 	Nanosuit* nanosuit = new Nanosuit();
 	nanosuit->physicsBody = new BoxPhysicsShape(*nanosuit, 1.f);
 	Lamp* lampWhite = new Lamp();
@@ -37,14 +37,13 @@ Level::Level():
 	Lamp* lampRed = new Lamp();
 	lampRed->setPosition(vec3(0.0, 15.0, -5.0));
 	lampRed->pointLight.diffuse = vec3(0.8, 0.1, 0.1);
-	Lamp* lampBlue = new Lamp();
+	Lamp* lampBlue = new Lamp();		
 	lampBlue->setPosition(vec3(0.0, 15.0, 5.0));
 	lampBlue->pointLight.diffuse = vec3(0.1, 0.1, 0.8);
 	Plane* plane = new Plane();
 	plane->setPosition(vec3(0.0, -5.0, 0.0));
 	plane->setScale(vec3(50.f, 1.0f, 50.f));
 	plane->physicsBody = new BoxPhysicsShape(*plane, 0.f);
-
 	
 	scene.addGameObject(nanosuit);
 	scene.addGameObject(lampWhite);
@@ -58,17 +57,14 @@ Level::Level():
 	camera.pos = glm::vec3(0.0f, 0.0f, 10.0f);
 	camera.front = glm::vec3(0.0f, 0.0f, -1.0f);
 	camera.up = glm::vec3(0.0f, 1.0f, 0.0f);
+
 	this->setEventHandler<Level, KeyEvent>(this, &Level::onKey);
 	this->setEventHandler<Level, ExitEvent>(this, &Level::onExit);
 }
 
 void Level::update(double gameTime, double deltaTime)
 {
-	/*double prevTime = time;
-	time = glfwGetTime();
-	double deltaTime = time - prevTime;*/
-
-	camera.update(time, deltaTime);
+	camera.update(gameTime, deltaTime);
 }
 
 Camera& Level::getCamera()
@@ -86,11 +82,11 @@ UIRoot& Level::getUIRoot()
 	return uiRoot;
 }
 
-void Level::onPhysicsUpdate()
+void Level::afterPhysicsUpdate()
 {
 	auto gameObjects = scene.getGameObjects();
 	for (auto gameObject : gameObjects) {
-		gameObject->onPhysicsUpdate();
+		gameObject->afterPhysicsUpdate();
 	}
 }
 

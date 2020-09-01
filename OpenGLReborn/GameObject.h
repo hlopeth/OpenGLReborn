@@ -20,7 +20,7 @@ public:
 	void setScale(const vec3 scale) override;
 	void setRotation(const vec3 rotation) override;
 	void call(const Event& event) override;
-	virtual void onPhysicsUpdate();
+	virtual void afterPhysicsUpdate();
 	void addChild(GameObject* child);
 	virtual void draw(RenderData& renderData) = 0;
 	bool usePhysics();

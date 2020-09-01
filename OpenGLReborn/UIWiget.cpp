@@ -54,7 +54,6 @@ std::vector<const UIWiget*> UIWiget::getChildren()
 	return childrenCopy;
 }
 
-//событие в экранных координатах(если он есть) 
 void UI::UIWiget::call(const Event& event)
 {
 	EventComponent::call(event);

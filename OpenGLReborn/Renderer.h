@@ -5,12 +5,13 @@
 #include "ResizeEvent.h"
 #include "EventComponent.h"
 
-class Renderer : EventComponent
+class Renderer : public EventComponent
 {
 public:
 	Renderer(GLFWwindow& window);
 	~Renderer();
 	void draw(Level& level);
+	void resize(const ResizeEvent& event);
 
 	static const int glMajorVersion = 4;
 	static const int glMinorVersion = 4;

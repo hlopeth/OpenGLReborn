@@ -4,6 +4,9 @@
 
 auto perlin = PerlinNoise();
 
+using glm::vec3;
+using glm::vec2;
+
 double noise(double x, double y, double f1, double f2, double f3, double s1, double s2, double s3)
 {
 	return s1 * perlin.noise(f1 * x, f1 * y, 0) + s2 * perlin.noise(f2 * x, f2 * y, 10) + s3 * perlin.noise(f3 * x, f3 * y, 20);

@@ -8,6 +8,8 @@ Renderer::Renderer( GLFWwindow &window) : window(window)
 {
 	viewportWidth = WindowManager::windowWidth;
 	viewportHeight = WindowManager::windowHeight;
+	glViewport(0, 0, viewportWidth, viewportHeight);
+	setEventHandler<Renderer, ResizeEvent>(this, &Renderer::resize);
 }
 
 Renderer::~Renderer()
@@ -57,7 +59,6 @@ void Renderer::draw(Level& level)
 {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
-	glViewport(0, 0, viewportWidth, viewportHeight);
 	glClearColor(0.1, 0.1, 0.1, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -71,18 +72,13 @@ void Renderer::draw(Level& level)
 
 	level.getUIRoot().draw(renderData);
 
-	checkGLErrors();
 	glfwSwapBuffers(&window);
+	checkGLErrors();
 }
-//
-//void Renderer::call(Event& event)
-//{
-//	switch (event.getType())
-//	{
-//	case EventType::RESIZE_EVENT:
-//		auto re = (ResizeEvent&)(event);
-//		viewportWidth = re.width;
-//		viewportHeight = re.height;
-//		break;
-//	}
-//}
+
+void Renderer::resize(const ResizeEvent& event)
+{
+	viewportWidth = event.width;
+	viewportHeight = event.height;
+	glViewport(0, 0, viewportWidth, viewportHeight);
+}

@@ -120,9 +120,6 @@
     <ClCompile Include="InitialisationExeption.cpp">
       <Filter>Исходные файлы\Exeptions</Filter>
     </ClCompile>
-    <ClCompile Include="Main1.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -228,6 +225,9 @@
     <ClCompile Include="Transform3DComponent.cpp">
       <Filter>Исходные файлы\Components</Filter>
     </ClCompile>
+    <ClCompile Include="TextureReadExeption.cpp">
+      <Filter>Исходные файлы\Exeptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -319,13 +319,7 @@
     <ClInclude Include="Mesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Model1.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
@@ -439,9 +433,6 @@
     <ClInclude Include="RenderData.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Box.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
@@ -480,6 +471,9 @@
     </ClInclude>
     <ClInclude Include="BoxPhysicsShape.h">
       <Filter>Файлы заголовков\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureReadExeption.h">
+      <Filter>Файлы заголовков\Exeptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -59,7 +59,7 @@ void GameObject::call(const Event& event)
 	}
 }
 
-void GameObject::onPhysicsUpdate()
+void GameObject::afterPhysicsUpdate()
 {
 	if (usePhysics()) {
 		copyTransform(*physicsBody);

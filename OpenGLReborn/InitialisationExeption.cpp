@@ -5,7 +5,7 @@ InitialisationExeption::InitialisationExeption(string message)
 	this->message = message;
 }
 
-string InitialisationExeption::getMessage()
+const string& InitialisationExeption::getMessage() const
 {
 	return message;
 }

@@ -6,5 +6,5 @@ class DirectinalLight
 public:
 	DirectinalLight() {};
 	DirectinalLight(glm::vec3 dir) : direction(dir) {};
-	glm::vec3 direction = vec3(0.0);
+	glm::vec3 direction = glm::vec3(0.0);
 };

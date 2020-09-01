@@ -1,4 +1,11 @@
 #include "TextureFromFile.h"
+#include "TextureReadExeption.h"
+#include <string>
+#include <iostream>
+#include <libpng/png.h>
+#include <glad/glad.h>
+
+using std::string;
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma)
 {
@@ -9,32 +16,27 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 	FILE *fp;
 	fopen_s(&fp, filename.c_str(), "rb");
 	if (!fp) {
-		std::cout << "[read_png_file] File %s could not be opened for reading" << filename << std::endl;
-		return 0;
+		throw TextureReadExeption(filename, "[read_png_file] File %s could not be opened for reading");
 	}
 	char header[8];
 
 	fread(header, 1, 8, fp);
 	if (png_sig_cmp((png_const_bytep)header, 0, 8)) {
-		std::cout << "[read_png_file] File %s is not recognized as a PNG file" << filename << std::endl;
-		return 0;
+		throw TextureReadExeption(filename, "[read_png_file] File %s is not recognized as a PNG file");
 	}
 
 	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
-		std::cout << "[read_png_file] png_create_read_struct failed" << std::endl;
-		return 0;
+		throw TextureReadExeption(filename, "[read_png_file] png_create_read_struct failed");
 	}
 
 	png_infop info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
-		std::cout << "[read_png_file] png_create_info_struct failed" << std::endl;
-		return 0;
+		throw TextureReadExeption(filename, "[read_png_file] png_create_info_struct failed");
 	}
 
 	if (setjmp(png_jmpbuf(png_ptr))) {
-		std::cout << "[read_png_file] Error during init_io" << std::endl;
-		return 0;
+		throw TextureReadExeption(filename, "[read_png_file] Error during init_io");
 	}
 
 	png_init_io(png_ptr, fp);
@@ -53,7 +55,7 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 
 	/* read file */
 	if (setjmp(png_jmpbuf(png_ptr))) {
-		std::cout << "[read_png_file] Error during read_image" << std::endl;
+		throw TextureReadExeption(filename, "[read_png_file] Error during read_image");
 	}
 
 
@@ -64,19 +66,17 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 	png_byte * image_data = (png_byte*)malloc(rowbytes * height);
 	if (image_data == NULL)
 	{
-		fprintf(stderr, "error: could not allocate memory for PNG image data\n");
 		fclose(fp);
-		return 0;
+		throw TextureReadExeption(filename, "error: could not allocate memory for PNG image data");
 	}
 
 	// row_pointers is for pointing to image_data for reading the png with libpng
 	png_bytep * row_pointers = (png_bytep *)malloc(height * sizeof(png_bytep));
 	if (row_pointers == NULL)
 	{
-		fprintf(stderr, "error: could not allocate memory for PNG row pointers\n");
 		free(image_data);
 		fclose(fp);
-		return 0;
+		throw TextureReadExeption(filename, "error: could not allocate memory for PNG row pointers");
 	}
 
 	// set the individual row_pointers to point at the correct offsets of image_data
@@ -88,9 +88,7 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 
 	// read the png into image_data through row_pointers
 	png_read_image(png_ptr, row_pointers);
-
-
-
+	   
 	fclose(fp);
 
 	if(image_data)
@@ -112,7 +110,6 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << path << std::endl;
-		return 0;
+		throw TextureReadExeption(filename, "Texture failed to load");
 	}
 }

@@ -27,7 +27,8 @@ Physics::Physics()
 void Physics::update(double time, double deltaTime)
 {
 	dynamicsWorld->stepSimulation(deltaTime);
-	LEVEL.onPhysicsUpdate();
+
+	LEVEL.afterPhysicsUpdate();
 }
 
 void Physics::addRigitBody(btRigidBody* body)

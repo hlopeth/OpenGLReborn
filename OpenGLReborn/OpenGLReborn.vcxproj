@@ -156,6 +156,7 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RenderData.cpp" />
+    <ClCompile Include="TextureReadExeption.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
     <ClCompile Include="Transform3DComponent.cpp" />
     <ClCompile Include="UIEvent.cpp" />
@@ -168,7 +169,6 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Main1.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MouseMoveEvent.cpp" />
@@ -213,7 +213,6 @@
     <None Include="UIRectVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="BoxPhysicsShape.h" />
     <ClInclude Include="Button.h" />
@@ -238,6 +237,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderData.h" />
+    <ClInclude Include="TextureReadExeption.h" />
     <ClInclude Include="UIEvent.h" />
     <ClInclude Include="UIRoot.h" />
     <ClInclude Include="UIWiget.h" />
@@ -257,7 +257,6 @@
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Material.h" />
-    <ClInclude Include="Model1.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RendererManager.h" />
     <ClInclude Include="Scene.h" />
@@ -268,7 +267,6 @@
     <ClInclude Include="Transform3DComponent.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="UIRect.h" />
-    <ClInclude Include="Utils.h" />
     <ClInclude Include="VerticalLayout.h" />
     <ClInclude Include="VrRenderer.h" />
     <ClInclude Include="WindowManager.h" />
