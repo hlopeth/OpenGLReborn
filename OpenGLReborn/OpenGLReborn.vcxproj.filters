@@ -82,6 +82,9 @@
     <Filter Include="Исходные файлы\Texture">
       <UniqueIdentifier>{e7a12056-ffe7-4499-924d-0a7acc667d93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Terrain">
+      <UniqueIdentifier>{0055f90a-7992-42bb-8f44-0e700f94dd0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -249,6 +252,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Исходные файлы\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -353,9 +359,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="VrRenderer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="TerrainGenerator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="PerlinNoise.h">
@@ -513,6 +516,12 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Файлы заголовков\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainGenerator.h">
+      <Filter>Файлы заголовков\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

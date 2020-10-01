@@ -164,6 +164,7 @@
     <ClCompile Include="RenderData.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureReadExeption.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GLTexture.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureReadExeption.h" />
     <ClInclude Include="UIEvent.h" />

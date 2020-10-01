@@ -16,6 +16,8 @@
 #include "Plane.h"
 #include "BoxPhysicsShape.h"
 #include "SkyBox.h"
+#include "Terrain.h"
+#include "MeshPrimitives.h"
 
 SkyBox* createScyBox() 
 {
@@ -66,13 +68,30 @@ Level::Level():
 	plane->physicsBody = new BoxPhysicsShape(*plane, 0.f);
 	
 	SkyBox *skyBox = createScyBox();
+
+	Texture heightMap = TextureFromFile("heightmap.png", "assets/terrane");
+	GLTexture terrainTexture = GLTexture(
+		TextureFromFile("grass.png", "assets/terrane"),
+		GL_RGB,
+		GL_MIRRORED_REPEAT,
+		GL_MIRRORED_REPEAT,
+		GL_LINEAR,
+		GL_LINEAR
+	);
+	Terrain* terrain = new Terrain(heightMap, terrainTexture);
+	terrain->setPosition(vec3(
+		heightMap.width / -2.0, 
+		-200,
+		heightMap.height / -2.0
+	));
 	
 	scene.setSkyBox(skyBox);
 	scene.addGameObject(nanosuit);
 	scene.addGameObject(lampWhite);
 	scene.addGameObject(lampRed);
 	scene.addGameObject(lampBlue);
-	scene.addGameObject(plane);
+	//scene.addGameObject(plane);
+	scene.addGameObject(terrain);
 	scene.addPointLight(&(lampWhite->pointLight));
 	scene.addPointLight(&(lampRed->pointLight));
 	scene.addPointLight(&(lampBlue->pointLight));

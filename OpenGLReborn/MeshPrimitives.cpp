@@ -78,10 +78,10 @@ GLTexture RenderingPrimitives::DefaultGLTexture()
 {
 	if (defaultTexture == nullptr)
 	{
-		const int cellSize = 1;
+		const int cellSize = 4;
 		Texture texture;
-		texture.width = 2;
-		texture.height = 2;
+		texture.width = 256;
+		texture.height = 256;
 		texture.data = new unsigned char[texture.width * texture.height * 4];
 		int t = cellSize * 2;
 		for(int x = 0; x < texture.width; x++)
