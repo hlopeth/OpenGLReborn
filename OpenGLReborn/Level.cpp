@@ -15,6 +15,26 @@
 #include "Event.h"
 #include "Plane.h"
 #include "BoxPhysicsShape.h"
+#include "SkyBox.h"
+
+SkyBox* createScyBox() 
+{
+	auto left	= TextureFromFile("left.png",	"assets/skybox");
+	auto right	= TextureFromFile("right.png",	"assets/skybox");
+	auto top	= TextureFromFile("top.png",	"assets/skybox");
+	auto bottom = TextureFromFile("bottom.png", "assets/skybox");
+	auto front	= TextureFromFile("front.png",	"assets/skybox");
+	auto back	= TextureFromFile("back.png",	"assets/skybox");
+	CubeTexture cubeTexture(
+		left,
+		right,
+		top,
+		bottom,
+		front,
+		back
+	);
+	return new SkyBox(cubeTexture);
+}
 
 void setupUI(UIRoot& uiRoot)
 {
@@ -45,6 +65,9 @@ Level::Level():
 	plane->setScale(vec3(50.f, 1.0f, 50.f));
 	plane->physicsBody = new BoxPhysicsShape(*plane, 0.f);
 	
+	SkyBox *skyBox = createScyBox();
+	
+	scene.setSkyBox(skyBox);
 	scene.addGameObject(nanosuit);
 	scene.addGameObject(lampWhite);
 	scene.addGameObject(lampRed);

@@ -4,7 +4,7 @@
 
 Plane::Plane(glm::vec3 color) :
 	GameObject(),
-	mesh(RenderingPrimitives::Plane(vector<Texture> { RenderingPrimitives::DefaultTexture() }, color))
+	mesh(RenderingPrimitives::Plane(vector<GLTexture> { RenderingPrimitives::DefaultGLTexture() }, color))
 {
 	shader = ShaderProgram("TexturedVertex.glsl", "TexturedFragment.glsl");
 }

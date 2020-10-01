@@ -144,6 +144,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="CubeTexture.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventComponent.cpp" />
     <ClCompile Include="EventHandlerBase.cpp" />
@@ -161,6 +162,9 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RenderData.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureReadExeption.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
     <ClCompile Include="Transform3DComponent.cpp" />
@@ -207,6 +211,8 @@
     <None Include="shadowFragment.glsl" />
     <None Include="shadowGeometry.glsl" />
     <None Include="shadowVertex.glsl" />
+    <None Include="skyBoxFragment.glsl" />
+    <None Include="skyBoxVertex.glsl" />
     <None Include="terrainFragment.glsl" />
     <None Include="terrainVertex.glsl" />
     <None Include="TexturedFragment.glsl" />
@@ -222,6 +228,7 @@
     <ClInclude Include="BoxPhysicsShape.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Canvas.h" />
+    <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="DefaultFragment.glsl" />
     <ClInclude Include="DirectinalLight.h" />
     <ClInclude Include="DrawComponent.h" />
@@ -242,6 +249,9 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderData.h" />
+    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="GLTexture.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureReadExeption.h" />
     <ClInclude Include="UIEvent.h" />
     <ClInclude Include="UIRoot.h" />

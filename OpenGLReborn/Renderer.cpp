@@ -9,6 +9,7 @@ Renderer::Renderer( GLFWwindow &window) : window(window)
 	viewportWidth = WindowManager::windowWidth;
 	viewportHeight = WindowManager::windowHeight;
 	glViewport(0, 0, viewportWidth, viewportHeight);
+	glDepthFunc(GL_LEQUAL);
 	setEventHandler<Renderer, ResizeEvent>(this, &Renderer::resize);
 }
 
@@ -62,12 +63,18 @@ void Renderer::draw(Level& level)
 	glClearColor(0.1, 0.1, 0.1, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	vector<GameObject*> gameObjects = level.getScene().getGameObjects();
-	RenderData renderData(level.getCamera(), level.getScene().getPointLights());
+	Scene& scene = level.getScene();
+	vector<GameObject*> gameObjects = scene.getGameObjects();
+	RenderData renderData(level.getCamera(), scene.getPointLights());
 
 	for (auto gameObject : gameObjects)
 	{
 		gameObject->draw(renderData);
+	}
+
+	if (scene.getSkyBox() != nullptr) 
+	{
+		scene.getSkyBox()->draw(renderData);
 	}
 
 	level.getUIRoot().draw(renderData);

@@ -22,12 +22,12 @@ public:
 private:
 	/*  Model Data  */
 	vector<Mesh> meshes;
-	vector<Texture> textures_loaded;
+	vector<GLTexture> textures_loaded;
 	string directory;
 	/*  Functions   */
 	void loadModel(string path);
 	void processNode(aiNode *node, const aiScene *scene);
 	Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
+	void loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName, vector<GLTexture>& outTextures);
 };
 

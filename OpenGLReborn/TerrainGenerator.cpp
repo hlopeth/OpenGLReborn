@@ -17,7 +17,7 @@ Model TerrainGenerator::generate(int width, int height, int n)
 	using  std::vector;
 	auto vertices = vector<Vertex>(n * n);
 	auto indices = vector<unsigned int>(6 * (n - 1) * (n - 1));
-	auto textures = vector<Texture>(0);
+	auto textures = vector<GLTexture>(0);
 	auto color = vec3(0.0);
 
 	double x = 0.0;
@@ -73,6 +73,6 @@ Model TerrainGenerator::generate(int width, int height, int n)
 		x += (double)width / n;
 	}
 
-	auto meshes = vector<Mesh>{ Mesh(vertices, indices, textures, color) };
+	auto meshes = vector<Mesh>{ Mesh(vertices, indices, color, textures) };
 	return Model(meshes);
 }

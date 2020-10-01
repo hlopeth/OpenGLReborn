@@ -1,7 +1,7 @@
 #include "Box.h"
 #include "MeshPrimitives.h"
 
-Box::Box(glm::vec3 color): mesh(RenderingPrimitives::Box(vector<Texture>(), color))
+Box::Box(glm::vec3 color): mesh(RenderingPrimitives::Box(vector<GLTexture>(), color))
 {
 	shader = ShaderProgram("BoxVertex.glsl", "BoxFragment.glsl");
 }

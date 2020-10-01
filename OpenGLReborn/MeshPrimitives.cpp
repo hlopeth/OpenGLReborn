@@ -1,4 +1,5 @@
 #include "MeshPrimitives.h"
+#include "Texture.h"
 
 vector<Vertex> boxVertices{
 	Vertex{glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec2(1.0f, 0.0f)},
@@ -61,62 +62,58 @@ const vector<unsigned int> planeIndices{
 	0, 1, 2, 3, 4, 5
 };
 
-Texture defaultTexture;
+GLTexture* defaultTexture = nullptr;
 
-Mesh RenderingPrimitives::Box(vector<Texture> textures, glm::vec3 color)
+Mesh RenderingPrimitives::Box(vector<GLTexture> textures, glm::vec3 color)
 {
-	return Mesh(boxVertices, boxIndices, textures, color);
+	return Mesh(boxVertices, boxIndices, color, textures);
 }
 
-Mesh RenderingPrimitives::Plane(vector<Texture> textures, glm::vec3 color)
+Mesh RenderingPrimitives::Plane(vector<GLTexture> textures, glm::vec3 color)
 {
-	return Mesh(planeVertices, planeIndices, textures, color);
+	return Mesh(planeVertices, planeIndices, color, textures);
 }
 
-Texture RenderingPrimitives::DefaultTexture()
+GLTexture RenderingPrimitives::DefaultGLTexture()
 {
-	if (defaultTexture.id == -1)
+	if (defaultTexture == nullptr)
 	{
-		int width = 2;
-		int height = 2;
-		int cellSize = 1;
-		unsigned char* textureData = new unsigned char[width * height * 4];
+		const int cellSize = 1;
+		Texture texture;
+		texture.width = 2;
+		texture.height = 2;
+		texture.data = new unsigned char[texture.width * texture.height * 4];
 		int t = cellSize * 2;
-		for(int x = 0; x < width; x++)
-			for (int y = 0; y < height; y++)
+		for(int x = 0; x < texture.width; x++)
+			for (int y = 0; y < texture.height; y++)
 			{
 				int kx = (x / cellSize) % 2;
 				int ky = (y / cellSize) % 2;
-				int i = (x * width + y) * 4;
+				int i = (x * texture.width + y) * 4;
 				if (kx == ky)
 				{
-					textureData[i] = 0;
-					textureData[i + 1] = 0;
-					textureData[i + 2] = 0;
-					textureData[i + 3] = 255;
+					texture.data[i] = 0;
+					texture.data[i + 1] = 0;
+					texture.data[i + 2] = 0;
+					texture.data[i + 3] = 255;
 				}
 				else
 				{
-					textureData[i] = 255;
-					textureData[i + 1] = 255;
-					textureData[i + 2] = 255;
-					textureData[i + 3] = 255;
+					texture.data[i] = 255;
+					texture.data[i + 1] = 255;
+					texture.data[i + 2] = 255;
+					texture.data[i + 3] = 255;
 				}
 			}
 
-
-		glGenTextures(1, &defaultTexture.id);
-
-		glBindTexture(GL_TEXTURE_2D, defaultTexture.id);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		defaultTexture.type = "texture_diffuse";
+		defaultTexture = new GLTexture(
+			texture,
+			GL_RGBA, 
+			GL_CLAMP_TO_EDGE, 
+			GL_CLAMP_TO_EDGE, 
+			GL_NEAREST, 
+			GL_NEAREST
+		);
 	}
-	return defaultTexture;
+	return *defaultTexture;
 }

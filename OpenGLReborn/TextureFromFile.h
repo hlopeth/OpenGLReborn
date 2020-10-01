@@ -1,4 +1,7 @@
 #pragma once
 #include <string>
+#include "Texture.h"
 
-unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
+Texture TextureFromFile(
+	const char *path, 
+	const std::string &directory);

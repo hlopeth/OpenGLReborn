@@ -7,8 +7,10 @@
 
 using std::string;
 
-unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma)
-{
+Texture TextureFromFile(
+	const char *path, 
+	const std::string &directory
+) {
 	string filename = string(path);
 	filename = directory + '/' + filename;
 	
@@ -91,25 +93,18 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 	   
 	fclose(fp);
 
+	Texture texture = nullTexture;
+
 	if(image_data)
 	{
-		unsigned int textureID;
-		glGenTextures(1, &textureID);
-
-		GLenum format = GL_RGB;
-
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		return textureID;
+		texture.data = image_data;
+		texture.width = width;
+		texture.height = height;
 	}
 	else
 	{
 		throw TextureReadExeption(filename, "Texture failed to load");
 	}
+	
+	return texture;
 }

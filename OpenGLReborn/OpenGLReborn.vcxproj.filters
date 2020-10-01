@@ -73,6 +73,15 @@
     <Filter Include="Исходные файлы\Events">
       <UniqueIdentifier>{71f25a88-9fab-403c-8939-edcedd1a0466}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Texture">
+      <UniqueIdentifier>{659ccaa3-86bb-40ec-8b68-d42e99018a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\shaders\SkyBox">
+      <UniqueIdentifier>{67d87f27-7bca-40b5-be51-71da62f00690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Texture">
+      <UniqueIdentifier>{e7a12056-ffe7-4499-924d-0a7acc667d93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -91,9 +100,6 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="glad.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureFromFile.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="TerrainGenerator.cpp">
@@ -228,6 +234,21 @@
     <ClCompile Include="TextureReadExeption.cpp">
       <Filter>Исходные файлы\Exeptions</Filter>
     </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeTexture.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureFromFile.cpp">
+      <Filter>Исходные файлы\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="GLTexture.cpp">
+      <Filter>Исходные файлы\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Исходные файлы\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -302,6 +323,12 @@
     <None Include="TexturedFragment.glsl">
       <Filter>Исходные файлы\shaders\TexturedShader</Filter>
     </None>
+    <None Include="skyBoxVertex.glsl">
+      <Filter>Исходные файлы\shaders\SkyBox</Filter>
+    </None>
+    <None Include="skyBoxFragment.glsl">
+      <Filter>Исходные файлы\shaders\SkyBox</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -326,9 +353,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="VrRenderer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureFromFile.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="TerrainGenerator.h">
@@ -474,6 +498,21 @@
     </ClInclude>
     <ClInclude Include="TextureReadExeption.h">
       <Filter>Файлы заголовков\Exeptions</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureFromFile.h">
+      <Filter>Файлы заголовков\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture.h">
+      <Filter>Файлы заголовков\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTexture.h">
+      <Filter>Файлы заголовков\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Файлы заголовков\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

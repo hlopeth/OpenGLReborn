@@ -26,3 +26,13 @@ bool Scene::addPointLight(PointLight* pointLight)
 
 	return true;
 }
+
+void Scene::setSkyBox(SkyBox* skyBox)
+{
+	this->skyBox = skyBox;
+}
+
+SkyBox* Scene::getSkyBox()
+{
+	return skyBox;
+}

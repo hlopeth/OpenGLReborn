@@ -1,10 +1,20 @@
 #include "Mesh.h"
 
-Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures, glm::vec3 color)
-{
+Mesh::Mesh(
+	vector<Vertex> vertices,
+	vector<unsigned int> indices,
+	glm::vec3 color,
+	vector<GLTexture> diffuseTextures,
+	vector<GLTexture> ambientTextures,
+	vector<GLTexture> emissiveTextures,
+	vector<GLTexture> specularTextures
+) {
 	this->vertices = vertices;
 	this->indices = indices;
-	this->textures = textures;
+	this->diffuseTextures = diffuseTextures;
+	this->ambientTextures = ambientTextures;
+	this->emissiveTextures = emissiveTextures;
+	this->specularTextures = specularTextures;
 	this->color = color;
 	setupMesh();
 }
@@ -41,19 +51,24 @@ void Mesh::Draw(ShaderProgram& shader)
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
-	for (int i = 0; i < textures.size(); i++)
+	int textureUnit = 0;
+	for (int i = 0; i < diffuseTextures.size(); i++)
 	{
-		glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
+		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
+		textureUnit++;
 		// retrieve texture number (the N in diffuse_textureN)
 		string number;
-		string name = textures[i].type;
-		if (name == "texture_diffuse")
-			number = std::to_string(diffuseNr++);
-		else if (name == "texture_specular")
-			number = std::to_string(specularNr++);
-
-		shader.setUniform(("material." + name + number), i);
-		glBindTexture(GL_TEXTURE_2D, textures[i].id);
+		shader.setUniform(("material.texture_diffuse" + i), i);
+		glBindTexture(GL_TEXTURE_2D, diffuseTextures[i].getID());
+	}
+	for (int i = 0; i < specularTextures.size(); i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
+		textureUnit++;
+		// retrieve texture number (the N in diffuse_textureN)
+		string number;
+		shader.setUniform(("material.texture_specular" + i), i);
+		glBindTexture(GL_TEXTURE_2D, diffuseTextures[i].getID());
 	}
 	shader.setUniform(("material.color"), color);
 
