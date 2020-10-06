@@ -32,6 +32,16 @@ void Scene::setSkyBox(SkyBox* skyBox)
 	this->skyBox = skyBox;
 }
 
+void Scene::setDirectinalLight(DirectinalLight* _directinalLight)
+{
+	directinalLight = _directinalLight;
+}
+
+DirectinalLight* Scene::getDirectinalLight()
+{
+	return directinalLight;
+}
+
 SkyBox* Scene::getSkyBox()
 {
 	return skyBox;

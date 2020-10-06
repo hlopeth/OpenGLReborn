@@ -6,6 +6,11 @@ in vec2 texCoord;
 in vec3 normal;
 in vec3 fragPos;
 
+struct DirectinalLight {
+	vec3 direction;
+	vec3 color;
+};
+
 struct PointLight {
 	vec3 position;
 	vec3 ambient;
@@ -18,7 +23,14 @@ struct PointLight {
     float farPlane;
 };
 
-uniform vec3 directinalLight;
+struct Material {
+	sampler2D texture_diffuse1;
+	sampler2D texture_specular1;
+	vec3 color;
+};
+uniform Material material;
+
+uniform DirectinalLight directinalLight;
 uniform vec3 cameraPos;
 uniform int n_pointLights;
 uniform PointLight pointLights[max_pointLights];
@@ -62,20 +74,21 @@ vec4 calcPointLightsColor()
 		vec4 specularColor = vec4(calcSpecular(pointLights[i])  * pointLights[i].specular ,1.0);
 		vec3 materialAmbient = vec3(1.0);
 		vec4 ambientColor = vec4(materialAmbient * pointLights[i].ambient,1.0);
-		float shadow = calcShadow(pointLights[i], shadowCubeMaps, i);
-		resultLight += shadow*attenuation*(diffuseColor + specularColor + ambientColor)/n_pointLights;
+		//float shadow = calcShadow(pointLights[i], shadowCubeMaps, i);
+		resultLight += /*shadow**/attenuation*(diffuseColor + specularColor + ambientColor)/n_pointLights;
 	}
 	return resultLight;
 }
 
 vec4 calcDirLightColor() {
-	vec3 diffuseColor = vec3(max(dot(normal,directinalLight), 0.0f));
-	return vec4(0.5 * diffuseColor, 1.0);
+	vec3 diffuse = vec3(max(dot(normal, directinalLight.direction), 0.0f));
+	return vec4(diffuse * directinalLight.color, 1.0);
 }
 
 void main()
 {
-	vec4 diffuseColor = vec4(1.0);
+	vec4 diffuseColor = texture(material.texture_diffuse1, texCoord);
 	vec4 lightColor = calcPointLightsColor() + calcDirLightColor();
+	//lightColor = vec4(1.0);
     FragColor = diffuseColor * lightColor;
 } 

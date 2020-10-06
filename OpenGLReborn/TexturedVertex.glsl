@@ -13,8 +13,8 @@ out vec3 o_fragPos;
 void main() 
 {
 	o_texCoord = i_texCoord;
-//	o_normal = normalize(transpose(inverse(mat3(model))) * i_normal);
-	o_normal = i_normal;
+	o_normal = normalize(transpose(inverse(mat3(model))) * i_normal);
+//	o_normal = i_normal;
 	o_fragPos = vec3(model * vec4(i_position,1.0));
     gl_Position = mvp * vec4(i_position, 1.0);
 }

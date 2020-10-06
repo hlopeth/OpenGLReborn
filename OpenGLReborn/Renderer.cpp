@@ -65,7 +65,7 @@ void Renderer::draw(Level& level)
 
 	Scene& scene = level.getScene();
 	vector<GameObject*> gameObjects = scene.getGameObjects();
-	RenderData renderData(level.getCamera(), scene.getPointLights());
+	RenderData renderData(level.getCamera(), scene.getPointLights(), scene.getDirectinalLight());
 
 	for (auto gameObject : gameObjects)
 	{

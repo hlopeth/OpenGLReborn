@@ -18,6 +18,7 @@
 #include "SkyBox.h"
 #include "Terrain.h"
 #include "MeshPrimitives.h"
+#include "DirectinalLight.h"
 
 SkyBox* createScyBox() 
 {
@@ -51,6 +52,7 @@ Level::Level():
 {
 	setupUI(uiRoot);
 
+	DirectinalLight* dirLight = new DirectinalLight(vec3(0.0, 0.0, 1.0), vec3(1.0, 1.0, 1.0));
 	//уровень пока строится прямо в конструкторе
 	Nanosuit* nanosuit = new Nanosuit();
 	nanosuit->physicsBody = new BoxPhysicsShape(*nanosuit, 1.f);
@@ -85,6 +87,7 @@ Level::Level():
 		heightMap.height / -2.0
 	));
 	
+	scene.setDirectinalLight(dirLight);
 	scene.setSkyBox(skyBox);
 	scene.addGameObject(nanosuit);
 	scene.addGameObject(lampWhite);
