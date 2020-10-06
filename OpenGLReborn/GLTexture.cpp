@@ -7,17 +7,21 @@ GLTexture::GLTexture(
 	GLint wrapS,
 	GLint wrapT,
 	GLint minFilter, 
-	GLint magFilter
-)
-{
+	GLint magFilter,
+	bool useMipMaps
+) {
 	format = _format;
 	init(texture, wrapS, wrapT, minFilter, magFilter);
 }
 
-GLTexture::GLTexture(const char* path, const std::string& directory)
-{
+GLTexture::GLTexture(
+	const char* path, 
+	const std::string& directory,
+	int _format, 
+	bool useMipMaps
+) {
 	Texture texture = TextureFromFile(path, directory);
-	format = GL_RGBA;
+	_format = GL_RGBA;
 	init(texture);
 	delete[] texture.data;
 }
@@ -46,17 +50,25 @@ void GLTexture::unload()
 
 GLTexture::~GLTexture()
 {
-	//delete[] data;
-	//data = nullptr;
 }
 
-void GLTexture::init(Texture texture, GLint wrapS, GLint wrapT, GLint minFilter, GLint magFilter)
-{
+void GLTexture::init(
+	Texture texture, 
+	GLint wrapS, 
+	GLint wrapT, 
+	GLint minFilter, 
+	GLint magFilter,
+	bool useMipMaps
+) {
 	glGenTextures(1, &id);
 	bind();
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+	if (useMipMaps) 
+	{
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
 	upload(texture);
 }
