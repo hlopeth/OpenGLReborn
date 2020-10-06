@@ -40,6 +40,7 @@ private:
 		GLint wrapT = GL_REPEAT,
 		GLint minFilter = GL_LINEAR,
 		GLint magFilter = GL_LINEAR,
-		bool useMipMaps = true
+		bool useMipMaps = true,
+		bool useAnisotropicFiltering = true
 	);
 };

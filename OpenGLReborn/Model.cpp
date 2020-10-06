@@ -123,6 +123,6 @@ void Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typ
 	{
 		aiString str;
 		mat->GetTexture(type, i, &str);
-		outTextures.emplace_back(str.C_Str(), directory);
+		outTextures.emplace_back(str.C_Str(), directory, GL_RGBA);
 	}
 }

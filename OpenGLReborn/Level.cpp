@@ -76,7 +76,7 @@ Level::Level():
 		GL_MIRRORED_REPEAT,
 		GL_MIRRORED_REPEAT,
 		GL_LINEAR_MIPMAP_LINEAR,
-		GL_LINEAR_MIPMAP_LINEAR
+		GL_LINEAR
 	);
 	Terrain* terrain = new Terrain(heightMap, terrainTexture);
 	terrain->setPosition(vec3(
