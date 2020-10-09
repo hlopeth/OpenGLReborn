@@ -70,8 +70,8 @@ Mesh* Terrain::generateMesh(Texture heightmap, GLTexture texture)
 
 			vec3 normal = normalize(vec3(vertexHeight - upHeight, vertexHeight - rightHeight, 1.0));
 
-			lowestPoint = min(lowestPoint, vertexHeight);
-			hightestPoint = max(hightestPoint, vertexHeight);
+			lowestPoint = glm::min(lowestPoint, vertexHeight);
+			hightestPoint = glm::max(hightestPoint, vertexHeight);
 
 			vertex.Position = vec3(x, vertexHeight, y);
 			vertex.Normal = normal;

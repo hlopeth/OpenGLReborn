@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include <vector>
-#include <typeinfo.h>
+#include <typeinfo>
 #include <typeindex>
 #include "EventHandler.h"
 
