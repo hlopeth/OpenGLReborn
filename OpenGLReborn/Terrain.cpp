@@ -1,4 +1,5 @@
 #include "Terrain.h"
+#include <bullet/BulletCollision/CollisionShapes/btTriangleMeshShape.h>
 
 Terrain::Terrain(Texture heightMap, GLTexture texture):
 	mesh(generateMesh(heightMap, texture))
@@ -49,6 +50,11 @@ float Terrain::getLowestPoint() const
 float Terrain::getHightestPoint() const
 {
 	return hightestPoint;
+}
+
+Mesh& Terrain::getMesh()
+{
+	return *mesh;
 }
 
 Mesh* Terrain::generateMesh(Texture heightmap, GLTexture texture)

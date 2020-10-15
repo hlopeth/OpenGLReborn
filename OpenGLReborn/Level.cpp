@@ -19,6 +19,7 @@
 #include "Terrain.h"
 #include "MeshPrimitives.h"
 #include "DirectinalLight.h"
+#include "MeshPhysicsShape.h"
 
 SkyBox* createScyBox() 
 {
@@ -83,9 +84,10 @@ Level::Level():
 	Terrain* terrain = new Terrain(heightMap, terrainTexture);
 	terrain->setPosition(vec3(
 		heightMap.width / -2.0, 
-		-200,
+		-220,
 		heightMap.height / -2.0
 	));
+	//terrain->physicsBody = new MeshPhysicsShape(*terrain, 0.f, &terrain->getMesh());
 	
 	scene.setDirectinalLight(dirLight);
 	scene.setSkyBox(skyBox);

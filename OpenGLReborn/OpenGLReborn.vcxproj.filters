@@ -255,6 +255,9 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="MeshPhysicsShape.cpp">
+      <Filter>Исходные файлы\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -522,6 +525,9 @@
     </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshPhysicsShape.h">
+      <Filter>Файлы заголовков\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

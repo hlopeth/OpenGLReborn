@@ -11,6 +11,7 @@ public:
 	~Terrain();
 	float getLowestPoint() const;
 	float getHightestPoint() const;
+	Mesh& getMesh();
 private:
 	Mesh* mesh;
 	Mesh* generateMesh(Texture heightmap, GLTexture texture);
