@@ -4,7 +4,7 @@
 class BoxPhysicsShape : public AbstractPhysicsBody
 {
 public:
-	BoxPhysicsShape(GameObject& gameObject, float mass);
-protected:
-	virtual btCollisionShape* createCollisionShape() override;
+	BoxPhysicsShape(vec3 size, GameObject& gameObject, float mass);
+private:
+	btBoxShape* boxShape;
 };

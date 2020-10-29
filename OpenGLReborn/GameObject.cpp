@@ -87,11 +87,11 @@ mat4 GameObject::getModelMatrix()
 {
 	if (modelMatrixIsDirty) {
 		modelMatrix = mat4(1.0);
+		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrix = glm::rotate(modelMatrix, rotation.x, vec3(1.0, 0.0, 0.0));
 		modelMatrix = glm::rotate(modelMatrix, rotation.y, vec3(0.0, 1.0, 0.0));
 		modelMatrix = glm::rotate(modelMatrix, rotation.z, vec3(0.0, 0.0, 1.0));
 		modelMatrix = glm::scale(modelMatrix, scale);
-		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrixIsDirty = false;
 	}
 	if (parent != nullptr) {

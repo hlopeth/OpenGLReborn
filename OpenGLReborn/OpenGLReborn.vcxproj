@@ -151,10 +151,10 @@
     <ClCompile Include="ExitEvent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="HeightfieldPhysicsBody.cpp" />
     <ClCompile Include="KeyEvent.cpp" />
     <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="MeshPhysicsShape.cpp" />
     <ClCompile Include="MeshPrimitives.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -240,10 +240,10 @@
     <ClInclude Include="EventHandlerBase.h" />
     <ClInclude Include="ExitEvent.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HeightfieldPhysicsBody.h" />
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="Lamp.h" />
     <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="MeshPhysicsShape.h" />
     <ClInclude Include="MeshPrimitives.h" />
     <ClInclude Include="MouseClickEvent.h" />
     <ClInclude Include="AbstractPhysicsBody.h" />

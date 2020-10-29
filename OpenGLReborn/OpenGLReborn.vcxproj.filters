@@ -255,8 +255,8 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MeshPhysicsShape.cpp">
-      <Filter>Исходные файлы\Physics</Filter>
+    <ClCompile Include="HeightfieldPhysicsBody.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -526,7 +526,7 @@
     <ClInclude Include="Terrain.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="MeshPhysicsShape.h">
+    <ClInclude Include="HeightfieldPhysicsBody.h">
       <Filter>Файлы заголовков\Physics</Filter>
     </ClInclude>
   </ItemGroup>

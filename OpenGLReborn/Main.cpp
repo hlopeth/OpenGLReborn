@@ -66,7 +66,7 @@ void startGameLoop()
 
 void updateTime(double& gameTime, double& deltaTime)
 {
-	double glfwTime = glfwGetTime();
+	double glfwTime = glfwGetTime() / 2.0;
 	deltaTime = glfwTime - gameTime;
 
 	//если прошло больше секунды с прошлого тика, то в этот тик время не идет.

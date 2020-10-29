@@ -42,7 +42,7 @@ vec3 Camera::Right()
 
 void Camera::update(double time, double deltaTime)
 {
-	float cameraSpeed = 10.0f * deltaTime;
+	float cameraSpeed = 20.0f * deltaTime;
 	if (moveForvard)
 	{
 		pos += cameraSpeed * front;

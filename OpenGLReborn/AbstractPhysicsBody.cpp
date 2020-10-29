@@ -5,23 +5,24 @@
 
 AbstractPhysicsBody::AbstractPhysicsBody(
 	GameObject& gameObject, 
-	float mass,
-	btCollisionShape* collisionShape):
+	float mass):
 	_mass(mass),
 	_gameObject(gameObject)
 {
-	bool isDynamic = mass != 0;
+}
 
+void AbstractPhysicsBody::initRigitBody(btCollisionShape* collisionShape)
+{
+	bool isDynamic = _mass != 0;
 	btVector3 localInertia(0, 0, 0);
 	if (isDynamic)
 	{
-		collisionShape->calculateLocalInertia(mass, localInertia);
+		collisionShape->calculateLocalInertia(_mass, localInertia);
 	}
-	_rigitBody = new btRigidBody(mass, 0, collisionShape, localInertia);
+	_rigitBody = new btRigidBody(_mass, 0, collisionShape, localInertia);
 	copyTransform(_gameObject);
 	PHYSICS.addRigitBody(_rigitBody);
 }
-
 
 vec3 AbstractPhysicsBody::getPosition() const
 {
@@ -67,9 +68,9 @@ void AbstractPhysicsBody::setRotation(const vec3 rotation)
 {
 	btQuaternion btRotation;
 	btRotation.setEulerZYX(
-		btScalar(rotation.x),
+		btScalar(rotation.z),
 		btScalar(rotation.y),
-		btScalar(rotation.z)
+		btScalar(rotation.x)
 	);
 	_rigitBody->getWorldTransform().setRotation(btRotation);
 }
@@ -100,3 +101,4 @@ AbstractPhysicsBody::~AbstractPhysicsBody()
 {
 	PHYSICS.removeRigidBody(_rigitBody);
 }
+

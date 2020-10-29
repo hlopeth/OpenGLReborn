@@ -19,7 +19,7 @@
 #include "Terrain.h"
 #include "MeshPrimitives.h"
 #include "DirectinalLight.h"
-#include "MeshPhysicsShape.h"
+#include "HeightfieldPhysicsBody.h"
 
 SkyBox* createScyBox() 
 {
@@ -56,7 +56,8 @@ Level::Level():
 	DirectinalLight* dirLight = new DirectinalLight(vec3(0.0, 0.0, 1.0), vec3(1.0, 1.0, 1.0));
 	//уровень пока строится прямо в конструкторе
 	Nanosuit* nanosuit = new Nanosuit();
-	nanosuit->physicsBody = new BoxPhysicsShape(*nanosuit, 1.f);
+	nanosuit->physicsBody = new BoxPhysicsShape(vec3(1.0),*nanosuit, 1.f);
+	nanosuit->addChild(new Box(vec3(1.0)));
 	Lamp* lampWhite = new Lamp();
 	lampWhite->pointLight.diffuse = vec3(0.8);
 	Lamp* lampRed = new Lamp();
@@ -65,10 +66,22 @@ Level::Level():
 	Lamp* lampBlue = new Lamp();		
 	lampBlue->setPosition(vec3(0.0, 15.0, 5.0));
 	lampBlue->pointLight.diffuse = vec3(0.1, 0.1, 0.8);
-	Plane* plane = new Plane();
-	plane->setPosition(vec3(0.0, -5.0, 0.0));
-	plane->setScale(vec3(50.f, 1.0f, 50.f));
-	plane->physicsBody = new BoxPhysicsShape(*plane, 0.f);
+	/*Plane* plane = new Plane();
+	plane->setPosition(vec3(0.0, -50.0, 0.0));
+	plane->setRotation(vec3(0.5, 0, 0));
+	plane->setScale(vec3(50.f, 0.01f, 50.f));
+	plane->physicsBody = new BoxPhysicsShape(vec3(1.0),*plane, 0.f);*/
+
+	for (int i = -5; i < 5; i++) {
+		for (int j = -5; j < 5; j++) {
+			Box* box = new Box(vec3(1.0, 0.0, 0.0));
+			const float scale = 5;
+			box->setPosition(vec3(i * scale, 20.f, j * scale));
+			box->physicsBody = new BoxPhysicsShape(vec3(1.0), *box, 1.f);
+			box->physicsBody->copyTransform(*box);
+			scene.addGameObject(box);
+		}
+	}
 	
 	SkyBox *skyBox = createScyBox();
 
@@ -82,12 +95,12 @@ Level::Level():
 		GL_LINEAR
 	);
 	Terrain* terrain = new Terrain(heightMap, terrainTexture);
-	terrain->setPosition(vec3(
-		heightMap.width / -2.0, 
-		-220,
-		heightMap.height / -2.0
-	));
-	//terrain->physicsBody = new MeshPhysicsShape(*terrain, 0.f, &terrain->getMesh());
+	terrain->setPosition(vec3(0.0, -90.0, 0.0));
+	terrain->setScale(vec3(1.f, 1.f, 1.f));
+	//terrain->setPosition(vec3(1.f, -220.f,1.f));
+	terrain->physicsBody = new HeightfieldPhysicsBody(heightMap, *terrain, 0.f);
+	//terrain->physicsBody = new BoxPhysicsShape(vec3(1.0), *terrain, 0.f);
+
 	
 	scene.setDirectinalLight(dirLight);
 	scene.setSkyBox(skyBox);

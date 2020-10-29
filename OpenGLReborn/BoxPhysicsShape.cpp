@@ -1,11 +1,8 @@
 #include "BoxPhysicsShape.h"
 
-BoxPhysicsShape::BoxPhysicsShape(GameObject& gameObject, float mass):
-	AbstractPhysicsBody(gameObject, mass, createCollisionShape())
+BoxPhysicsShape::BoxPhysicsShape(vec3 size, GameObject& gameObject, float mass):
+	AbstractPhysicsBody(gameObject, mass)
 {
-}
-
-btCollisionShape* BoxPhysicsShape::createCollisionShape()
-{
-	return new btBoxShape(btVector3(1.f, 1.f, 1.f));
+	boxShape = new btBoxShape(btVector3(size.x, size.y, size.z));
+	initRigitBody(boxShape);
 }
