@@ -8,7 +8,8 @@ Mesh::Mesh(
 	vector<GLTexture> diffuseTextures,
 	vector<GLTexture> ambientTextures,
 	vector<GLTexture> emissiveTextures,
-	vector<GLTexture> specularTextures
+	vector<GLTexture> specularTextures,
+	vector<GLTexture> normalTextures
 ) {
 	this->vertices = vertices;
 	this->indices = indices;
@@ -16,6 +17,7 @@ Mesh::Mesh(
 	this->ambientTextures = ambientTextures;
 	this->emissiveTextures = emissiveTextures;
 	this->specularTextures = specularTextures;
+	this->normalTextures = normalTextures;
 	this->color = color;
 	setupMesh();
 }
@@ -61,6 +63,12 @@ void Mesh::setupMesh()
 	// vertex texture coords
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+	// vertex tangents
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangents));
+	// vertex bitangents
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangents));
 
 	glBindVertexArray(0);
 }
@@ -73,20 +81,23 @@ void Mesh::Draw(ShaderProgram& shader)
 	for (int i = 0; i < diffuseTextures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
-		textureUnit++;
-		// retrieve texture number (the N in diffuse_textureN)
-		string number;
-		shader.setUniform(("material.texture_diffuse" + i), i);
 		glBindTexture(GL_TEXTURE_2D, diffuseTextures[i].getID());
+		shader.setUniform(("material.texture_diffuse" + to_string(i)), textureUnit);
+		textureUnit++;
 	}
 	for (int i = 0; i < specularTextures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
+		glBindTexture(GL_TEXTURE_2D, specularTextures[i].getID());
+		shader.setUniform(("material.texture_specular" + to_string(i)), textureUnit);
 		textureUnit++;
-		// retrieve texture number (the N in diffuse_textureN)
-		string number;
-		shader.setUniform(("material.texture_specular" + i), i);
-		glBindTexture(GL_TEXTURE_2D, diffuseTextures[i].getID());
+	}
+	for (int i = 0; i < normalTextures.size(); i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
+		glBindTexture(GL_TEXTURE_2D, normalTextures[i].getID());
+		shader.setUniform(("material.texture_normal" + to_string(i)), textureUnit);
+		textureUnit++;
 	}
 	shader.setUniform(("material.color"), color);
 

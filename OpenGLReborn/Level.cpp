@@ -105,7 +105,7 @@ Level::Level():
 	scene.addGameObject(lampWhite);
 	scene.addGameObject(lampRed);
 	scene.addGameObject(lampBlue);
-	//scene.addGameObject(plane);
+//	scene.addGameObject(plane);
 	scene.addGameObject(terrain);
 	scene.addPointLight(&(lampWhite->pointLight));
 	scene.addPointLight(&(lampRed->pointLight));

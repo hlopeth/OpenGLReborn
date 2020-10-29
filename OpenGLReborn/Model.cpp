@@ -24,7 +24,7 @@ vector<Mesh>& Model::GetMesh()
 void Model::loadModel(string path)
 {
 	Assimp::Importer import;
-	const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -60,24 +60,36 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
-		glm::vec3 vector;
+		glm::vec3 tmpVector;
 
 		//process vertex positions
-		vector.x = mesh->mVertices[i].x;
-		vector.y = mesh->mVertices[i].y;
-		vector.z = mesh->mVertices[i].z;
-		vertex.Position = vector;
+		tmpVector.x = mesh->mVertices[i].x;
+		tmpVector.y = mesh->mVertices[i].y;
+		tmpVector.z = mesh->mVertices[i].z;
+		vertex.Position = tmpVector;
 
 		//process vertex normals
 		if(true)//if (mesh->mNormals != NULL)
 		{
-			vector.x = mesh->mNormals[i].x;
-			vector.y = mesh->mNormals[i].y;
-			vector.z = mesh->mNormals[i].z;
-			vertex.Normal = vector;
+			tmpVector.x = mesh->mNormals[i].x;
+			tmpVector.y = mesh->mNormals[i].y;
+			tmpVector.z = mesh->mNormals[i].z;
+			vertex.Normal = tmpVector;
 		}
 		else
 			vertex.Normal = glm::vec3(0.0f);
+
+		tmpVector.x = mesh->mTangents[i].x;
+		tmpVector.y = mesh->mTangents[i].y;
+		tmpVector.z = mesh->mTangents[i].z;
+		vertex.Tangents = tmpVector;
+
+		tmpVector.x = mesh->mBitangents[i].x;
+		tmpVector.y = mesh->mBitangents[i].y;
+		tmpVector.z = mesh->mBitangents[i].z;
+		vertex.Bitangents = tmpVector;
+
+
 
 		//process vertex texture coordinates
 		if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
@@ -105,6 +117,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 	vector<GLTexture> emissiveTextures;
 	vector<GLTexture> unknownTextures;
 	vector<GLTexture> specularTextures;
+	vector<GLTexture> normalTextures;
 	// process material
 	if (mesh->mMaterialIndex >= 0)
 	{
@@ -112,22 +125,23 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 		aiColor4D diffuse; 
 		if (AI_SUCCESS == aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
 			color = glm::vec3(diffuse.r, diffuse.g, diffuse.b);
-		loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", diffuseTextures);
-		loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ambient", ambientTextures);
-		loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive", emissiveTextures);
-		loadMaterialTextures(material, aiTextureType_UNKNOWN, "texture_unknown", unknownTextures);
-		loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular", specularTextures);
+		loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", diffuseTextures, GL_RGBA);
+		loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_ambient", ambientTextures, GL_RGBA);
+		loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive", emissiveTextures, GL_RGBA);
+		loadMaterialTextures(material, aiTextureType_UNKNOWN, "texture_unknown", unknownTextures, GL_RGBA);
+		loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular", specularTextures, GL_RGBA);
+		loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal", normalTextures, GL_RGB);
 	}
 
-	return Mesh(vertices, indices, color, diffuseTextures, ambientTextures, emissiveTextures, specularTextures);
+	return Mesh(vertices, indices, color, diffuseTextures, ambientTextures, emissiveTextures, specularTextures, normalTextures);
 }
 
-void Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName, vector<GLTexture> &outTextures)
+void Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName, vector<GLTexture> &outTextures, int format)
 {
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString str;
 		mat->GetTexture(type, i, &str);
-		outTextures.emplace_back(str.C_Str(), directory, GL_RGBA);
+		outTextures.emplace_back(str.C_Str(), directory, format);
 	}
 }
