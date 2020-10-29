@@ -19,6 +19,7 @@ public:
 		loadModel(path);
 	}
 	void Draw(ShaderProgram& shader);
+	vector<Mesh>& GetMesh();
 private:
 	/*  Model Data  */
 	vector<Mesh> meshes;

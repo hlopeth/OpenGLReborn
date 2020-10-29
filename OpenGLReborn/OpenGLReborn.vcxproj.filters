@@ -529,6 +529,9 @@
     <ClInclude Include="HeightfieldPhysicsBody.h">
       <Filter>Файлы заголовков\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="texture\container.jpg">

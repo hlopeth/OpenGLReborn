@@ -16,6 +16,11 @@ void Model::Draw(ShaderProgram& shader)
 	}
 }
 
+vector<Mesh>& Model::GetMesh()
+{
+	return meshes;
+}
+
 void Model::loadModel(string path)
 {
 	Assimp::Importer import;

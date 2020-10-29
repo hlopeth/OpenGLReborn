@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include <algorithm>
 
 Mesh::Mesh(
 	vector<Vertex> vertices,
@@ -21,6 +22,23 @@ Mesh::Mesh(
 
 void Mesh::setupMesh()
 {
+	float maxY = vertices[0].Position.y;
+	float minY = vertices[0].Position.y;
+	float maxX = vertices[0].Position.x;
+	float minX = vertices[0].Position.x;
+	float maxZ = vertices[0].Position.z;
+	float minZ = vertices[0].Position.z;
+	for (auto vertex : vertices) {
+		auto p = vertex.Position;
+		maxY = std::max(maxY, p.y);
+		minY = std::min(minY, p.y);
+		maxX = std::max(maxX, p.x);
+		minX = std::min(minX, p.x);
+		maxZ = std::max(maxZ, p.z);
+		minZ = std::min(minZ, p.z);
+	}
+	aabb = AABB(maxY, minY, maxX, minX, maxZ, minZ);
+
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -78,4 +96,9 @@ void Mesh::Draw(ShaderProgram& shader)
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+}
+
+const AABB& Mesh::GetAABB()
+{
+	return aabb;
 }

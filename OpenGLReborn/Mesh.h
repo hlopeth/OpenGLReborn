@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
 #include "GLTexture.h"
+#include "AABB.h"
 
 using namespace std;
 
@@ -37,9 +38,11 @@ public:
 		vector<GLTexture> specularTextures = {}
 	);
 	void Draw(ShaderProgram& shader);
+	const AABB& GetAABB();
 private:
 	/*  Render data  */
 	unsigned int VAO, VBO, EBO;
 	/*  Functions    */
 	void setupMesh();
+	AABB aabb;
 };
