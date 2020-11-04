@@ -20,6 +20,7 @@
 #include "MeshPrimitives.h"
 #include "DirectinalLight.h"
 #include "HeightfieldPhysicsBody.h"
+#include "TextureFromFile.h"
 
 SkyBox* createScyBox() 
 {

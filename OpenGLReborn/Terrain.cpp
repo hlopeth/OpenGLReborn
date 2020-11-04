@@ -1,40 +1,14 @@
 #include "Terrain.h"
 #include "HeightfieldPhysicsBody.h"
+#include "TerrainMaterial.h"
 
 Terrain::Terrain(Texture heightMap, GLTexture texture):
-	mesh(generateMesh(heightMap, texture))
+	Model(
+		make_shared<Mesh>(generateMesh(heightMap)),
+		make_shared<TerrainMaterial>(texture)
+	)
 {
 	shader = ShaderProgram("terrainVertex.glsl", "terrainFragment.glsl");
-}
-
-void Terrain::draw(RenderData& renderData)
-{
-	shader.use();
-	shader.setUniform("model", getModelMatrix());
-	shader.setUniform("mvp", renderData.camera.getViewProjection() * getModelMatrix());
-
-	shader.setUniform("cameraPos", renderData.camera.pos);
-	PointLight* pointLight = nullptr;
-	int pointLightsSize = renderData.pointLights.size();
-	shader.setUniform("n_pointLights", pointLightsSize);
-	for (unsigned int i = 0; i < pointLightsSize; i++)
-	{
-		pointLight = renderData.pointLights[i];
-		char ch_i = '0' + i;
-		shader.setUniform(string("pointLights[") + ch_i + "].position", pointLight->position);
-		shader.setUniform(string("pointLights[") + ch_i + "].ambient", pointLight->ambient);
-		shader.setUniform(string("pointLights[") + ch_i + "].diffuse", pointLight->diffuse);
-		shader.setUniform(string("pointLights[") + ch_i + "].specular", pointLight->specular);
-		shader.setUniform(string("pointLights[") + ch_i + "].constant", pointLight->constant);
-		shader.setUniform(string("pointLights[") + ch_i + "].linear", pointLight->linear);
-		shader.setUniform(string("pointLights[") + ch_i + "].quadratic", pointLight->quadratic);
-		shader.setUniform(string("pointLights[") + ch_i + "].farPlane", pointLight->farPlane);
-	}
-
-	shader.setUniform("directinalLight.direction", renderData.dirextinalLight->direction);
-	shader.setUniform("directinalLight.color", renderData.dirextinalLight->color);
-
-	mesh->Draw(shader);
 }
 
 Terrain::~Terrain()
@@ -47,7 +21,7 @@ Mesh& Terrain::getMesh()
 	return *mesh;
 }
 
-Mesh* Terrain::generateMesh(Texture heightmap, GLTexture texture)
+Mesh Terrain::generateMesh(Texture heightmap)
 {
 	auto textureWidth = heightmap.width;
 	auto textureHeight = heightmap.height;
@@ -97,10 +71,8 @@ Mesh* Terrain::generateMesh(Texture heightmap, GLTexture texture)
 		vertices[i].Position.y -= hightestPoint - d;
 	}
 
-	return new Mesh(
+	return Mesh(
 		vertices,
-		indices,
-		vec3(0.0, 1.0, 0.0),
-		{ texture }
+		indices
 	);
 }

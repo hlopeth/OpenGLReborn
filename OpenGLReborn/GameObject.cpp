@@ -83,7 +83,7 @@ GameObject::~GameObject()
 	physicsBody = nullptr;
 }
 
-mat4 GameObject::getModelMatrix()
+mat4 GameObject::getModelMatrix() 
 {
 	if (modelMatrixIsDirty) {
 		modelMatrix = mat4(1.0);

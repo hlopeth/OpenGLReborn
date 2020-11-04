@@ -18,35 +18,26 @@ struct Vertex {
 	glm::vec3 Bitangents;
 };
 
-
 class Mesh {
 public:
 	/*  Mesh Data  */
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
-	vector<GLTexture> diffuseTextures;
-	vector<GLTexture> ambientTextures;
-	vector<GLTexture> emissiveTextures;
-	vector<GLTexture> specularTextures;
-	vector<GLTexture> normalTextures;
-	glm::vec3 color;
 	/*  Functions  */
+	Mesh();
 	Mesh(
 		vector<Vertex> vertices, 
-		vector<unsigned int> indices,
-		glm::vec3 color,
-		vector<GLTexture> diffuseTextures = {},
-		vector<GLTexture> ambientTextures = {},
-		vector<GLTexture> emissiveTextures = {},
-		vector<GLTexture> specularTextures = {},
-		vector<GLTexture> normalTextures = {}
+		vector<unsigned int> indices
 	);
-	void Draw(ShaderProgram& shader);
-	const AABB& GetAABB();
+
+	const AABB& getAABB() const;
+	GLuint getVAO() const;
+	GLuint getVBO() const;
+	GLuint getEBO() const;
 private:
 	/*  Render data  */
-	unsigned int VAO, VBO, EBO;
+	GLuint VAO, VBO, EBO;
+	AABB aabb;
 	/*  Functions    */
 	void setupMesh();
-	AABB aabb;
 };

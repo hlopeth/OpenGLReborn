@@ -1,25 +1,35 @@
 #include "Mesh.h"
 #include <algorithm>
 
+Mesh::Mesh()
+{
+	VAO = -1;
+	VBO = -1;
+	EBO = -1;
+}
+
 Mesh::Mesh(
 	vector<Vertex> vertices,
-	vector<unsigned int> indices,
-	glm::vec3 color,
-	vector<GLTexture> diffuseTextures,
-	vector<GLTexture> ambientTextures,
-	vector<GLTexture> emissiveTextures,
-	vector<GLTexture> specularTextures,
-	vector<GLTexture> normalTextures
+	vector<unsigned int> indices
 ) {
 	this->vertices = vertices;
 	this->indices = indices;
-	this->diffuseTextures = diffuseTextures;
-	this->ambientTextures = ambientTextures;
-	this->emissiveTextures = emissiveTextures;
-	this->specularTextures = specularTextures;
-	this->normalTextures = normalTextures;
-	this->color = color;
 	setupMesh();
+}
+
+GLuint Mesh::getVAO() const
+{
+	return VAO;
+}
+
+GLuint Mesh::getVBO() const
+{
+	return VBO;
+}
+
+GLuint Mesh::getEBO() const
+{
+	return EBO;
 }
 
 void Mesh::setupMesh()
@@ -73,43 +83,7 @@ void Mesh::setupMesh()
 	glBindVertexArray(0);
 }
 
-void Mesh::Draw(ShaderProgram& shader)
-{
-	unsigned int diffuseNr = 1;
-	unsigned int specularNr = 1;
-	int textureUnit = 0;
-	for (int i = 0; i < diffuseTextures.size(); i++)
-	{
-		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
-		glBindTexture(GL_TEXTURE_2D, diffuseTextures[i].getID());
-		shader.setUniform(("material.texture_diffuse" + to_string(i)), textureUnit);
-		textureUnit++;
-	}
-	for (int i = 0; i < specularTextures.size(); i++)
-	{
-		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
-		glBindTexture(GL_TEXTURE_2D, specularTextures[i].getID());
-		shader.setUniform(("material.texture_specular" + to_string(i)), textureUnit);
-		textureUnit++;
-	}
-	for (int i = 0; i < normalTextures.size(); i++)
-	{
-		glActiveTexture(GL_TEXTURE0 + textureUnit); // activate proper texture unit before binding
-		glBindTexture(GL_TEXTURE_2D, normalTextures[i].getID());
-		shader.setUniform(("material.texture_normal" + to_string(i)), textureUnit);
-		textureUnit++;
-	}
-	shader.setUniform(("material.color"), color);
-
-	glActiveTexture(GL_TEXTURE0);
-
-	// draw mesh
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-}
-
-const AABB& Mesh::GetAABB()
+const AABB& Mesh::getAABB() const
 {
 	return aabb;
 }

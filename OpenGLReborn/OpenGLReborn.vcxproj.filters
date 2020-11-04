@@ -85,6 +85,12 @@
     <Filter Include="Файлы заголовков\Terrain">
       <UniqueIdentifier>{0055f90a-7992-42bb-8f44-0e700f94dd0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Material">
+      <UniqueIdentifier>{2bb06d6d-68f5-4ac0-bbfe-9edd51b62c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Material">
+      <UniqueIdentifier>{36534dbc-5440-48e0-8dde-c06c33aa65a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -258,6 +264,27 @@
     <ClCompile Include="HeightfieldPhysicsBody.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelReadExeprion.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoaderManager.cpp">
+      <Filter>Исходные файлы\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleTextureMaterial.cpp">
+      <Filter>Исходные файлы\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="NanosuitMaterial.cpp">
+      <Filter>Исходные файлы\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxMaterial.cpp">
+      <Filter>Исходные файлы\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainMaterial.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -344,9 +371,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="PointLight.h">
@@ -531,6 +555,30 @@
     </ClInclude>
     <ClInclude Include="AABB.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelReadExeprion.h">
+      <Filter>Файлы заголовков\Exeptions</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoaderManager.h">
+      <Filter>Файлы заголовков\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTextureMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="NanosuitMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

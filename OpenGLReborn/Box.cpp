@@ -1,17 +1,14 @@
 #include "Box.h"
 #include "MeshPrimitives.h"
 
-Box::Box(glm::vec3 color): mesh(RenderingPrimitives::Box(vector<GLTexture>(), color))
+Box::Box(glm::vec3 color): Model(
+	make_shared<Mesh>(RenderingPrimitives::Box()), 
+	std::dynamic_pointer_cast<ModelMaterial>(make_shared<BoxMaterial>(BoxMaterial(color))))
 {
-	shader = ShaderProgram("BoxVertex.glsl", "BoxFragment.glsl");
+	boxMaterial = std::dynamic_pointer_cast<BoxMaterial>(material);
 }
 
-void Box::draw(RenderData& renderData)
+shared_ptr<BoxMaterial> Box::getMaterial() const
 {
-	shader.use();
-	auto model = getModelMatrix();
-	auto mvp = renderData.camera.getViewProjection() * model;
-	shader.setUniform("model", model);
-	shader.setUniform("mvp", mvp);
-	mesh.Draw(shader);
+	return boxMaterial;
 }

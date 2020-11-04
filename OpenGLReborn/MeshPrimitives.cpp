@@ -64,14 +64,14 @@ const vector<unsigned int> planeIndices{
 
 GLTexture* defaultTexture = nullptr;
 
-Mesh RenderingPrimitives::Box(vector<GLTexture> textures, glm::vec3 color)
+Mesh RenderingPrimitives::Box()
 {
-	return Mesh(boxVertices, boxIndices, color, textures);
+	return Mesh(boxVertices, boxIndices);
 }
 
-Mesh RenderingPrimitives::Plane(vector<GLTexture> textures, glm::vec3 color)
+Mesh RenderingPrimitives::Plane()
 {
-	return Mesh(planeVertices, planeIndices, color, textures);
+	return Mesh(planeVertices, planeIndices);
 }
 
 GLTexture RenderingPrimitives::DefaultGLTexture()

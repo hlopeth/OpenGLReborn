@@ -24,11 +24,11 @@ public:
 	void addChild(GameObject* child);
 	virtual void draw(RenderData& renderData) = 0;
 	bool usePhysics();
+	mat4 getModelMatrix();
 	~GameObject();
 
 	AbstractPhysicsBody* physicsBody = nullptr;
 protected:
-	mat4 getModelMatrix();
 	GameObject* parent = nullptr;
 	vector<GameObject*> childs;
 private:
