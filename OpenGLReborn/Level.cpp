@@ -25,9 +25,6 @@
 #include "RendererManager.h"
 #include "PhysicsManager.h"
 
-double _deltaTime = 0.0;
-GameObject* selectedObject = nullptr;
-
 SkyBox* createScyBox() 
 {
 	auto left	= TextureFromFile("left.png",	"assets/skybox");
@@ -90,6 +87,7 @@ Level::Level():
 		for (int j = -5; j < 5; j++) {
 			if (i == 0 && j == 0) continue;
 			Box* box = new Box(singleTextureMaterial);
+			box->selectable = true;
 			const float scale = 5;
 			box->setPosition(vec3(i * scale, 20.f, j * scale));
 			box->physicsBody = new BoxPhysicsShape(vec3(1.0), *box, 1.f);
@@ -138,7 +136,6 @@ Level::Level():
 
 void Level::update(double gameTime, double deltaTime)
 {
-	_deltaTime = deltaTime;
 	camera.update(gameTime, deltaTime);
 }
 
@@ -164,14 +161,32 @@ void Level::afterPhysicsUpdate()
 	AbstractPhysicsBody* body = nullptr;
 	if (PHYSICS.rayCast(camera.pos, camera.pos + camera.front * vec3(1000.0), hitPoint, hitNormal, body))
 	{
-		if (body != nullptr) 
+		if (body != nullptr )
 		{
-			selectedObject = &body->gameObject();
+			if (body->gameObject().selectable)
+			{
+				if (auto model = dynamic_cast<Model*>(&(body->gameObject())))
+				{
+					selectedModel = model;
+				}
+				else
+				{
+					selectedModel = nullptr;
+				}
+			}
+			else
+			{
+				selectedModel = nullptr;
+			}
+		}
+		else 
+		{
+			selectedModel = nullptr;
 		}
 	}
 	else
 	{
-		selectedObject = nullptr;
+		selectedModel = nullptr;
 	}
 
 
@@ -186,13 +201,6 @@ void Level::onKey(const KeyEvent& event)
 	if (event.key == GLFW_KEY_ESCAPE)
 	{
 		glfwSetWindowShouldClose(&WINDOW, true);
-	}
-	if (event.key == GLFW_KEY_F)
-	{
-		if (selectedObject != nullptr)
-		{
-			selectedObject->setScale(selectedObject->getScale() + vec3(_deltaTime));
-		}
 	}
 }
 

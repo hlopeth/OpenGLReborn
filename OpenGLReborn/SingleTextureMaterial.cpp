@@ -31,5 +31,4 @@ void SingleTextureMaterial::draw(Model& model, const RenderData& rd)
 	glBindVertexArray(model.getMesh()->getVAO());
 	glDrawElements(GL_TRIANGLES, model.getMesh()->indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-	RENDERER.checkGLErrors();
 }

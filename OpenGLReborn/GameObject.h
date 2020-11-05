@@ -28,6 +28,7 @@ public:
 	~GameObject();
 
 	AbstractPhysicsBody* physicsBody = nullptr;
+	bool selectable = false;
 protected:
 	GameObject* parent = nullptr;
 	vector<GameObject*> childs;
