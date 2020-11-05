@@ -8,6 +8,11 @@ Mesh::Mesh()
 	EBO = -1;
 }
 
+Mesh::Mesh(const Mesh& mesh):
+	Mesh(mesh.vertices, mesh.indices)
+{
+}
+
 Mesh::Mesh(
 	vector<Vertex> vertices,
 	vector<unsigned int> indices

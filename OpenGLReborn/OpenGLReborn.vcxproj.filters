@@ -279,11 +279,11 @@
     <ClCompile Include="NanosuitMaterial.cpp">
       <Filter>Исходные файлы\Material</Filter>
     </ClCompile>
-    <ClCompile Include="BoxMaterial.cpp">
-      <Filter>Исходные файлы\Material</Filter>
-    </ClCompile>
     <ClCompile Include="TerrainMaterial.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitColorMaterial.cpp">
+      <Filter>Исходные файлы\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -574,10 +574,10 @@
     <ClInclude Include="NanosuitMaterial.h">
       <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
-    <ClInclude Include="BoxMaterial.h">
+    <ClInclude Include="TerrainMaterial.h">
       <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainMaterial.h">
+    <ClInclude Include="UnitColorMaterial.h">
       <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
   </ItemGroup>

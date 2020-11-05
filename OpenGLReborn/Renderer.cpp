@@ -18,7 +18,7 @@ Renderer::~Renderer()
 
 }
 
-void checkGLErrors()
+void Renderer::checkGLErrors()
 {
 	GLenum err;
 	while ((err = glGetError()) != GL_NO_ERROR)
@@ -67,9 +67,13 @@ void Renderer::draw(Level& level)
 	vector<GameObject*> gameObjects = scene.getGameObjects();
 	RenderData renderData(level.getCamera(), scene.getPointLights(), scene.getDirectinalLight());
 
+	checkGLErrors();
+	int i = 0;
 	for (auto gameObject : gameObjects)
 	{
 		gameObject->draw(renderData);
+		checkGLErrors();
+		i++;
 	}
 
 	if (scene.getSkyBox() != nullptr) 

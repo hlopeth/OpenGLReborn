@@ -21,6 +21,8 @@
 #include "DirectinalLight.h"
 #include "HeightfieldPhysicsBody.h"
 #include "TextureFromFile.h"
+#include "SingleTextureMaterial.h"
+#include "RendererManager.h"
 
 SkyBox* createScyBox() 
 {
@@ -41,6 +43,13 @@ SkyBox* createScyBox()
 	return new SkyBox(cubeTexture);
 }
 
+shared_ptr<SingleTextureMaterial> createSingleTextureMaterial()
+{
+	Texture boxTexture = TextureFromFile("box.png", "assets");
+	GLTexture boxGLTexture = GLTexture(boxTexture, GL_RGBA);
+	return make_shared<SingleTextureMaterial>(boxGLTexture, vec3(1.0));
+}
+
 void setupUI(UIRoot& uiRoot)
 {
 	Canvas& c = uiRoot.getCanvas();
@@ -53,6 +62,8 @@ Level::Level():
 	camera(vec3(0.0), vec3(0.0), vec3(0.0))
 {
 	setupUI(uiRoot);
+
+	auto singleTextureMaterial = createSingleTextureMaterial();
 
 	DirectinalLight* dirLight = new DirectinalLight(vec3(0.0, 0.0, 1.0), vec3(1.0, 1.0, 1.0));
 	//уровень пока строится прямо в конструкторе
@@ -74,7 +85,7 @@ Level::Level():
 	for (int i = -5; i < 5; i++) {
 		for (int j = -5; j < 5; j++) {
 			if (i == 0 && j == 0) continue;
-			Box* box = new Box(vec3(1.0, 0.0, 0.0));
+			Box* box = new Box(singleTextureMaterial);
 			const float scale = 5;
 			box->setPosition(vec3(i * scale, 20.f, j * scale));
 			box->physicsBody = new BoxPhysicsShape(vec3(1.0), *box, 1.f);

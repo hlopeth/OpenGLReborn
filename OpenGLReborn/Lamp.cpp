@@ -1,6 +1,9 @@
 #include "Lamp.h"
+#include "UnitColorMaterial.h"
 
-Lamp::Lamp(): GameObject()
+Lamp::Lamp(): 
+	box(make_shared<UnitColorMaterial>( vec3(0.5) )),
+	GameObject()
 {
 	addChild(&box);
 	box.setScale(vec3(0.5));
@@ -14,7 +17,7 @@ void Lamp::setPosition(const vec3 position)
 
 void Lamp::draw(RenderData& renderData)
 {
-	box.getMaterial()->color = pointLight.diffuse;
+	dynamic_pointer_cast<UnitColorMaterial>(box.getMaterial())->color = pointLight.diffuse;
 	box.draw(renderData);
 }
 			

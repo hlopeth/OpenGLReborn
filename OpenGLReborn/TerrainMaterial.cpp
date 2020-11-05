@@ -36,7 +36,7 @@ void TerrainMaterial::draw(Model& model, const RenderData& renderData)
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, diffuseTexture.getID());
-	shader.setUniform("material.texture_diffuse1", GL_TEXTURE0);
+	shader.setUniform("material.texture_diffuse1", 0);
 
 	glBindVertexArray(model.getMesh()->getVAO());
 	glDrawElements(GL_TRIANGLES, model.getMesh()->indices.size(), GL_UNSIGNED_INT, 0);

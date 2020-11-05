@@ -14,6 +14,7 @@ std::vector<Model> loadModels()
 		auto node = (*modelData)[i];
 
 		GLTexture diffuseGLTexture, specularGLTexture, normalGLTexture;
+		bool useSpecular = false;
 
 		for (int j = 0; j < node.textures.size(); j++)
 		{
@@ -29,6 +30,7 @@ std::vector<Model> loadModels()
 			{
 				Texture specularTexture = *node.textures[j];
 				specularGLTexture = GLTexture(specularTexture, GL_RGBA);
+				useSpecular = true;
 				break;
 			}
 			case TextureType::NORMAL:
@@ -46,7 +48,8 @@ std::vector<Model> loadModels()
 			diffuseGLTexture,
 			specularGLTexture,
 			normalGLTexture,
-			node.color
+			node.color,
+			useSpecular
 		);
 
 		models.push_back(

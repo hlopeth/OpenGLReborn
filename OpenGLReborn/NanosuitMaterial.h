@@ -10,7 +10,8 @@ public:
 		GLTexture diffuseTexture,
 		GLTexture specularTexture,
 		GLTexture normalTexture,
-		glm::vec3 color
+		glm::vec3 color,
+		bool _useSpecular
 	);
 	virtual void draw(Model& model, const RenderData& renderData) override;
 private:
@@ -18,5 +19,6 @@ private:
 	GLTexture specularTexture;
 	GLTexture normalTexture;
 	glm::vec3 color;
+	bool useSpecular;
 	ShaderProgram shaderProgram;
 };

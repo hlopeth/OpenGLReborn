@@ -7,12 +7,14 @@ NanosuitMaterial::NanosuitMaterial(
 	GLTexture _diffuseTexture, 
 	GLTexture _specularTexture, 
 	GLTexture _normalTexture, 
-	glm::vec3 _color
+	glm::vec3 _color,
+	bool _useSpecular
 ):
 	diffuseTexture(_diffuseTexture),
 	specularTexture(_specularTexture),
 	normalTexture(_normalTexture),
 	color(_color),
+	useSpecular(_useSpecular),
 	shaderProgram(VERTEX_SHADER, FRAGMENT_SHADER)
 {
 }
@@ -44,15 +46,18 @@ void NanosuitMaterial::draw(Model& model, const RenderData& rd)
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, diffuseTexture.getID());
-	shaderProgram.setUniform("material.texture_diffuse0", GL_TEXTURE0);
+	shaderProgram.setUniform("material.texture_diffuse0", 0);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, specularTexture.getID());
-	shaderProgram.setUniform("material.texture_specular0", GL_TEXTURE1);
+	if (useSpecular) 
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, specularTexture.getID());
+		shaderProgram.setUniform("material.texture_specular0", 1);
+	}
 
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, normalTexture.getID());
-	shaderProgram.setUniform("material.texture_normal0", GL_TEXTURE2);
+	shaderProgram.setUniform("material.texture_normal0", 2);
 
 	shaderProgram.setUniform("material.color", color);
 

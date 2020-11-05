@@ -25,6 +25,7 @@ public:
 	vector<unsigned int> indices;
 	/*  Functions  */
 	Mesh();
+	Mesh(const Mesh& mesh);
 	Mesh(
 		vector<Vertex> vertices, 
 		vector<unsigned int> indices

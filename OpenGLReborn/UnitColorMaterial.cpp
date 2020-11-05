@@ -1,12 +1,12 @@
-#include "BoxMaterial.h"
+#include "UnitColorMaterial.h"
 
-BoxMaterial::BoxMaterial(glm::vec3 _color):
+UnitColorMaterial::UnitColorMaterial(glm::vec3 _color):
 	color(_color),
 	shaderProgram("BoxVertex.glsl", "BoxFragment.glsl")
 {
 }
 
-void BoxMaterial::draw(Model& model, const RenderData& renderData)
+void UnitColorMaterial::draw(Model& model, const RenderData& renderData)
 {
 	shaderProgram.use();
 	auto modelMat = model.getModelMatrix();

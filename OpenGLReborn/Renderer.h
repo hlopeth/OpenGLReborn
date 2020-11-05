@@ -12,6 +12,7 @@ class Renderer : public EventComponent
 public:
 	Renderer(GLFWwindow& window);
 	~Renderer();
+	void checkGLErrors();
 	void draw(Level& level);
 	void resize(const ResizeEvent& event);
 
