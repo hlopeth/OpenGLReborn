@@ -21,7 +21,7 @@ void AbstractPhysicsBody::initRigitBody(btCollisionShape* collisionShape)
 	}
 	_rigitBody = new btRigidBody(_mass, 0, collisionShape, localInertia);
 	copyTransform(_gameObject);
-	PHYSICS.addRigitBody(_rigitBody);
+	PHYSICS.addRigitBody(_rigitBody, this);
 }
 
 vec3 AbstractPhysicsBody::getPosition() const
@@ -78,6 +78,11 @@ void AbstractPhysicsBody::setRotation(const vec3 rotation)
 GameObject& AbstractPhysicsBody::gameObject() const
 {
 	return _gameObject;
+}
+
+const btRigidBody& AbstractPhysicsBody::getRigitBody() const
+{
+	return *_rigitBody;
 }
 
 float AbstractPhysicsBody::mass() const

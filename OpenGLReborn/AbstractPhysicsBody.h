@@ -14,6 +14,7 @@ public:
 	virtual void setScale(const vec3 scale) override;
 	virtual void setRotation(const vec3 rotation) override;
 	GameObject& gameObject() const;
+	const btRigidBody& getRigitBody() const;
 	float mass() const;
 	void setMass(float mass);
 	~AbstractPhysicsBody();

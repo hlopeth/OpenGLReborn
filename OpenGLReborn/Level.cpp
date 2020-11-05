@@ -23,6 +23,10 @@
 #include "TextureFromFile.h"
 #include "SingleTextureMaterial.h"
 #include "RendererManager.h"
+#include "PhysicsManager.h"
+
+double _deltaTime = 0.0;
+GameObject* selectedObject = nullptr;
 
 SkyBox* createScyBox() 
 {
@@ -129,10 +133,12 @@ Level::Level():
 
 	this->setEventHandler<Level, KeyEvent>(this, &Level::onKey);
 	this->setEventHandler<Level, ExitEvent>(this, &Level::onExit);
+
 }
 
 void Level::update(double gameTime, double deltaTime)
 {
+	_deltaTime = deltaTime;
 	camera.update(gameTime, deltaTime);
 }
 
@@ -153,6 +159,22 @@ UIRoot& Level::getUIRoot()
 
 void Level::afterPhysicsUpdate()
 {
+	vec3 hitPoint;
+	vec3 hitNormal;
+	AbstractPhysicsBody* body = nullptr;
+	if (PHYSICS.rayCast(camera.pos, camera.pos + camera.front * vec3(1000.0), hitPoint, hitNormal, body))
+	{
+		if (body != nullptr) 
+		{
+			selectedObject = &body->gameObject();
+		}
+	}
+	else
+	{
+		selectedObject = nullptr;
+	}
+
+
 	auto gameObjects = scene.getGameObjects();
 	for (auto gameObject : gameObjects) {
 		gameObject->afterPhysicsUpdate();
@@ -164,6 +186,13 @@ void Level::onKey(const KeyEvent& event)
 	if (event.key == GLFW_KEY_ESCAPE)
 	{
 		glfwSetWindowShouldClose(&WINDOW, true);
+	}
+	if (event.key == GLFW_KEY_F)
+	{
+		if (selectedObject != nullptr)
+		{
+			selectedObject->setScale(selectedObject->getScale() + vec3(_deltaTime));
+		}
 	}
 }
 
