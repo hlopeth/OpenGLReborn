@@ -37,7 +37,7 @@ HeightfieldPhysicsBody::HeightfieldPhysicsBody(Texture heightmap, GameObject& ga
 	int i = 0;
 	for (int x = 0; x < texWidth; x++) {
 		for (int y = 0; y < texHeight; y++) {
-			float height = heightmap.data[(y * texHeight + x) * 2];
+			float height = heightmap.data[(y * texHeight + x)];
 			maxHeight = height > maxHeight? height: maxHeight;
 			minHeight = height < minHeight ? height : minHeight;
 			(*heights)[i++] = height;

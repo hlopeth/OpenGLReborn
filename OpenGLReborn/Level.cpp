@@ -90,7 +90,7 @@ Level::Level():
 			box->selectable = true;
 			const float scale = 5;
 			box->setPosition(vec3(i * scale, 20.f, j * scale));
-			box->physicsBody = new BoxPhysicsShape(vec3(1.0), *box, 1.f);
+			box->physicsBody = new BoxPhysicsShape(vec3(1.0), *box, 0.f);
 			box->physicsBody->copyTransform(*box);
 			scene.addGameObject(box);
 		}
@@ -98,7 +98,6 @@ Level::Level():
 	
 	SkyBox *skyBox = createScyBox();
 
-	Texture heightMap = TextureFromFile("heightmap.png", "assets/terrane");
 	GLTexture terrainTexture = GLTexture(
 		TextureFromFile("grass.png", "assets/terrane"),
 		GL_RGB,
@@ -107,11 +106,20 @@ Level::Level():
 		GL_LINEAR_MIPMAP_LINEAR,
 		GL_LINEAR
 	);
-	Terrain* terrain = new Terrain(heightMap, terrainTexture);
-	terrain->setPosition(vec3(0.0, -90.0, 0.0));
-	terrain->setScale(vec3(1.f, 1.f, 1.f));
-	terrain->physicsBody = new HeightfieldPhysicsBody(heightMap, *terrain, 0.f);
-
+	int k = 1;
+	for (int i = 0; i < 4; i++)
+		for(int j = 0; j < 4; j++)
+		{
+			string filename = "out" + to_string(k) + ".png";
+			Texture heightMap = TextureFromFile(filename.c_str(), "assets/terrane");
+			Terrain* terrain = new Terrain(heightMap, terrainTexture);
+			terrain->setPosition(vec3(i * (heightMap.height - 1), -terrain->lowestPoint - 100.0, j * (heightMap.width - 1)));
+			//terrain->setPosition(vec3(0.0, -90.0, i * (heightMap.width)));
+			terrain->setScale(vec3(1.f, 1.f, 1.f));
+			terrain->physicsBody = new HeightfieldPhysicsBody(heightMap, *terrain, 0.f);
+			scene.addGameObject(terrain);
+			k++;
+		}
 	
 	scene.setDirectinalLight(dirLight);
 	scene.setSkyBox(skyBox);
@@ -120,7 +128,6 @@ Level::Level():
 	scene.addGameObject(lampRed);
 	scene.addGameObject(lampBlue);
 //	scene.addGameObject(plane);
-	scene.addGameObject(terrain);
 	scene.addPointLight(&(lampWhite->pointLight));
 	scene.addPointLight(&(lampRed->pointLight));
 	scene.addPointLight(&(lampBlue->pointLight));

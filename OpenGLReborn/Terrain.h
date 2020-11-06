@@ -7,10 +7,8 @@
 class Terrain : public Model {
 public:
 	Terrain(Texture heightMap, GLTexture texture);
-	~Terrain();
-	Mesh& getMesh();
+	float lowestPoint = 0.0f;
+	float hightestPoint = 0.0f;
 private:
-	Mesh* mesh;
 	Mesh generateMesh(Texture heightmap);
-	ShaderProgram shader;
 };

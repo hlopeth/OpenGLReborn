@@ -42,7 +42,8 @@ vec3 Camera::Right()
 
 void Camera::update(double time, double deltaTime)
 {
-	float cameraSpeed = 20.0f * deltaTime;
+	float cameraSpeed = speed * deltaTime;
+	if (sprint) cameraSpeed *= 4;
 	if (moveForvard)
 	{
 		pos += cameraSpeed * front;
@@ -113,6 +114,9 @@ void Camera::onKey(const KeyEvent& event)
 		break;
 	case GLFW_KEY_E:
 		moveUp = pressed;
+		break;
+	case  GLFW_KEY_LEFT_SHIFT:
+		sprint = pressed;
 		break;
 	}
 }

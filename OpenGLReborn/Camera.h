@@ -17,6 +17,7 @@ public:
 	glm::vec3 pos;
 	glm::vec3 front;
 	glm::vec3 up;
+	float speed = 20.0;
 	
 	Camera(vec3 _Pos, vec3 _Front, vec3 _Up);
 	mat4 getView();
@@ -38,4 +39,5 @@ private:
 	bool moveRight = false;
 	bool moveUp = false;
 	bool moveDown = false;
+	bool sprint = false;
 };

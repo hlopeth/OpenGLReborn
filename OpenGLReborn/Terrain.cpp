@@ -4,21 +4,11 @@
 
 Terrain::Terrain(Texture heightMap, GLTexture texture):
 	Model(
-		make_shared<Mesh>(generateMesh(heightMap)),
+		make_shared<Mesh>(),
 		make_shared<TerrainMaterial>(texture)
 	)
 {
-	shader = ShaderProgram("terrainVertex.glsl", "terrainFragment.glsl");
-}
-
-Terrain::~Terrain()
-{
-	delete mesh;
-}
-
-Mesh& Terrain::getMesh()
-{
-	return *mesh;
+	mesh = make_shared<Mesh>(generateMesh(heightMap));
 }
 
 Mesh Terrain::generateMesh(Texture heightmap)
@@ -31,15 +21,15 @@ Mesh Terrain::generateMesh(Texture heightmap)
 	unsigned int currVertIndex = 0;
 	
 
-	float lowestPoint = heightmap.data[0];
-	float hightestPoint = heightmap.data[0];
+	lowestPoint = heightmap.data[0];
+	hightestPoint = heightmap.data[0];
 
 	for (int x = 0; x < textureWidth; x++) {
 		for (int y = 0; y < textureHeight; y++) {
 			Vertex& vertex = vertices[x * textureWidth + y];
-			float vertexHeight = heightmap.data[(x * textureWidth + y) * 2];
-			float upHeight = y > 0 ? heightmap.data[(x * textureWidth + y - 1) * 2] : vertexHeight;
-			float rightHeight = x < textureWidth - 1 ? heightmap.data[((x + 1) * textureWidth + y) * 2] : vertexHeight;
+			float vertexHeight = heightmap.data[(x * textureWidth + y) ];
+			float upHeight = y > 0 ? heightmap.data[(x * textureWidth + y - 1)] : vertexHeight;
+			float rightHeight = x < textureWidth - 1 ? heightmap.data[((x + 1) * textureWidth + y)] : vertexHeight;
 
 			vec3 normal = normalize(vec3(vertexHeight - upHeight, vertexHeight - rightHeight, 1.0));
 
@@ -70,6 +60,8 @@ Mesh Terrain::generateMesh(Texture heightmap)
 	for (int i = 0; i < textureWidth * textureHeight; i++) {
 		vertices[i].Position.y -= hightestPoint - d;
 	}
+	hightestPoint -= d;
+	lowestPoint -= d;
 
 	return Mesh(
 		vertices,
