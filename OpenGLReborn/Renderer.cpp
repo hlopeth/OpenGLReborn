@@ -10,6 +10,8 @@ Renderer::Renderer( GLFWwindow &window) : window(window)
 	viewportHeight = WindowManager::windowHeight;
 	glViewport(0, 0, viewportWidth, viewportHeight);
 	glDepthFunc(GL_LEQUAL); 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	setEventHandler<Renderer, ResizeEvent>(this, &Renderer::resize);
 
 	outlineShader = ShaderProgram("DefaultVertex.glsl", "DefaultFragment.glsl");

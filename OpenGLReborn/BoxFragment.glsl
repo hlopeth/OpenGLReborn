@@ -3,11 +3,11 @@ in vec2 o_texCoord;
 in vec3 o_normal;
 in vec3 o_fragPos;
 
-uniform vec3 color;
+uniform vec4 color;
 
 out vec4 FragColor;
 
 void main()
 {
-	FragColor = vec4(color.r, color.g, color.b, 1.0);
+	FragColor = vec4(color);
 } 

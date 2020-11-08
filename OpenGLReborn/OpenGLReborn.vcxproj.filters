@@ -91,6 +91,9 @@
     <Filter Include="Исходные файлы\Material">
       <UniqueIdentifier>{36534dbc-5440-48e0-8dde-c06c33aa65a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\shaders\WaterShader">
+      <UniqueIdentifier>{6d8b92b5-556c-4a03-9c1e-1584711bce58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -285,6 +288,12 @@
     <ClCompile Include="UnitColorMaterial.cpp">
       <Filter>Исходные файлы\Material</Filter>
     </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterMaterial.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -364,6 +373,12 @@
     </None>
     <None Include="skyBoxFragment.glsl">
       <Filter>Исходные файлы\shaders\SkyBox</Filter>
+    </None>
+    <None Include="waterVertex.glsl">
+      <Filter>Исходные файлы\shaders\WaterShader</Filter>
+    </None>
+    <None Include="waterFragment.glsl">
+      <Filter>Исходные файлы\shaders\WaterShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -578,6 +593,12 @@
       <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
     <ClInclude Include="UnitColorMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterMaterial.h">
       <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
   </ItemGroup>

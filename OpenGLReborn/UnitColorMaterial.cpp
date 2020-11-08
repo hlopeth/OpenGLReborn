@@ -1,9 +1,15 @@
 #include "UnitColorMaterial.h"
 
-UnitColorMaterial::UnitColorMaterial(glm::vec3 _color):
+UnitColorMaterial::UnitColorMaterial(glm::vec4 _color):
 	color(_color),
 	shaderProgram("BoxVertex.glsl", "BoxFragment.glsl")
 {
+}
+
+UnitColorMaterial::UnitColorMaterial(const UnitColorMaterial& material):
+	UnitColorMaterial(material.color)
+{
+
 }
 
 void UnitColorMaterial::draw(Model& model, const RenderData& renderData)

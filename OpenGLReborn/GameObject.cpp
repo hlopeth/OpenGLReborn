@@ -72,6 +72,10 @@ void GameObject::addChild(GameObject* child)
 	child->parent = this;
 }
 
+void GameObject::update(double gameTime, double deltaTime)
+{
+}
+
 bool GameObject::usePhysics()
 {
 	return physicsBody != nullptr;

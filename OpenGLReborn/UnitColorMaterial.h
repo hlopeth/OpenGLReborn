@@ -4,9 +4,10 @@
 class UnitColorMaterial : public ModelMaterial
 {
 public:
-	UnitColorMaterial(glm::vec3 color);
+	UnitColorMaterial(glm::vec4 color);
+	UnitColorMaterial(const UnitColorMaterial& material);
 	virtual void draw(Model& model, const RenderData& rd) override;
-	glm::vec3 color;
+	glm::vec4 color;
 private: 
 	ShaderProgram shaderProgram;
 };

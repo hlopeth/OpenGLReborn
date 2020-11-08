@@ -26,6 +26,7 @@
 #include "RendererManager.h"
 #include "PhysicsManager.h"
 #include "TerrainMaterial.h"
+#include "Water.h"
 
 SkyBox* createScyBox() 
 {
@@ -110,6 +111,7 @@ Level::Level():
 	
 	SkyBox *skyBox = createScyBox();
 
+	//Terrain
 	GLTexture sandTexture = GLTexture(
 		TextureFromFile("sand.png", "assets/terrane"),
 		GL_RGB,
@@ -150,6 +152,13 @@ Level::Level():
 		terrains[i].wait();
 		scene.addGameObject(terrains[i].get());
 	}
+
+	//Water
+	shared_ptr<WaterMaterial> warerMaterial = make_shared<WaterMaterial>(glm::vec4(0, 0.467, 0.745, 0.8));
+	//513 - размер heightmap
+	Water* water = new Water(513, 513, warerMaterial);
+	water->setPosition(vec3(-256.5, -90.5, -256.5));
+	water->setScale(vec3(4.0, 1.0, 4.0));
 	
 	scene.setDirectinalLight(dirLight);
 	scene.setSkyBox(skyBox);
@@ -161,6 +170,8 @@ Level::Level():
 	scene.addPointLight(&(lampWhite->pointLight));
 	scene.addPointLight(&(lampRed->pointLight));
 	scene.addPointLight(&(lampBlue->pointLight));
+	//water в конце из за прозрачности
+	scene.addGameObject(water);
 
 	camera.pos = glm::vec3(0.0f, 0.0f, 10.0f);
 	camera.front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -174,6 +185,10 @@ Level::Level():
 void Level::update(double gameTime, double deltaTime)
 {
 	camera.update(gameTime, deltaTime);
+	for (auto gameObject : scene.getGameObjects())
+	{
+		gameObject->update(gameTime, deltaTime);
+	}
 }
 
 Camera& Level::getCamera()

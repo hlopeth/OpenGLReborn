@@ -202,6 +202,8 @@
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="VerticalLayout.cpp" />
     <ClCompile Include="VrRenderer.cpp" />
+    <ClCompile Include="Water.cpp" />
+    <ClCompile Include="WaterMaterial.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +233,8 @@
     <None Include="NanosuitVertex.glsl" />
     <None Include="UIRectFragment.glsl" />
     <None Include="UIRectVertex.glsl" />
+    <None Include="waterFragment.glsl" />
+    <None Include="waterVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
@@ -303,6 +307,8 @@
     <ClInclude Include="UIRect.h" />
     <ClInclude Include="VerticalLayout.h" />
     <ClInclude Include="VrRenderer.h" />
+    <ClInclude Include="Water.h" />
+    <ClInclude Include="WaterMaterial.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>

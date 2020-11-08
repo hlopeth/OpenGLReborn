@@ -105,4 +105,5 @@ void main()
 
 	vec4 lightColor = calcLightColor();
     FragColor = texelColol * lightColor;
+	FragColor.a = 1.0;
 } 
