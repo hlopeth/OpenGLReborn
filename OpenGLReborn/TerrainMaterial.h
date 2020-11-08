@@ -1,14 +1,17 @@
 #pragma once
-#include "Model.h"
+#include "AbstractMaterial.h"
 #include "Shader.h"
 #include "GLTexture.h"
+#include "RenderData.h"
 
-class TerrainMaterial : public ModelMaterial 
+class TerrainMaterial : public AbstractMaterial
 {
 public:
-	TerrainMaterial(GLTexture diffuseTexture);
-	virtual void draw(Model& model, const RenderData& renderData) override;
+	TerrainMaterial(GLTexture sandTexture, GLTexture grassTexture, GLTexture rockTexture);
+	void draw(GLuint vao, int indicesSize, const glm::mat4& modelMatrix, const RenderData& renderData);
 private:
-	GLTexture diffuseTexture;
+	GLTexture sandTexture;
+	GLTexture grassTexture;
+	GLTexture rockTexture;
 	ShaderProgram shader;
 };

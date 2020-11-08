@@ -12,7 +12,7 @@ Camera::Camera(vec3 _Pos, vec3 _Front, vec3 _Up) :
 	float aspect = WindowManager::windowWidth / (float)WindowManager::windowHeight;
 	float fov = 60.0;
 	float near = 0.1;
-	float far = 1000.0;
+	float far = 10000.0;
 	projection = glm::perspective(glm::radians(fov), aspect, near, far);
 
 	setEventHandler<Camera, MouseMoveEvent>(this, &Camera::onMouse);
@@ -43,7 +43,7 @@ vec3 Camera::Right()
 void Camera::update(double time, double deltaTime)
 {
 	float cameraSpeed = speed * deltaTime;
-	if (sprint) cameraSpeed *= 4;
+	if (sprint) cameraSpeed *= 10;
 	if (moveForvard)
 	{
 		pos += cameraSpeed * front;

@@ -1,17 +1,18 @@
 #include "TerrainMaterial.h"
 
-TerrainMaterial::TerrainMaterial(GLTexture _diffuseTexture):
-	diffuseTexture(_diffuseTexture),
+TerrainMaterial::TerrainMaterial(GLTexture _sandTexture, GLTexture _grassTexture, GLTexture _rockTexture):
+	sandTexture(_sandTexture),
+	grassTexture(_grassTexture),
+	rockTexture(_rockTexture),
 	shader("terrainVertex.glsl", "terrainFragment.glsl")
 {
 }
 
-void TerrainMaterial::draw(Model& model, const RenderData& renderData)
+void TerrainMaterial::draw(GLuint vao, int indicesSize, const glm::mat4& modelMatrix, const RenderData& renderData)
 {
 	shader.use();
-	glm::mat4 modelMat = model.getModelMatrix();
-	shader.setUniform("model", modelMat);
-	shader.setUniform("mvp", renderData.camera.getViewProjection() * modelMat);
+	shader.setUniform("model", modelMatrix);
+	shader.setUniform("mvp", renderData.camera.getViewProjection() * modelMatrix);
 
 	shader.setUniform("cameraPos", renderData.camera.pos);
 	PointLight* pointLight = nullptr;
@@ -35,10 +36,18 @@ void TerrainMaterial::draw(Model& model, const RenderData& renderData)
 	shader.setUniform("directinalLight.color", renderData.dirextinalLight->color);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, diffuseTexture.getID());
-	shader.setUniform("material.texture_diffuse1", 0);
+	glBindTexture(GL_TEXTURE_2D, sandTexture.getID());
+	shader.setUniform("sandMaterial.texture_diffuse1", 0);
 
-	glBindVertexArray(model.getMesh()->getVAO());
-	glDrawElements(GL_TRIANGLES, model.getMesh()->indices.size(), GL_UNSIGNED_INT, 0);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, grassTexture.getID());
+	shader.setUniform("grassMaterial.texture_diffuse1", 1);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, rockTexture.getID());
+	shader.setUniform("rockMaterial.texture_diffuse1", 2);
+
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }

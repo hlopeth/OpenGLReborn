@@ -1,4 +1,5 @@
 #include "Level.h"
+#include <future>
 #include "MouseClickEvent.h"
 #include "ResizeEvent.h"
 #include "ExitEvent.h"
@@ -24,6 +25,7 @@
 #include "SingleTextureMaterial.h"
 #include "RendererManager.h"
 #include "PhysicsManager.h"
+#include "TerrainMaterial.h"
 
 SkyBox* createScyBox() 
 {
@@ -57,6 +59,16 @@ void setupUI(UIRoot& uiRoot)
 	UI::MainMenu* mainMenu = new UI::MainMenu();
 	mainMenu->visible = false;
 	c.addChild(mainMenu);
+}
+
+Terrain* loadTerrain(const string& filename, shared_ptr<TerrainMaterial> material, int i, int j)
+{
+	Texture heightMap = TextureFromFile(filename.c_str(), "assets/terrane");
+	Terrain* terrain = new Terrain(heightMap, material);
+	float offset = terrain->getHightestPoint() - (terrain->getHightestPoint() - terrain->getLowestPoint()) / 2.0;
+	terrain->setPosition(vec3(i * (heightMap.height - 1), offset - 100.0, j * (heightMap.width - 1)));
+	terrain->physicsBody = new HeightfieldPhysicsBody(heightMap, *terrain, 0.f);
+	return terrain;
 }
 
 Level::Level():
@@ -98,7 +110,15 @@ Level::Level():
 	
 	SkyBox *skyBox = createScyBox();
 
-	GLTexture terrainTexture = GLTexture(
+	GLTexture sandTexture = GLTexture(
+		TextureFromFile("sand.png", "assets/terrane"),
+		GL_RGB,
+		GL_MIRRORED_REPEAT,
+		GL_MIRRORED_REPEAT,
+		GL_LINEAR_MIPMAP_LINEAR,
+		GL_LINEAR
+	);
+	GLTexture grassTexture = GLTexture(
 		TextureFromFile("grass.png", "assets/terrane"),
 		GL_RGB,
 		GL_MIRRORED_REPEAT,
@@ -106,20 +126,30 @@ Level::Level():
 		GL_LINEAR_MIPMAP_LINEAR,
 		GL_LINEAR
 	);
+	GLTexture rockTexture = GLTexture(
+		TextureFromFile("rock.png", "assets/terrane"),
+		GL_RGB,
+		GL_MIRRORED_REPEAT,
+		GL_MIRRORED_REPEAT,
+		GL_LINEAR_MIPMAP_LINEAR,
+		GL_LINEAR
+	);
+	shared_ptr<TerrainMaterial> terrainMaterial = make_shared<TerrainMaterial>(sandTexture, grassTexture, rockTexture);
 	int k = 1;
+	std::vector<std::future<Terrain*>> terrains;
 	for (int i = 0; i < 4; i++)
 		for(int j = 0; j < 4; j++)
 		{
 			string filename = "out" + to_string(k) + ".png";
-			Texture heightMap = TextureFromFile(filename.c_str(), "assets/terrane");
-			Terrain* terrain = new Terrain(heightMap, terrainTexture);
-			terrain->setPosition(vec3(i * (heightMap.height - 1), -terrain->lowestPoint - 100.0, j * (heightMap.width - 1)));
-			//terrain->setPosition(vec3(0.0, -90.0, i * (heightMap.width)));
-			terrain->setScale(vec3(1.f, 1.f, 1.f));
-			terrain->physicsBody = new HeightfieldPhysicsBody(heightMap, *terrain, 0.f);
-			scene.addGameObject(terrain);
+			terrains.push_back(std::async(loadTerrain, filename, terrainMaterial, i, j));
 			k++;
 		}
+
+	for (int i = 0; i < terrains.size(); i++)
+	{
+		terrains[i].wait();
+		scene.addGameObject(terrains[i].get());
+	}
 	
 	scene.setDirectinalLight(dirLight);
 	scene.setSkyBox(skyBox);
