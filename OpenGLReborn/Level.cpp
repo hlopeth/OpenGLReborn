@@ -67,7 +67,9 @@ Terrain* loadTerrain(const string& filename, shared_ptr<TerrainMaterial> materia
 	Texture heightMap = TextureFromFile(filename.c_str(), "assets/terrane");
 	Terrain* terrain = new Terrain(heightMap, material);
 	float offset = terrain->getHightestPoint() - (terrain->getHightestPoint() - terrain->getLowestPoint()) / 2.0;
-	terrain->setPosition(vec3(i * (heightMap.height - 1), offset - 100.0, j * (heightMap.width - 1)));
+	float scale = 1.0;
+	terrain->setPosition(vec3(i * scale *(heightMap.height - 1), offset - 100.0, j * scale *(heightMap.width - 1)));
+	terrain->setScale(vec3(scale, 1.0, scale));
 	terrain->physicsBody = new HeightfieldPhysicsBody(heightMap, *terrain, 0.f);
 	return terrain;
 }
@@ -79,7 +81,7 @@ Level::Level():
 
 	auto singleTextureMaterial = createSingleTextureMaterial();
 
-	DirectinalLight* dirLight = new DirectinalLight(vec3(0.0, 0.0, 1.0), vec3(1.0, 1.0, 1.0));
+	DirectinalLight* dirLight = new DirectinalLight(glm::normalize(vec3(0.0, 1.0, 1.0)), vec3(1.0, 1.0, 1.0));
 	//уровень пока строится прямо в конструкторе
 	Nanosuit* nanosuit = new Nanosuit();
 	nanosuit->physicsBody = new BoxPhysicsShape(vec3(1.0), *nanosuit, 0.f);

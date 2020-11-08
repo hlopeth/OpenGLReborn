@@ -11,7 +11,7 @@ Water::Water(float width, float height, shared_ptr<WaterMaterial> material) :
 
 void Water::update(double gameTime, double deltaTime)
 {
-	std::dynamic_pointer_cast<WaterMaterial>(material)->time += 0.001 * deltaTime;
+	std::dynamic_pointer_cast<WaterMaterial>(material)->time += 0.008 * deltaTime;
 }
 
 shared_ptr<Mesh> Water::generateMesh(float width, float height)

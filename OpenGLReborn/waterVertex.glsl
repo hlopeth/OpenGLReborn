@@ -92,7 +92,7 @@ void main()
 	o_normal = normalize(transpose(inverse(mat3(model))) * aNormal);
 	o_fragPos = vec3(model * vec4(aPosition,1.0));
 	vec3 position = aPosition;
-	o_noise = cnoise(1000 * vec3(aTexCoord + time, 0.0));
-	position.y += o_noise;
+	o_noise = cnoise(20 * vec3(aTexCoord + time, 0.0));
+	position.y += 8 * o_noise;
     gl_Position = mvp * vec4(position, 1.0);
 }

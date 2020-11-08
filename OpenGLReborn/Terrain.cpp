@@ -48,7 +48,8 @@ void Terrain::generateMesh(Texture heightmap)
 			float upHeight = y > 0 ? heightmap.data[(x * textureWidth + y - 1)] : vertexHeight;
 			float rightHeight = x < textureWidth - 1 ? heightmap.data[((x + 1) * textureWidth + y)] : vertexHeight;
 
-			vec3 normal = normalize(vec3(vertexHeight - upHeight, vertexHeight - rightHeight, 1.0));
+			//vec3 normal = normalize(vec3(vertexHeight - upHeight, vertexHeight - rightHeight, 1.0));
+			vec3 normal = normalize(vec3((rightHeight - vertexHeight), 1.0, (upHeight - vertexHeight)));
 
 			lowestPoint = min(lowestPoint, vertexHeight);
 			hightestPoint = max(hightestPoint, vertexHeight);

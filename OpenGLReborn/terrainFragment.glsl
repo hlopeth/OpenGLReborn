@@ -10,6 +10,7 @@ in vec3 alphas;
 struct DirectinalLight {
 	vec3 direction;
 	vec3 color;
+	vec3 ambient;
 };
 
 struct PointLight {
@@ -85,7 +86,7 @@ vec4 calcPointLightsColor()
 
 vec4 calcDirLightColor() {
 	vec3 diffuse = vec3(max(dot(normal, directinalLight.direction), 0.0f));
-	return vec4(diffuse * directinalLight.color, 1.0);
+	return vec4(diffuse * directinalLight.color + directinalLight.ambient, 1.0);
 }
 
 void main()

@@ -34,6 +34,7 @@ void TerrainMaterial::draw(GLuint vao, int indicesSize, const glm::mat4& modelMa
 
 	shader.setUniform("directinalLight.direction", renderData.dirextinalLight->direction);
 	shader.setUniform("directinalLight.color", renderData.dirextinalLight->color);
+	shader.setUniform("directinalLight.ambient", renderData.dirextinalLight->ambient);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, sandTexture.getID());
