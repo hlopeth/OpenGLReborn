@@ -294,6 +294,9 @@
     <ClCompile Include="WaterMaterial.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -600,6 +603,9 @@
     </ClInclude>
     <ClInclude Include="WaterMaterial.h">
       <Filter>Файлы заголовков\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

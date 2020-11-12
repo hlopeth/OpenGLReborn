@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="UnitColorMaterial.cpp" />
     <ClCompile Include="BoxPhysicsShape.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -239,6 +240,7 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="UnitColorMaterial.h" />
     <ClInclude Include="BoxPhysicsShape.h" />
     <ClInclude Include="Button.h" />
