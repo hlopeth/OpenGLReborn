@@ -256,6 +256,13 @@ void Level::onKey(const KeyEvent& event)
 	{
 		glfwSetWindowShouldClose(&WINDOW, true);
 	}
+	if (event.key == GLFW_KEY_F)
+	{
+		if (selectedModel != nullptr)
+		{
+			selectedModel->call(SelectEvent());
+		}
+	}
 }
 
 void Level::onExit(const ExitEvent& event)
@@ -267,5 +274,9 @@ void Level::call(const Event& event)
 {
 	EventComponent::call(event);
 	camera.call(event);
+	for (auto gameObject: scene.getGameObjects())
+	{
+		gameObject->call(event);
+	}
 	uiRoot.call(event);
 }

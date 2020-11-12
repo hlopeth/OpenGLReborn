@@ -25,6 +25,8 @@ public:
 	mat4 getViewProjection();
 	vec3 Right();
 	void update(double time, double deltaTime);
+	void lock();
+	void free();
 private:
 	void onMouse(const MouseMoveEvent& event);
 	void onKey(const KeyEvent& event);
@@ -40,4 +42,5 @@ private:
 	bool moveUp = false;
 	bool moveDown = false;
 	bool sprint = false;
+	bool locked = false;
 };

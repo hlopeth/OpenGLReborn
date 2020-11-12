@@ -141,6 +141,8 @@
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SelectableComponent.cpp" />
+    <ClCompile Include="SelectEvent.cpp" />
     <ClCompile Include="UnitColorMaterial.cpp" />
     <ClCompile Include="BoxPhysicsShape.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -241,6 +243,8 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SelectableComponent.h" />
+    <ClInclude Include="SelectEvent.h" />
     <ClInclude Include="UnitColorMaterial.h" />
     <ClInclude Include="BoxPhysicsShape.h" />
     <ClInclude Include="Button.h" />
@@ -251,7 +255,7 @@
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventComponent.h" />
-    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventHandlers.h" />
     <ClInclude Include="EventHandlerBase.h" />
     <ClInclude Include="ExitEvent.h" />
     <ClInclude Include="GameObject.h" />

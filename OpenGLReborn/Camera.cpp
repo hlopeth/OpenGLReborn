@@ -42,6 +42,8 @@ vec3 Camera::Right()
 
 void Camera::update(double time, double deltaTime)
 {
+	if (!moveCamera || locked)
+		return;
 	float cameraSpeed = speed * deltaTime;
 	if (sprint) cameraSpeed *= 10;
 	if (moveForvard)
@@ -70,9 +72,19 @@ void Camera::update(double time, double deltaTime)
 	}
 }
 
+void Camera::lock()
+{
+	locked = true;
+}
+
+void Camera::free()
+{
+	locked = false;
+}
+
 void Camera::onMouse(const MouseMoveEvent& event)
 {
-	if (!moveCamera)
+	if (!moveCamera || locked)
 		return;
 	
 	cameraYaw += event.xOffset;

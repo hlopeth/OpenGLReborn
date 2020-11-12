@@ -297,6 +297,12 @@
     <ClCompile Include="Player.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="SelectEvent.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectableComponent.cpp">
+      <Filter>Исходные файлы\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -520,9 +526,6 @@
     <ClInclude Include="EventHandlerBase.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsManager.h">
       <Filter>Файлы заголовков\Managers</Filter>
     </ClInclude>
@@ -606,6 +609,15 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandlers.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectableComponent.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectEvent.h">
+      <Filter>Файлы заголовков\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
