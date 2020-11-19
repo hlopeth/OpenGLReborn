@@ -138,7 +138,7 @@ Level::Level():
 		GL_LINEAR_MIPMAP_LINEAR,
 		GL_LINEAR
 	);
-	shared_ptr<TerrainMaterial> terrainMaterial = make_shared<TerrainMaterial>(sandTexture, grassTexture, rockTexture);
+	/*shared_ptr<TerrainMaterial> terrainMaterial = make_shared<TerrainMaterial>(sandTexture, grassTexture, rockTexture);
 	int k = 1;
 	std::vector<std::future<Terrain*>> terrains;
 	for (int i = 0; i < 4; i++)
@@ -153,7 +153,7 @@ Level::Level():
 	{
 		terrains[i].wait();
 		scene.addGameObject(terrains[i].get());
-	}
+	}*/
 
 	//Water
 	shared_ptr<WaterMaterial> warerMaterial = make_shared<WaterMaterial>(glm::vec4(0, 0.467, 0.745, 0.8));
@@ -198,12 +198,22 @@ Camera& Level::getCamera()
 	return camera;
 }
 
+const Camera& Level::getCamera() const
+{
+	return camera;
+}
+
 Scene& Level::getScene()
 {
 	return scene;
 }
 
-UIRoot& Level::getUIRoot()
+const Scene& Level::getScene() const
+{
+	return scene;
+}
+
+const UIRoot& Level::getUIRoot() const
 {
 	return uiRoot;
 }

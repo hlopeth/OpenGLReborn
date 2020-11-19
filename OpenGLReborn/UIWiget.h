@@ -28,14 +28,14 @@ namespace UI
 		virtual void call(const Event& event) override;
 		virtual int getMaxChildren() = 0;
 		//renderArea - координаты родительского контейнера
-		virtual void draw() = 0;
+		virtual void draw() const = 0;
 		bool pointInShape(float x, float y);
 
 		UIWiget* parent = nullptr;
 		Rect transform;
 		bool visible = true;
 	protected:
-		void drawChildren();
+		void drawChildren() const;
 
 		//позиция в локальных координатаъ элемента
 		ShaderProgram shader;

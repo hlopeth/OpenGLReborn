@@ -77,7 +77,7 @@ bool UI::UIWiget::addChild(UIWiget* wiget)
 	return true;
 }
 
-void UI::UIWiget::drawChildren()
+void UI::UIWiget::drawChildren() const
 {
 	for (auto i = children.begin(); i != children.end(); i++)
 	{

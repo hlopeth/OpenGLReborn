@@ -10,7 +10,7 @@ UIRoot::UIRoot()
 	canvas.setSize(vec2(renderArea.width, renderArea.height));
 }
 
-void UIRoot::draw(RenderData& renderData)
+void UIRoot::draw(RenderData& renderData) const
 {
 	canvas.draw();
 }

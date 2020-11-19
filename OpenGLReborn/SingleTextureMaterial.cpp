@@ -11,7 +11,7 @@ SingleTextureMaterial::SingleTextureMaterial(
 {
 }
 
-void SingleTextureMaterial::draw(Model& model, const RenderData& rd)
+void SingleTextureMaterial::draw(const Model& model, const RenderData& rd) const
 {
 	shader.use();
 	auto modelMatrix = model.getModelMatrix();

@@ -15,7 +15,7 @@ void Lamp::setPosition(const vec3 position)
 	pointLight.position = position;
 }
 
-void Lamp::draw(RenderData& renderData)
+void Lamp::draw(RenderData& renderData) const
 {
 	dynamic_pointer_cast<UnitColorMaterial>(box.getMaterial())->color = vec4(pointLight.diffuse, 1.0);
 	box.draw(renderData);

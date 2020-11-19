@@ -6,7 +6,7 @@
 class SkyBox : public DrawComponent {
 public:
 	SkyBox(CubeTexture texture);
-	void draw(RenderData& renderData) override;
+	void draw(RenderData& renderData) const override;
 private:
 	ShaderProgram shader;
 	CubeTexture texture;

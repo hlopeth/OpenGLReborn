@@ -4,6 +4,6 @@
 class DrawComponent
 {
 public:
-	virtual void draw(RenderData& renderData) = 0;
+	virtual void draw(RenderData& renderData) const = 0;
 };
 

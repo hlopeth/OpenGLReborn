@@ -17,7 +17,7 @@ int UI::VerticalLayout::getMaxChildren()
 	return maxChildren;
 }
 
-void UI::VerticalLayout::draw()
+void UI::VerticalLayout::draw() const
 {
 	drawChildren();
 }

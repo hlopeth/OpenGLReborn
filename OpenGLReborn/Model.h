@@ -9,7 +9,7 @@ class Model;
 class ModelMaterial : public AbstractMaterial
 {
 public:
-	virtual void draw(Model& model, const RenderData& rd) = 0;
+	virtual void draw(const Model& model, const RenderData& rd) const = 0;
 };
 
 
@@ -17,7 +17,7 @@ class Model: public GameObject
 {
 public:
 	Model(shared_ptr<Mesh> mesh, shared_ptr<ModelMaterial> material);
-	void draw(RenderData& rd) override;
+	void draw(RenderData& rd) const override;
 	shared_ptr<Mesh> getMesh() const;
 	shared_ptr<ModelMaterial> getMaterial() const;
 protected:

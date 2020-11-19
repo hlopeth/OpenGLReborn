@@ -306,6 +306,9 @@
     <ClCompile Include="SelectableComponent.cpp">
       <Filter>Исходные файлы\Components</Filter>
     </ClCompile>
+    <ClCompile Include="StereoRenderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -623,6 +626,9 @@
       <Filter>Файлы заголовков\Render</Filter>
     </ClInclude>
     <ClInclude Include="AbstractRenderer.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="StereoRenderer.h">
       <Filter>Файлы заголовков\Render</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,7 +11,7 @@ namespace UI
 		UIRect(vec4 _color);
 		~UIRect();
 		int getMaxChildren() override;
-		void draw() override; 
+		void draw() const override; 
 		vec4 color;
 	private:
 		static GLuint VAO;

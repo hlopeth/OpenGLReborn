@@ -6,7 +6,7 @@ Model::Model(shared_ptr<Mesh> _mesh, shared_ptr<ModelMaterial> _material)
 	material = _material;
 }
 
-void Model::draw(RenderData& rd)
+void Model::draw(RenderData& rd) const
 {
 	material->draw(*this, rd);
 }

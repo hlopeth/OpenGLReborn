@@ -48,7 +48,7 @@ UI::MainMenu::MainMenu()
 	addChild(background);
 }
 
-void UI::MainMenu::draw()
+void UI::MainMenu::draw() const
 {
 	drawChildren();
 }

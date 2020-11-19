@@ -24,32 +24,32 @@ public:
 	{
 		id = createShaderProgram(vertexShaderFileName, fragmentShaderFileName, geomertyShaderFileName);
 	}
-	void use();
-	void setUniform(string name, unsigned int val)
+	void use() const;
+	void setUniform(string name, unsigned int val) const
 	{
 		glUniform1ui(findLocation(name), val);
 	}
-	void setUniform(string name, int val)
+	void setUniform(string name, int val) const
 	{
 		glUniform1i(findLocation(name), val);
 	}
-	void setUniform(string name, float val)
+	void setUniform(string name, float val) const
 	{
 		glUniform1f(findLocation(name), val);
 	}
-	void setUniform(string name, glm::mat4 val)
+	void setUniform(string name, glm::mat4 val) const
 	{
 		glUniformMatrix4fv(findLocation(name), 1, GL_FALSE, glm::value_ptr(val));
 	}
-	void setUniform(string name, glm::vec2 val)
+	void setUniform(string name, glm::vec2 val) const
 	{
 		glUniform2fv(findLocation(name), 1, glm::value_ptr(val));
 	}
-	void setUniform(string name, glm::vec3 val)
+	void setUniform(string name, glm::vec3 val) const
 	{
 		glUniform3fv(findLocation(name),1, glm::value_ptr(val));
 	}
-	void setUniform(string name, glm::vec4 val)
+	void setUniform(string name, glm::vec4 val) const
 	{
 		glUniform4fv(findLocation(name), 1, glm::value_ptr(val));
 	}
@@ -57,5 +57,5 @@ private:
 	GLuint createShaderProgram(string vertexShaderFileName, string fragmentShaderFileName, string geomertyShaderFileName = "");
 	GLuint compileShader(const string source, GLenum type);
 	string getSource(string fileName);
-	GLint findLocation(string name);
+	GLint findLocation(const string& name) const;
 };

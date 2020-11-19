@@ -6,7 +6,7 @@ WaterMaterial::WaterMaterial(vec4 _color):
 {
 }
 
-void WaterMaterial::draw(Model& model, const RenderData& rd)
+void WaterMaterial::draw(const Model& model, const RenderData& rd) const
 {
 	shader.use();
 	auto modelMat = model.getModelMatrix();

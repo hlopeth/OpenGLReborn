@@ -12,7 +12,7 @@ int UI::Button::getMaxChildren()
 	return 1;
 }
 
-void UI::Button::draw()
+void UI::Button::draw() const
 {
 	drawChildren();
 }

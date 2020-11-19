@@ -73,7 +73,7 @@ const std::vector<Model>& Nanosuit::getModel() const
 	return models;
 }
 
-void Nanosuit::draw(RenderData& rd)
+void Nanosuit::draw(RenderData& rd) const
 {
 	for (int i = 0; i < models.size(); i++)
 	{

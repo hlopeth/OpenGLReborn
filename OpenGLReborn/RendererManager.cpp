@@ -2,6 +2,7 @@
 #include "WindowManager.h"
 #include "InitialisationExeption.h"
 #include "Renderer.h"
+#include "StereoRenderer.h"
 
 AbstractRenderer* RendererManager::renderer = nullptr;
 
@@ -14,7 +15,7 @@ void RendererManager::initialise()
 		renderer = nullptr;
 		throw InitialisationExeption("Failed to initialize GLAD");
 	}
-	renderer = new Renderer(window);
+	renderer = new StereoRenderer(window);
 }
 
 void RendererManager::destroy()

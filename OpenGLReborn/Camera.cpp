@@ -4,40 +4,70 @@
 
 bool moveCamera = false;
 
-Camera::Camera(vec3 _Pos, vec3 _Front, vec3 _Up) :
-	pos(_Pos), 
-	front(_Front), 
-	up(_Up)
+Camera::Camera(
+	vec3 _pos,
+	vec3 _front, 
+	vec3 _up,
+	float _near,
+	float _far
+) :
+	pos(_pos),
+	front(_front),
+	up(_up),
+	near(_near),
+	far(_far)
 {
 	float aspect = WindowManager::windowWidth / (float)WindowManager::windowHeight;
-	float fov = 60.0;
-	float near = 0.1;
-	float far = 10000.0;
 	projection = glm::perspective(glm::radians(fov), aspect, near, far);
-
 	setEventHandler<Camera, MouseMoveEvent>(this, &Camera::onMouse);
 	setEventHandler<Camera, KeyEvent>(this, &Camera::onKey);
 	setEventHandler<Camera, MouseRightClickEvent>(this, &Camera::onRightClick);
 }
 
-mat4 Camera::getView()
+Camera::Camera(
+	vec3 _pos, 
+	vec3 _front, 
+	vec3 _up, 
+	mat4 _projection
+):
+	pos(_pos),
+	front(_front),
+	up(_up),
+	projection(_projection)
+{
+	setEventHandler<Camera, MouseMoveEvent>(this, &Camera::onMouse);
+	setEventHandler<Camera, KeyEvent>(this, &Camera::onKey);
+	setEventHandler<Camera, MouseRightClickEvent>(this, &Camera::onRightClick);
+}
+
+mat4 Camera::getView() const
 {
 	return lookAt(pos, pos + front, up);
 }
 
-mat4 Camera::getProjection()
+mat4 Camera::getProjection() const
 {
 	return projection;
 }
 
-mat4 Camera::getViewProjection()
+mat4 Camera::getViewProjection() const
 {
 	return projection * getView();
 }
 
-vec3 Camera::Right()
+vec3 Camera::Right() const
 {
 	return glm::normalize(glm::cross(front, up));
+}
+
+float Camera::Near() const
+{
+	return near;
+}
+
+float Camera::Far() const
+{
+	return far;
 }
 
 void Camera::update(double time, double deltaTime)

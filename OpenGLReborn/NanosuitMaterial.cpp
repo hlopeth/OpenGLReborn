@@ -19,7 +19,7 @@ NanosuitMaterial::NanosuitMaterial(
 {
 }
 
-void NanosuitMaterial::draw(Model& model, const RenderData& rd)
+void NanosuitMaterial::draw(const Model& model, const RenderData& rd) const
 {
 	shaderProgram.use();
 	auto modelMat = model.getModelMatrix();

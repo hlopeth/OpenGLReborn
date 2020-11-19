@@ -10,7 +10,7 @@ namespace UI
 	{
 	public:
 		MainMenu();
-		void draw() override;
+		void draw() const override;
 	private:
 		vec4 backgroundColor = vec4(1.0);
 		Button exitButton;
