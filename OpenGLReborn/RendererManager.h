@@ -1,5 +1,5 @@
 #pragma once
-#include "Renderer.h"
+#include "AbstractRenderer.h"
 
 #ifndef RENDERER
 #define RENDERER RendererManager().getRenderer()
@@ -13,7 +13,7 @@ class RendererManager
 public:
 	void initialise();
 	void destroy();
-	Renderer& getRenderer();
+	AbstractRenderer& getRenderer();
 private:
-	static Renderer* renderer;
+	static AbstractRenderer* renderer;
 };

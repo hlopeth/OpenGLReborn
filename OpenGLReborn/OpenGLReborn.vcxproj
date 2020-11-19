@@ -241,6 +241,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="AbstractRenderer.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SelectableComponent.h" />

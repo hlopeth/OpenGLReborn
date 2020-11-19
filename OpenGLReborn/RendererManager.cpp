@@ -1,8 +1,9 @@
 #include "RendererManager.h"
 #include "WindowManager.h"
 #include "InitialisationExeption.h"
+#include "Renderer.h"
 
-Renderer* RendererManager::renderer = nullptr;
+AbstractRenderer* RendererManager::renderer = nullptr;
 
 void RendererManager::initialise()
 {
@@ -22,7 +23,7 @@ void RendererManager::destroy()
 	renderer = nullptr;
 }
 
-Renderer& RendererManager::getRenderer()
+AbstractRenderer& RendererManager::getRenderer()
 {
 	return *renderer;
 }
