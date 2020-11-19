@@ -11,8 +11,7 @@ GLTexture::GLTexture(
 	GLint magFilter,
 	bool useMipMaps
 ) {
-	format = _format;
-	init(texture, wrapS, wrapT, minFilter, magFilter);
+	init(&texture, _format, wrapS, wrapT, minFilter, magFilter);
 }
 
 GLTexture::GLTexture(
@@ -22,9 +21,14 @@ GLTexture::GLTexture(
 	bool useMipMaps
 ) {
 	Texture texture = TextureFromFile(path, directory);
-	format = _format;
-	init(texture);
+	init(&texture, _format);
 	delete[] texture.data;
+}
+
+void GLTexture::allocate(size_t width, size_t height)
+{
+	bind();
+	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, NULL);
 }
 
 void GLTexture::upload(Texture t)
@@ -53,7 +57,8 @@ GLTexture::~GLTexture()
 }
 
 void GLTexture::init(
-	Texture texture, 
+	Texture* texture,
+	GLint _format,
 	GLint wrapS, 
 	GLint wrapT, 
 	GLint minFilter, 
@@ -61,9 +66,13 @@ void GLTexture::init(
 	bool useMipMaps,
 	bool useAnisotropicFiltering
 ) {
+	format = _format;
 	glGenTextures(1, &id);
 	bind();
-	upload(texture);
+	if (texture != nullptr) 
+	{
+		upload(*texture);
+	}
 	if (useMipMaps)
 	{
 		glGenerateMipmap(GL_TEXTURE_2D);

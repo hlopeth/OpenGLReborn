@@ -11,7 +11,6 @@ class Renderer : public AbstractRenderer
 public:
 	Renderer(GLFWwindow& window);
 	~Renderer();
-	void checkGLErrors();
 	virtual void draw(Level& level) override;
 	void resize(const ResizeEvent& event);
 

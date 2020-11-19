@@ -309,6 +309,12 @@
     <ClCompile Include="StereoRenderer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="TextureRenderTarget.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FullscreenTextureMaterial.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -630,6 +636,12 @@
     </ClInclude>
     <ClInclude Include="StereoRenderer.h">
       <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderTarget.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FullscreenTextureMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

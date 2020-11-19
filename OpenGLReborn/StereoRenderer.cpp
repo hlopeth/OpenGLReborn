@@ -1,10 +1,14 @@
 #include "StereoRenderer.h"
+#include "MeshPrimitives.h"
 
 const float eyeDist = 0.1; 
-const float convergenceDist = 100;
+const float convergenceDist = 50;
 
 StereoRenderer::StereoRenderer(GLFWwindow& _window):
-	window(_window)
+	window(_window),
+	leftEyeRenderTarget(WindowManager::windowWidth, WindowManager::windowHeight),
+	rightEyeRenderTarget(WindowManager::windowWidth, WindowManager::windowHeight),
+	screenRect(make_shared<Mesh>(RenderingPrimitives::Plane()), make_shared<FullscreenTextureMaterial>())
 {
 	viewportWidth = WindowManager::windowWidth;
 	viewportHeight = WindowManager::windowHeight;
@@ -13,6 +17,14 @@ StereoRenderer::StereoRenderer(GLFWwindow& _window):
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	screenMaterial = make_shared<FullscreenTextureMaterial>(
+		FullscreenTextureMaterial(
+			leftEyeRenderTarget.getTexture(),
+			rightEyeRenderTarget.getTexture()
+		)
+		);
+	screenRect.setMaterial(screenMaterial);
 }
 
 StereoRenderer::~StereoRenderer()
@@ -58,23 +70,34 @@ void StereoRenderer::draw(Level& level)
 	drawLeftEye(level, leftEyeCamera);
 	drawRightEye(level, rightEyeCamera);
 
+	screenMaterial->textureLeft = leftEyeRenderTarget.getTexture();
+	screenMaterial->textureRight = rightEyeRenderTarget.getTexture();
+	RenderData renderData(leftEyeCamera, level.getScene().getPointLights(), level.getScene().getDirectinalLight());
+	screenRect.draw(renderData);
+
 	glfwSwapBuffers(&window);
 }
 
 void StereoRenderer::drawLeftEye(const Level& level, const Camera& leftEyeCamera)
 {
-	glViewport(0, 0, viewportWidth / 2, viewportHeight);
+	glBindFramebuffer(GL_FRAMEBUFFER, leftEyeRenderTarget.getFbo());
 	drawCommon(level, leftEyeCamera);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void StereoRenderer::drawRightEye(const Level& level, const Camera& rightEyeCamera)
 {
-	glViewport(viewportWidth / 2, 0, viewportWidth / 2, viewportHeight);
+	glBindFramebuffer(GL_FRAMEBUFFER, rightEyeRenderTarget.getFbo());
 	drawCommon(level, rightEyeCamera);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void StereoRenderer::drawCommon(const Level& level, const Camera& camera)
 {
+	glViewport(0, 0, viewportWidth, viewportHeight);
+	glClearColor(0.1, 0.1, 0.1, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 	const Scene& scene = level.getScene();
 	auto gameObjects = scene.getGameObjects();
 	RenderData renderData(camera, scene.getPointLights(), scene.getDirectinalLight());
@@ -98,5 +121,6 @@ void StereoRenderer::resize(const ResizeEvent& event)
 {
 	viewportWidth = event.width;
 	viewportHeight = event.height;
-	glViewport(0, 0, viewportWidth, viewportHeight);
+	leftEyeRenderTarget.allocate(viewportWidth, viewportHeight);
+	rightEyeRenderTarget.allocate(viewportWidth, viewportHeight);
 }

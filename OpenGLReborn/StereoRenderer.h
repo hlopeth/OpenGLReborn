@@ -5,6 +5,9 @@
 #include "AbstractRenderer.h"
 #include "ResizeEvent.h"
 #include "Camera.h"
+#include "TextureRenderTarget.h"
+#include "Model.h"
+#include "FullscreenTextureMaterial.h"
 
 class StereoRenderer : public AbstractRenderer
 {
@@ -23,4 +26,8 @@ private:
 	GLFWwindow& window;
 	int viewportWidth = 0;
 	int viewportHeight = 0;
+	TextureRenderTarget leftEyeRenderTarget;
+	TextureRenderTarget rightEyeRenderTarget;
+	Model screenRect;
+	shared_ptr<FullscreenTextureMaterial> screenMaterial;
 };

@@ -20,3 +20,13 @@ shared_ptr<ModelMaterial> Model::getMaterial() const
 {
 	return material;
 }
+
+void Model::setMesh(shared_ptr<Mesh> _mesh)
+{
+	mesh = mesh;
+}
+
+void Model::setMaterial(shared_ptr<ModelMaterial> _material)
+{
+	material = _material;
+}

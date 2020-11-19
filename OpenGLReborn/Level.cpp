@@ -138,7 +138,7 @@ Level::Level():
 		GL_LINEAR_MIPMAP_LINEAR,
 		GL_LINEAR
 	);
-	/*shared_ptr<TerrainMaterial> terrainMaterial = make_shared<TerrainMaterial>(sandTexture, grassTexture, rockTexture);
+	shared_ptr<TerrainMaterial> terrainMaterial = make_shared<TerrainMaterial>(sandTexture, grassTexture, rockTexture);
 	int k = 1;
 	std::vector<std::future<Terrain*>> terrains;
 	for (int i = 0; i < 4; i++)
@@ -153,7 +153,7 @@ Level::Level():
 	{
 		terrains[i].wait();
 		scene.addGameObject(terrains[i].get());
-	}*/
+	}
 
 	//Water
 	shared_ptr<WaterMaterial> warerMaterial = make_shared<WaterMaterial>(glm::vec4(0, 0.467, 0.745, 0.8));

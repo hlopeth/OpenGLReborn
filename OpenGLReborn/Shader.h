@@ -37,6 +37,14 @@ public:
 	{
 		glUniform1f(findLocation(name), val);
 	}
+	void setUniform(string name, glm::mat2 val) const
+	{
+		glUniformMatrix2fv(findLocation(name), 1, GL_FALSE, glm::value_ptr(val));
+	}
+	void setUniform(string name, glm::mat3 val) const
+	{
+		glUniformMatrix3fv(findLocation(name), 1, GL_FALSE, glm::value_ptr(val));
+	}
 	void setUniform(string name, glm::mat4 val) const
 	{
 		glUniformMatrix4fv(findLocation(name), 1, GL_FALSE, glm::value_ptr(val));
