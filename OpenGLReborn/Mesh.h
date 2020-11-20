@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
 #include "GLTexture.h"
+#include "AABB.h"
 
 using namespace std;
 
@@ -13,33 +14,31 @@ struct Vertex {
 	glm::vec3 Position;
 	glm::vec3 Normal;
 	glm::vec2 TexCoords;
+	glm::vec3 Tangents;
+	glm::vec3 Bitangents;
 };
-
 
 class Mesh {
 public:
 	/*  Mesh Data  */
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
-	vector<GLTexture> diffuseTextures;
-	vector<GLTexture> ambientTextures;
-	vector<GLTexture> emissiveTextures;
-	vector<GLTexture> specularTextures;
-	glm::vec3 color;
 	/*  Functions  */
+	Mesh();
+	Mesh(const Mesh& mesh);
 	Mesh(
 		vector<Vertex> vertices, 
-		vector<unsigned int> indices,
-		glm::vec3 color,
-		vector<GLTexture> diffuseTextures = {},
-		vector<GLTexture> ambientTextures = {},
-		vector<GLTexture> emissiveTextures = {},
-		vector<GLTexture> specularTextures = {}
+		vector<unsigned int> indices
 	);
-	void Draw(ShaderProgram& shader);
+
+	const AABB& getAABB() const;
+	GLuint getVAO() const;
+	GLuint getVBO() const;
+	GLuint getEBO() const;
 private:
 	/*  Render data  */
-	unsigned int VAO, VBO, EBO;
+	GLuint VAO, VBO, EBO;
+	AABB aabb;
 	/*  Functions    */
 	void setupMesh();
 };

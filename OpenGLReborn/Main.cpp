@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "LevelManager.h"
 #include "PhysicsManager.h"
+#include "ModelLoaderManager.h"
 #include "InitialisationExeption.h"
 #include "Trace.h"
 
@@ -30,6 +31,7 @@ bool initialiseManagers()
 		RendererManager().initialise();
 		PhysicsManager().initialise();
 		LevelManager().initialize();
+		ModelLoaderManager().initialize();
 	}
 	catch (InitialisationExeption ex)
 	{
@@ -46,6 +48,7 @@ void destroyManagers()
 	RendererManager().destroy();
 	WindowManager().destroy();
 	PhysicsManager().destroy();
+	ModelLoaderManager().destroy();
 }
 
 void startGameLoop()
@@ -66,7 +69,7 @@ void startGameLoop()
 
 void updateTime(double& gameTime, double& deltaTime)
 {
-	double glfwTime = glfwGetTime();
+	double glfwTime = glfwGetTime() / 2.0;
 	deltaTime = glfwTime - gameTime;
 
 	//если прошло больше секунды с прошлого тика, то в этот тик время не идет.

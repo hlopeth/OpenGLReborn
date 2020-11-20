@@ -5,10 +5,12 @@ out vec4 FragColor;
 in vec2 texCoord;
 in vec3 normal;
 in vec3 fragPos;
+in vec3 alphas;
 
 struct DirectinalLight {
 	vec3 direction;
 	vec3 color;
+	vec3 ambient;
 };
 
 struct PointLight {
@@ -28,7 +30,9 @@ struct Material {
 	sampler2D texture_specular1;
 	vec3 color;
 };
-uniform Material material;
+uniform Material sandMaterial;
+uniform Material grassMaterial;
+uniform Material rockMaterial;
 
 uniform DirectinalLight directinalLight;
 uniform vec3 cameraPos;
@@ -82,13 +86,17 @@ vec4 calcPointLightsColor()
 
 vec4 calcDirLightColor() {
 	vec3 diffuse = vec3(max(dot(normal, directinalLight.direction), 0.0f));
-	return vec4(diffuse * directinalLight.color, 1.0);
+	return vec4(diffuse * directinalLight.color + directinalLight.ambient, 1.0);
 }
 
 void main()
 {
-	vec4 diffuseColor = texture(material.texture_diffuse1, texCoord);
+	vec4 sandColor = texture(sandMaterial.texture_diffuse1, texCoord);
+	vec4 grassColor = texture(grassMaterial.texture_diffuse1, texCoord);
+	vec4 rockColor = texture(rockMaterial.texture_diffuse1, texCoord);
+
+	vec4 diffuseColor = sandColor * alphas.x + grassColor * alphas.y + rockColor * alphas.z;
+
 	vec4 lightColor = calcPointLightsColor() + calcDirLightColor();
-	//lightColor = vec4(1.0);
     FragColor = diffuseColor * lightColor;
 } 

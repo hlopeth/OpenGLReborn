@@ -12,12 +12,11 @@ double noise(double x, double y, double f1, double f2, double f3, double s1, dou
 	return s1 * perlin.noise(f1 * x, f1 * y, 0) + s2 * perlin.noise(f2 * x, f2 * y, 10) + s3 * perlin.noise(f3 * x, f3 * y, 20);
 }
 
-Model TerrainGenerator::generate(int width, int height, int n)
+Mesh TerrainGenerator::generate(int width, int height, int n)
 {
 	using  std::vector;
 	auto vertices = vector<Vertex>(n * n);
 	auto indices = vector<unsigned int>(6 * (n - 1) * (n - 1));
-	auto textures = vector<GLTexture>(0);
 	auto color = vec3(0.0);
 
 	double x = 0.0;
@@ -73,6 +72,5 @@ Model TerrainGenerator::generate(int width, int height, int n)
 		x += (double)width / n;
 	}
 
-	auto meshes = vector<Mesh>{ Mesh(vertices, indices, color, textures) };
-	return Model(meshes);
+	return Mesh(vertices, indices);
 }

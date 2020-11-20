@@ -3,7 +3,7 @@
 
 namespace RenderingPrimitives
 {
-	Mesh Box(vector<GLTexture> textures, glm::vec3 color);
-	Mesh Plane(vector<GLTexture> textures, glm::vec3 color);
+	Mesh Box();
+	Mesh Plane();
 	GLTexture DefaultGLTexture();
 }

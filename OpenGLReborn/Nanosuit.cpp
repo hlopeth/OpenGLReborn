@@ -1,48 +1,82 @@
 #include "Nanosuit.h"
-#include "Trace.h"
+#include "NanosuitMaterial.h"
+#include "ModelLoaderManager.h"
+#include "GLTexture.h"
 
 #define PATH_TO_MODEL "assets/nanosuit/nanosuit.obj"
-#define VERTEX_SHADER "NanosuitVertex.glsl"
-#define FRAGMENT_SHADER "NanosuitFragment.glsl"
 
-Nanosuit::Nanosuit(): 
-	model(PATH_TO_MODEL),
-	shaderProgram(VERTEX_SHADER, FRAGMENT_SHADER)
-{}
-
-Model& Nanosuit::getModel()
+std::vector<Model> loadModels()
 {
-	return model;
+	shared_ptr<ModelData> modelData = MODEL_LOADER.loadModel(PATH_TO_MODEL);
+	std::vector<Model> models;
+	for (int i = 0; i < modelData->size(); i++)
+	{
+		auto node = (*modelData)[i];
+
+		GLTexture diffuseGLTexture, specularGLTexture, normalGLTexture;
+		bool useSpecular = false;
+
+		for (int j = 0; j < node.textures.size(); j++)
+		{
+			switch (node.textures[j]->type)
+			{
+			case TextureType::DIFFUSE: 
+			{
+				Texture diffuseTexture = *node.textures[j];
+				diffuseGLTexture = GLTexture(diffuseTexture, GL_RGBA);
+				break;
+			}
+			case TextureType::SPECULAR:
+			{
+				Texture specularTexture = *node.textures[j];
+				specularGLTexture = GLTexture(specularTexture, GL_RGBA);
+				useSpecular = true;
+				break;
+			}
+			case TextureType::NORMAL:
+			{
+				Texture normalTexture = *node.textures[j];
+				normalGLTexture = GLTexture(normalTexture, GL_RGB);
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+		NanosuitMaterial material(
+			diffuseGLTexture,
+			specularGLTexture,
+			normalGLTexture,
+			node.color,
+			useSpecular
+		);
+
+		models.push_back(
+			Model(
+				make_shared<Mesh>(node.mesh.vertices, node.mesh.indices),
+				make_shared<NanosuitMaterial>(material)
+			)
+		);
+	}
+
+	return models;
+}
+
+Nanosuit::Nanosuit()
+{
+	models = loadModels();
+}
+
+const std::vector<Model>& Nanosuit::getModel() const
+{
+	return models;
 }
 
 void Nanosuit::draw(RenderData& rd)
 {
-	shaderProgram.use();
-	auto modelMat = getModelMatrix();
-	auto mvp = rd.camera.getViewProjection() * modelMat;
-	shaderProgram.setUniform("mvp", mvp);
-	shaderProgram.setUniform("model", modelMat);
-	shaderProgram.setUniform("cameraPos", rd.camera.pos);
-	PointLight* pointLight = nullptr;
-	int pointLightsSize = rd.pointLights.size();
-	shaderProgram.setUniform("n_pointLights", pointLightsSize);
-	for (unsigned int i = 0; i < pointLightsSize; i++)
+	for (int i = 0; i < models.size(); i++)
 	{
-		pointLight = rd.pointLights[i];
-		char ch_i = '0' + i;
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].position", pointLight->position);
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].ambient", pointLight->ambient);
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].diffuse", pointLight->diffuse);
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].specular", pointLight->specular);
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].constant", pointLight->constant);
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].linear", pointLight->linear);
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].quadratic", pointLight->quadratic);
-		shaderProgram.setUniform(string("pointLights[") + ch_i + "].farPlane", pointLight->farPlane);
+		models[i].draw(rd);
 	}
-	model.Draw(shaderProgram);
-}
-
-void Nanosuit::setModel(Model& model)
-{
-	this->model = model;
 }

@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SelectableComponent.cpp" />
+    <ClCompile Include="SelectEvent.cpp" />
+    <ClCompile Include="UnitColorMaterial.cpp" />
     <ClCompile Include="BoxPhysicsShape.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -151,20 +155,27 @@
     <ClCompile Include="ExitEvent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="HeightfieldPhysicsBody.cpp" />
     <ClCompile Include="KeyEvent.cpp" />
     <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MeshPrimitives.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="ModelLoaderManager.cpp" />
+    <ClCompile Include="ModelReadExeprion.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
+    <ClCompile Include="NanosuitMaterial.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="AbstractPhysicsBody.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RenderData.cpp" />
+    <ClCompile Include="SingleTextureMaterial.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="TerrainMaterial.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureReadExeption.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
@@ -194,6 +205,8 @@
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="VerticalLayout.cpp" />
     <ClCompile Include="VrRenderer.cpp" />
+    <ClCompile Include="Water.cpp" />
+    <ClCompile Include="WaterMaterial.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -223,9 +236,16 @@
     <None Include="NanosuitVertex.glsl" />
     <None Include="UIRectFragment.glsl" />
     <None Include="UIRectVertex.glsl" />
+    <None Include="waterFragment.glsl" />
+    <None Include="waterVertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SelectableComponent.h" />
+    <ClInclude Include="SelectEvent.h" />
+    <ClInclude Include="UnitColorMaterial.h" />
     <ClInclude Include="BoxPhysicsShape.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Canvas.h" />
@@ -235,24 +255,31 @@
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventComponent.h" />
-    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventHandlers.h" />
     <ClInclude Include="EventHandlerBase.h" />
     <ClInclude Include="ExitEvent.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HeightfieldPhysicsBody.h" />
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="Lamp.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MeshPrimitives.h" />
+    <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="ModelLoaderManager.h" />
+    <ClInclude Include="ModelReadExeprion.h" />
     <ClInclude Include="MouseClickEvent.h" />
     <ClInclude Include="AbstractPhysicsBody.h" />
+    <ClInclude Include="NanosuitMaterial.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RenderData.h" />
+    <ClInclude Include="SingleTextureMaterial.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="TerrainMaterial.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureReadExeption.h" />
     <ClInclude Include="UIEvent.h" />
@@ -273,7 +300,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="PointLight.h" />
-    <ClInclude Include="Material.h" />
+    <ClInclude Include="AbstractMaterial.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RendererManager.h" />
     <ClInclude Include="Scene.h" />
@@ -286,6 +313,8 @@
     <ClInclude Include="UIRect.h" />
     <ClInclude Include="VerticalLayout.h" />
     <ClInclude Include="VrRenderer.h" />
+    <ClInclude Include="Water.h" />
+    <ClInclude Include="WaterMaterial.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>

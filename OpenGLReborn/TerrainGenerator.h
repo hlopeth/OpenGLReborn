@@ -1,8 +1,8 @@
 #pragma once
-#include "Model.h"
+#include "Mesh.h"
 
 class TerrainGenerator
 {
 public:
-	static Model generate(int width, int height, int n);
+	static Mesh generate(int width, int height, int n);
 };

@@ -22,13 +22,15 @@ public:
 	void call(const Event& event) override;
 	virtual void afterPhysicsUpdate();
 	void addChild(GameObject* child);
+	virtual void update(double gameTime, double deltaTime);
 	virtual void draw(RenderData& renderData) = 0;
 	bool usePhysics();
+	mat4 getModelMatrix();
 	~GameObject();
 
 	AbstractPhysicsBody* physicsBody = nullptr;
+	bool selectable = false;
 protected:
-	mat4 getModelMatrix();
 	GameObject* parent = nullptr;
 	vector<GameObject*> childs;
 private:

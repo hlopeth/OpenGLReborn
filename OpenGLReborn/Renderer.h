@@ -6,12 +6,14 @@
 #include "Level.h"
 #include "ResizeEvent.h"
 #include "EventComponent.h"
+#include "Shader.h"
 
 class Renderer : public EventComponent
 {
 public:
 	Renderer(GLFWwindow& window);
 	~Renderer();
+	void checkGLErrors();
 	void draw(Level& level);
 	void resize(const ResizeEvent& event);
 
@@ -21,4 +23,5 @@ private:
 	GLFWwindow& window;
 	int viewportWidth = 0;
 	int viewportHeight = 0;
+	ShaderProgram outlineShader;
 };

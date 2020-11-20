@@ -12,7 +12,7 @@ Camera::Camera(vec3 _Pos, vec3 _Front, vec3 _Up) :
 	float aspect = WindowManager::windowWidth / (float)WindowManager::windowHeight;
 	float fov = 60.0;
 	float near = 0.1;
-	float far = 1000.0;
+	float far = 10000.0;
 	projection = glm::perspective(glm::radians(fov), aspect, near, far);
 
 	setEventHandler<Camera, MouseMoveEvent>(this, &Camera::onMouse);
@@ -42,7 +42,10 @@ vec3 Camera::Right()
 
 void Camera::update(double time, double deltaTime)
 {
-	float cameraSpeed = 10.0f * deltaTime;
+	if (!moveCamera || locked)
+		return;
+	float cameraSpeed = speed * deltaTime;
+	if (sprint) cameraSpeed *= 10;
 	if (moveForvard)
 	{
 		pos += cameraSpeed * front;
@@ -69,9 +72,19 @@ void Camera::update(double time, double deltaTime)
 	}
 }
 
+void Camera::lock()
+{
+	locked = true;
+}
+
+void Camera::free()
+{
+	locked = false;
+}
+
 void Camera::onMouse(const MouseMoveEvent& event)
 {
-	if (!moveCamera)
+	if (!moveCamera || locked)
 		return;
 	
 	cameraYaw += event.xOffset;
@@ -113,6 +126,9 @@ void Camera::onKey(const KeyEvent& event)
 		break;
 	case GLFW_KEY_E:
 		moveUp = pressed;
+		break;
+	case  GLFW_KEY_LEFT_SHIFT:
+		sprint = pressed;
 		break;
 	}
 }

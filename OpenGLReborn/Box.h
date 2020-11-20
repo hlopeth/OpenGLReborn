@@ -1,14 +1,11 @@
 #pragma once
-#include "GameObject.h"
-#include "Mesh.h"
-#include "Shader.h"
+#include "Model.h"
+#include "SelectableComponent.h"
 
-class Box : public GameObject
+class Box : public Model
 {
 public:
-	Box(glm::vec3 color = glm::vec3(0.2));
-	void draw(RenderData& renderData) override;
-	Mesh mesh;
-private:
-	ShaderProgram shader;
+	Box(shared_ptr<ModelMaterial> material);
+	void update(double gameTime, double deltaTime) override;
+	SelectableComponent selectableComponent;
 };

@@ -1,5 +1,6 @@
 #include "Physics.h"
 #include "LevelManager.h"
+#include <bullet/btBulletCollisionCommon.h>
 
 Physics::Physics()
 {
@@ -31,9 +32,10 @@ void Physics::update(double time, double deltaTime)
 	LEVEL.afterPhysicsUpdate();
 }
 
-void Physics::addRigitBody(btRigidBody* body)
+void Physics::addRigitBody(btRigidBody* rigitBody, AbstractPhysicsBody* abstractPhysicsBody)
 {
-	dynamicsWorld->addRigidBody(body);
+	rigitBodyToAbstactPhysicsBody[rigitBody] = abstractPhysicsBody;
+	dynamicsWorld->addRigidBody(rigitBody);
 }
 
 btCollisionShape* Physics::createBoxShape(glm::vec3 size)
@@ -44,11 +46,42 @@ btCollisionShape* Physics::createBoxShape(glm::vec3 size)
 
 void Physics::removeRigidBody(btRigidBody* body)
 {
+	rigitBodyToAbstactPhysicsBody[body] = nullptr;
 	dynamicsWorld->removeRigidBody(body);
 	body = nullptr;
 }
 
-btVector3 Physics::tobtVector3(vec3 vector)
+bool Physics::rayCast(const vec3& _from, const vec3& _to, vec3& oHitPoint, vec3& oHitNormal, AbstractPhysicsBody* &outBody)
+{
+	btVector3 from = to_btVector3(_from);
+	btVector3 to = to_btVector3(_to);
+	btCollisionWorld::ClosestRayResultCallback rayCallback(from, to);
+
+	dynamicsWorld->rayTest(from, to, rayCallback);
+	if (rayCallback.hasHit()) 
+	{
+		oHitPoint = to_vec3(rayCallback.m_hitPointWorld);
+		oHitNormal = to_vec3(rayCallback.m_hitNormalWorld);
+		auto abstractPhysicsBody = rigitBodyToAbstactPhysicsBody.find((btRigidBody*)rayCallback.m_collisionObject);
+		if (abstractPhysicsBody != rigitBodyToAbstactPhysicsBody.end()) 
+		{
+			outBody = abstractPhysicsBody->second;
+		}
+		else
+		{
+			outBody = nullptr;
+		}
+		return true;
+	}
+	return false;
+}
+
+vec3 Physics::to_vec3(btVector3 vector)
+{
+	return vec3(vector.x(), vector.y(), vector.z());
+}
+
+btVector3 Physics::to_btVector3(vec3 vector)
 {
 	return btVector3(btScalar(vector.x), btScalar(vector.y), btScalar(vector.z));
 }

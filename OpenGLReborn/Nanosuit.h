@@ -2,14 +2,12 @@
 #include "GameObject.h"
 #include "ModelComponent.h"
 
-class Nanosuit : public GameObject, ModelComponent
+class Nanosuit : public GameObject
 {
 public:
 	Nanosuit();
-	Model& getModel() override;
+	const std::vector<Model>& getModel() const;
 	void draw(RenderData& renderData) override;
 private:
-	void setModel(Model& model) override;
-	Model model;
-	ShaderProgram shaderProgram;
+	std::vector<Model> models;
 };

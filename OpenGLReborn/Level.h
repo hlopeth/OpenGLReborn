@@ -4,6 +4,7 @@
 #include "UIRoot.h"
 #include "EventComponent.h"
 #include "ExitEvent.h"
+#include "Model.h"
 
 class Level: public EventComponent
 {
@@ -15,6 +16,7 @@ public:
 	UIRoot& getUIRoot();
 	void afterPhysicsUpdate();
 	void call(const Event& event) override;
+	Model* selectedModel = nullptr;
 private:
 	Camera camera;
 	Scene scene;

@@ -52,44 +52,6 @@ GLTexture::~GLTexture()
 {
 }
 
-void checkGLErrors1()
-{
-	GLenum err;
-	while ((err = glGetError()) != GL_NO_ERROR)
-	{
-		switch (err)
-		{
-		case GL_INVALID_ENUM:
-			trace("GL_INVALID_ENUM");
-			break;
-		case GL_INVALID_VALUE:
-			trace("GL_INVALID_ENUM");
-			break;
-		case GL_INVALID_OPERATION:
-			trace("GL_INVALID_OPERATION");
-			break;
-		case GL_STACK_OVERFLOW:
-			trace("GL_STACK_OVERFLOW");
-			break;
-		case GL_STACK_UNDERFLOW:
-			trace("GL_STACK_UNDERFLOW");
-			break;
-		case GL_OUT_OF_MEMORY:
-			trace("GL_OUT_OF_MEMORY");
-			break;
-		case GL_INVALID_FRAMEBUFFER_OPERATION:
-			trace("GL_INVALID_FRAMEBUFFER_OPERATION");
-			break;
-		case GL_CONTEXT_LOST:
-			trace("GL_CONTEXT_LOST");
-			break;
-		default:
-			trace("GL_UNNOWN_ERROR");
-			break;
-		}
-	}
-}
-
 void GLTexture::init(
 	Texture texture, 
 	GLint wrapS, 
@@ -108,11 +70,8 @@ void GLTexture::init(
 	}
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
-	checkGLErrors1();
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-	checkGLErrors1();
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-	checkGLErrors1();
 	if (useAnisotropicFiltering && GLAD_GL_EXT_texture_filter_anisotropic) {
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, 5.0f);
 	}

@@ -17,6 +17,7 @@ public:
 	glm::vec3 pos;
 	glm::vec3 front;
 	glm::vec3 up;
+	float speed = 20.0;
 	
 	Camera(vec3 _Pos, vec3 _Front, vec3 _Up);
 	mat4 getView();
@@ -24,6 +25,8 @@ public:
 	mat4 getViewProjection();
 	vec3 Right();
 	void update(double time, double deltaTime);
+	void lock();
+	void free();
 private:
 	void onMouse(const MouseMoveEvent& event);
 	void onKey(const KeyEvent& event);
@@ -38,4 +41,6 @@ private:
 	bool moveRight = false;
 	bool moveUp = false;
 	bool moveDown = false;
+	bool sprint = false;
+	bool locked = false;
 };
