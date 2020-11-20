@@ -2,7 +2,7 @@
 #include "MeshPrimitives.h"
 
 const float eyeDist = 0.1; 
-const float convergenceDist = 50;
+const float convergenceDist = 10;
 
 StereoRenderer::StereoRenderer(GLFWwindow& _window):
 	window(_window),
