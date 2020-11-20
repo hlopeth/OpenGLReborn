@@ -8,8 +8,12 @@ using std::vector;
 
 struct RenderData
 {
-	RenderData(Camera& camera, vector<PointLight*> pointLights, DirectinalLight* dirextinalLight);
-	Camera& camera;
-	vector<PointLight*> pointLights;
-	DirectinalLight* dirextinalLight;
+	RenderData(
+		const Camera& camera,
+		const vector<PointLight*>& pointLights, 
+		const DirectinalLight* dirextinalLight
+	);
+	const Camera& camera;
+	const vector<PointLight*>& pointLights;
+	const DirectinalLight* dirextinalLight;
 };

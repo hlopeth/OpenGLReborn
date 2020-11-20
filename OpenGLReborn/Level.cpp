@@ -198,12 +198,22 @@ Camera& Level::getCamera()
 	return camera;
 }
 
+const Camera& Level::getCamera() const
+{
+	return camera;
+}
+
 Scene& Level::getScene()
 {
 	return scene;
 }
 
-UIRoot& Level::getUIRoot()
+const Scene& Level::getScene() const
+{
+	return scene;
+}
+
+const UIRoot& Level::getUIRoot() const
 {
 	return uiRoot;
 }

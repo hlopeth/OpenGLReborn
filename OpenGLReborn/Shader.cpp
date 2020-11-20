@@ -79,12 +79,12 @@ string ShaderProgram::getSource(string fileName)
 	return shaderSource;
 }
 
-void ShaderProgram::use()
+void ShaderProgram::use() const
 {
 	glUseProgram(id);
 }
 
-GLint ShaderProgram::findLocation(string name)
+GLint ShaderProgram::findLocation(const string& name) const
 {
 	auto location = glGetUniformLocation(id, name.c_str());
 	/*if (location == -1)

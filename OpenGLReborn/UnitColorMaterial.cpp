@@ -12,7 +12,7 @@ UnitColorMaterial::UnitColorMaterial(const UnitColorMaterial& material):
 
 }
 
-void UnitColorMaterial::draw(Model& model, const RenderData& renderData)
+void UnitColorMaterial::draw(const Model& model, const RenderData& renderData) const
 {
 	shaderProgram.use();
 	auto modelMat = model.getModelMatrix();

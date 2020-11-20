@@ -8,6 +8,6 @@ namespace UI
 	public:
 		Button();
 		int getMaxChildren() override;
-		void draw() override;
+		void draw() const override;
 	};
 }

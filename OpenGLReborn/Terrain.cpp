@@ -7,12 +7,14 @@ Terrain::Terrain(Texture heightMap, shared_ptr<TerrainMaterial> _material): mate
 	generateMesh(heightMap);
 }
 
-void Terrain::draw(RenderData& renderData)
+void Terrain::draw(RenderData& renderData) const
 {
+	//TODO вынести из const метода
 	if (shouldUpload) 
 	{
-		upload();
-		shouldUpload = false;
+		auto* p_this = const_cast<Terrain*>(this);
+		p_this->upload();
+		p_this->shouldUpload = false;
 	}
 	material->draw(VAO, indices.size(), getModelMatrix(), renderData);
 }

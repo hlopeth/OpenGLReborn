@@ -19,19 +19,31 @@ public:
 	glm::vec3 up;
 	float speed = 20.0;
 	
-	Camera(vec3 _Pos, vec3 _Front, vec3 _Up);
-	mat4 getView();
-	mat4 getProjection();
-	mat4 getViewProjection();
-	vec3 Right();
+	Camera(
+		vec3 pos,
+		vec3 front, 
+		vec3 up,
+		float near = 0.1f, 
+		float far = 10000.f);
+	Camera(vec3 pos, vec3 front, vec3 up, mat4 projection);
+	mat4 getView() const;
+	mat4 getProjection() const;
+	mat4 getViewProjection() const;
+	vec3 Right() const;
+	float Near() const;
+	float Far() const;
 	void update(double time, double deltaTime);
 	void lock();
 	void free();
+
+	const float fov = 60.0;
 private:
 	void onMouse(const MouseMoveEvent& event);
 	void onKey(const KeyEvent& event);
 	void onRightClick(const MouseRightClickEvent& event);
 	glm::mat4 projection;
+	float near;
+	float far;
 	float cameraYaw = -90.0f;
 	float cameraPitch = 0.0f;
 	double deltaTime = 0;

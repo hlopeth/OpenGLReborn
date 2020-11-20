@@ -2,19 +2,16 @@
 #ifndef __gl_h_
 #include <glad/glad.h>
 #endif
-#include <GLFW/glfw3.h>
-#include "Level.h"
+#include "AbstractRenderer.h"
 #include "ResizeEvent.h"
-#include "EventComponent.h"
 #include "Shader.h"
 
-class Renderer : public EventComponent
+class Renderer : public AbstractRenderer
 {
 public:
 	Renderer(GLFWwindow& window);
 	~Renderer();
-	void checkGLErrors();
-	void draw(Level& level);
+	virtual void draw(Level& level) override;
 	void resize(const ResizeEvent& event);
 
 	static const int glMajorVersion = 4;

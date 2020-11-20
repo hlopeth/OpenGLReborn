@@ -94,6 +94,9 @@
     <Filter Include="Исходные файлы\shaders\WaterShader">
       <UniqueIdentifier>{6d8b92b5-556c-4a03-9c1e-1584711bce58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Render">
+      <UniqueIdentifier>{58112434-a0c8-43ff-ac6c-0cd5aa962999}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -303,6 +306,15 @@
     <ClCompile Include="SelectableComponent.cpp">
       <Filter>Исходные файлы\Components</Filter>
     </ClCompile>
+    <ClCompile Include="StereoRenderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRenderTarget.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FullscreenTextureMaterial.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="lampFragment.glsl">
@@ -416,9 +428,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="DirectinalLight.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -618,6 +627,21 @@
     </ClInclude>
     <ClInclude Include="SelectEvent.h">
       <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractRenderer.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="StereoRenderer.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderTarget.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FullscreenTextureMaterial.h">
+      <Filter>Файлы заголовков\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

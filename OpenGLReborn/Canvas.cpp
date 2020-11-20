@@ -5,7 +5,7 @@ int UI::Canvas::getMaxChildren()
 	return maxChildren;
 }
 
-void UI::Canvas::draw()
+void UI::Canvas::draw() const
 {
 	drawChildren();
 }

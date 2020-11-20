@@ -6,7 +6,7 @@ class WaterMaterial : public ModelMaterial
 {
 public:
 	WaterMaterial(vec4 color);
-	void draw(Model& model, const RenderData& rd) override;
+	void draw(const Model& model, const RenderData& rd) const override;
 	float time = 0;
 private:
 	vec4 color;

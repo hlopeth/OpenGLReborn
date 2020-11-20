@@ -8,6 +8,11 @@ in vec3 vFragPos;
 in vec3 vTangent;
 in vec3 vBitangent;
 
+struct DirectinalLight {
+	vec3 direction;
+	vec3 color;
+};
+
 struct Material {
 	sampler2D texture_diffuse0;
 	sampler2D texture_specular0;
@@ -31,6 +36,7 @@ uniform mat4x4 model;
 uniform Material material;
 uniform int n_pointLights;
 uniform PointLight pointLights[max_pointLights];
+uniform DirectinalLight directinalLight;
 
 float calcDiffusion(vec3 pointLighPos, vec3 normal, vec3 fragPos)
 {
@@ -66,6 +72,11 @@ vec3 getNormal()
     return normalize(normal * 2.0 - 1.0); 
 }
 
+vec4 calcDirLightColor() {
+	vec3 diffuse = vec3(max(dot(vNormal, directinalLight.direction), 0.2f));
+	return vec4(diffuse * directinalLight.color, 1.0);
+}
+
 vec4 calcLightColor()
 {
 	mat3 TBN = getTBN();
@@ -93,7 +104,7 @@ vec4 calcLightColor()
 
 		resultLight += attenuation * (diffuseColor + specularColor + ambientColor);
 	}
-	return resultLight;
+	return resultLight + calcDirLightColor();
 }
 
 void main()

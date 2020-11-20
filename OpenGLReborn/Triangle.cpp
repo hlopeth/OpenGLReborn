@@ -30,7 +30,7 @@ Triangle::~Triangle()
 	glDeleteBuffers(1, &VBO);
 }
 
-void Triangle::draw(RenderData& renderData)
+void Triangle::draw(RenderData& renderData) const
 {
 	shaderProgram.use();
 	glBindVertexArray(VAO);

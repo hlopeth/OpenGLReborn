@@ -140,9 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="FullscreenTextureMaterial.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SelectableComponent.cpp" />
     <ClCompile Include="SelectEvent.cpp" />
+    <ClCompile Include="StereoRenderer.cpp" />
+    <ClCompile Include="TextureRenderTarget.cpp" />
     <ClCompile Include="UnitColorMaterial.cpp" />
     <ClCompile Include="BoxPhysicsShape.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -241,10 +244,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="AbstractRenderer.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="FullscreenTextureMaterial.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SelectableComponent.h" />
     <ClInclude Include="SelectEvent.h" />
+    <ClInclude Include="StereoRenderer.h" />
+    <ClInclude Include="TextureRenderTarget.h" />
     <ClInclude Include="UnitColorMaterial.h" />
     <ClInclude Include="BoxPhysicsShape.h" />
     <ClInclude Include="Button.h" />

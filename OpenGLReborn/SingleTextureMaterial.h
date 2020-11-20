@@ -7,7 +7,7 @@ class SingleTextureMaterial : public ModelMaterial
 {
 public:
 	SingleTextureMaterial(GLTexture diffuseTexture, glm::vec3 color = glm::vec3(0.0));
-	virtual void draw(Model& model, const RenderData& renderData) override;
+	virtual void draw(const Model& model, const RenderData& renderData) const override;
 	GLTexture diffuseTexture;
 	glm::vec3 color;
 private:

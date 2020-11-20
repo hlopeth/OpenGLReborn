@@ -57,7 +57,7 @@ int UI::UIRect::getMaxChildren()
 	return 0;
 }
 
-void UIRect::draw()
+void UIRect::draw() const
 {
 	shader.use();
 	vec4 u_transform = vec4(

@@ -14,7 +14,7 @@ struct TerrainVertex
 class Terrain : public GameObject {
 public:
 	Terrain(Texture heightMap, shared_ptr<TerrainMaterial> material);
-	void draw(RenderData& renderData) override;
+	void draw(RenderData& renderData) const override;
 	float getLowestPoint() const;
 	float getHightestPoint() const;
 private:

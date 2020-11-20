@@ -13,13 +13,15 @@ class Scene
 {
 public:
 	vector<GameObject*>& getGameObjects();
+	const vector<GameObject*>& getGameObjects() const;
 	vector<PointLight*>& getPointLights();
+	const vector<PointLight*>& getPointLights() const;
 	void addGameObject(GameObject* gameObject);
 	bool addPointLight(PointLight* pointLight);
 	void setSkyBox(SkyBox* skyBox);
-	SkyBox* getSkyBox();
+	const SkyBox* getSkyBox() const;
 	void setDirectinalLight(DirectinalLight* directinalLight);
-	DirectinalLight* getDirectinalLight();
+	const DirectinalLight* getDirectinalLight() const;
 
 	//DirectinalLight* directinalLight;
 private:

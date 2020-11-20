@@ -87,9 +87,10 @@ GameObject::~GameObject()
 	physicsBody = nullptr;
 }
 
-mat4 GameObject::getModelMatrix() 
+const mat4 GameObject::getModelMatrix() const
 {
 	if (modelMatrixIsDirty) {
+		//TODO теренести из const метода
 		modelMatrix = mat4(1.0);
 		modelMatrix = glm::translate(modelMatrix, position);
 		modelMatrix = glm::rotate(modelMatrix, rotation.x, vec3(1.0, 0.0, 0.0));

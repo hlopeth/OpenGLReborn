@@ -13,7 +13,7 @@ public:
 		glm::vec3 color,
 		bool _useSpecular
 	);
-	virtual void draw(Model& model, const RenderData& renderData) override;
+	virtual void draw(const Model& model, const RenderData& renderData) const override;
 private:
 	GLTexture diffuseTexture;
 	GLTexture specularTexture;

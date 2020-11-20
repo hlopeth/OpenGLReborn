@@ -67,7 +67,7 @@ SkyBox::SkyBox(CubeTexture _texture): texture(_texture)
     glBindVertexArray(0);
 }
 
-void SkyBox::draw(RenderData& renderData)
+void SkyBox::draw(RenderData& renderData) const
 {
     shader.use();
     mat4 mvp = renderData.camera.getProjection() *

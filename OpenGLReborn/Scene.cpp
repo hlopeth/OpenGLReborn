@@ -5,7 +5,17 @@ vector<GameObject*>& Scene::getGameObjects()
 	return gameObjects;
 }
 
+const vector<GameObject*>& Scene::getGameObjects() const
+{
+	return gameObjects;
+}
+
 vector<PointLight*>& Scene::getPointLights()
+{
+	return pointLights;
+}
+
+const vector<PointLight*>& Scene::getPointLights() const
 {
 	return pointLights;
 }
@@ -37,12 +47,12 @@ void Scene::setDirectinalLight(DirectinalLight* _directinalLight)
 	directinalLight = _directinalLight;
 }
 
-DirectinalLight* Scene::getDirectinalLight()
+const DirectinalLight* Scene::getDirectinalLight() const
 {
 	return directinalLight;
 }
 
-SkyBox* Scene::getSkyBox()
+const SkyBox* Scene::getSkyBox() const
 {
 	return skyBox;
 }

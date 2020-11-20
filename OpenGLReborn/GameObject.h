@@ -23,9 +23,9 @@ public:
 	virtual void afterPhysicsUpdate();
 	void addChild(GameObject* child);
 	virtual void update(double gameTime, double deltaTime);
-	virtual void draw(RenderData& renderData) = 0;
+	virtual void draw(RenderData& renderData) const = 0;
 	bool usePhysics();
-	mat4 getModelMatrix();
+	const mat4 getModelMatrix() const;
 	~GameObject();
 
 	AbstractPhysicsBody* physicsBody = nullptr;
@@ -37,6 +37,6 @@ private:
 	vec3 position;
 	vec3 scale;
 	vec3 rotation;
-	mat4 modelMatrix;
-	bool modelMatrixIsDirty = true;
+	mutable mat4 modelMatrix;
+	mutable bool modelMatrixIsDirty = true;
 };

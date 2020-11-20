@@ -19,7 +19,7 @@ NanosuitMaterial::NanosuitMaterial(
 {
 }
 
-void NanosuitMaterial::draw(Model& model, const RenderData& rd)
+void NanosuitMaterial::draw(const Model& model, const RenderData& rd) const
 {
 	shaderProgram.use();
 	auto modelMat = model.getModelMatrix();
@@ -47,6 +47,10 @@ void NanosuitMaterial::draw(Model& model, const RenderData& rd)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, diffuseTexture.getID());
 	shaderProgram.setUniform("material.texture_diffuse0", 0);
+
+	shaderProgram.setUniform("directinalLight.direction", rd.dirextinalLight->direction);
+	shaderProgram.setUniform("directinalLight.color", rd.dirextinalLight->color);
+	shaderProgram.setUniform("directinalLight.ambient", rd.dirextinalLight->ambient);
 
 	if (useSpecular) 
 	{

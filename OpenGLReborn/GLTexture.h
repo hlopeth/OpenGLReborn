@@ -3,6 +3,8 @@
 #include <glad/glad.h>
 #include "Texture.h"
 
+class TextureRenderTarget;
+
 //Представление текстуры в видеопамяти, не хранит данные о загруженной текстуре
 class GLTexture {
 public:
@@ -25,6 +27,7 @@ public:
 		int format = GL_RGBA,
 		bool useMipMaps = true
 	);
+	void allocate(size_t width, size_t height);
 	void upload(Texture texture);
 	void bind() const;
 	GLuint getID() const;
@@ -35,7 +38,8 @@ protected:
 	GLuint id;
 private:
 	void init(
-		Texture texture,
+		Texture* texture,
+		GLint format,
 		GLint wrapS = GL_REPEAT,
 		GLint wrapT = GL_REPEAT,
 		GLint minFilter = GL_LINEAR,
@@ -43,4 +47,5 @@ private:
 		bool useMipMaps = true,
 		bool useAnisotropicFiltering = true
 	);
+	friend TextureRenderTarget;
 };
