@@ -59,8 +59,11 @@ project(Engine)
     target_link_libraries(Engine PUBLIC BulletDynamics)
     
     #assimp
-    find_library(ASSIMP_LIBRARY NAMES assimp-vc140-mt.lib PATHS ${LIBRARY_DIR})
-    target_link_libraries(Engine PUBLIC ${ASSIMP_LIBRARY})
+    set(ASSIMP_INSTALL OFF)
+    set(ASSIMP_DIR thirdParty/assimp)
+    include_directories(${ASSIMP_DIR}/include/assimp)
+    add_subdirectory(${ASSIMP_DIR})
+    target_link_libraries(Engine PUBLIC assimp)
 
 
     target_include_directories(
@@ -69,14 +72,14 @@ project(Engine)
         "${INCLUDE_DIR}"
     )
 
-    #copy zlib
+    file(GLOB_RECURSE SHADERS "${Engine_SRC_DIR}/*.glsl")
     add_custom_command(TARGET Engine POST_BUILD        
         COMMAND ${CMAKE_COMMAND} -E copy_if_different  
-            "${LIBRARY_DIR}/zlibd.dll"      
+            ${SHADERS}      
             $<TARGET_FILE_DIR:Engine>) 
 
-    #copy assimp
-    add_custom_command(TARGET Engine POST_BUILD        
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different  
-            "${LIBRARY_DIR}/assimp-vc140-mt.dll"      
-            $<TARGET_FILE_DIR:Engine>) 
+    # #copy assimp
+    # add_custom_command(TARGET Engine POST_BUILD        
+    #     COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+    #         "${LIBRARY_DIR}/assimp-vc140-mt.dll"      
+    #         $<TARGET_FILE_DIR:Engine>) 

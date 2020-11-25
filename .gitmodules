@@ -12,3 +12,7 @@
 [submodule "thirdParty/bullet3"]
 	path = thirdParty/bullet3
 	url = https://github.com/bulletphysics/bullet3
+[submodule "thirdParty/assimp"]
+	path = thirdParty/assimp
+	url = https://github.com/assimp/assimp
+	branch = assimp_5.0_release
