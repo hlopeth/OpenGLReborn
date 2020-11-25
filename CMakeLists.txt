@@ -1,0 +1,67 @@
+cmake_minimum_required(VERSION 3.10)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+set(Engine_SRC_DIR ${CMAKE_SOURCE_DIR}/OpenGLReborn)
+
+if(WIN32)
+    set(LIBRARY_DIR ${CMAKE_SOURCE_DIR}/libs/Debug/Win32)
+endif (WIN32)
+
+if(WIN64)
+    set(LIBRARY_DIR ${CMAKE_SOURCE_DIR}/libs/Debug/x64)
+endif (WIN64)
+
+
+project(Engine)
+    file(GLOB_RECURSE Engine_SRC "${Engine_SRC_DIR}/*.h" "${Engine_SRC_DIR}/*.cpp" "${Engine_SRC_DIR}/*.c")
+
+    add_executable(Engine ${Engine_SRC})
+
+    #openGL
+    find_package(OpenGL REQUIRED)
+    target_link_libraries(Engine PUBLIC ${OPENGL_LIBRARY})
+
+    #glfw
+    find_library(GLFW_LIBRARY NAMES glfw3.lib PATHS ${LIBRARY_DIR})
+    target_link_libraries(Engine PUBLIC ${GLFW_LIBRARY})
+
+    #zlib
+    find_library(ZLIB_LIBRARY NAMES zlibd.lib PATHS ${LIBRARY_DIR})
+    target_link_libraries(Engine PUBLIC ${ZLIB_LIBRARY} )
+
+    #libpng
+    find_library(LIBPNG_LIBRARY NAMES libpng16_staticd.lib PATHS ${LIBRARY_DIR})
+    target_link_libraries(Engine PUBLIC ${LIBPNG_LIBRARY})
+
+    #bullet
+    find_library(BULLET_LINEAR_MATH_LIBRARY NAMES LinearMath_Debug.lib PATHS ${LIBRARY_DIR})
+    target_link_libraries(Engine PUBLIC ${BULLET_LINEAR_MATH_LIBRARY})
+    find_library(BULLET_COLLISION_LIBRARY NAMES BulletCollision_Debug.lib PATHS ${LIBRARY_DIR})
+    target_link_libraries(Engine PUBLIC ${BULLET_COLLISION_LIBRARY})
+    find_library(BULLET_DYNAMICS_LIBRARY NAMES BulletDynamics_Debug.lib PATHS ${LIBRARY_DIR})
+    target_link_libraries(Engine PUBLIC ${BULLET_DYNAMICS_LIBRARY})
+
+    #assimp
+    find_library(ASSIMP_LIBRARY NAMES assimp-vc140-mt.lib PATHS ${LIBRARY_DIR})
+    target_link_libraries(Engine PUBLIC ${ASSIMP_LIBRARY})
+
+
+    target_include_directories(
+        Engine PUBLIC
+        "${PROJECT_BINARY_DIR}"
+        "${INCLUDE_DIR}"
+    )
+
+    #copy zlib
+    add_custom_command(TARGET Engine POST_BUILD        
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+            "${LIBRARY_DIR}/zlibd.dll"      
+            $<TARGET_FILE_DIR:Engine>) 
+
+    #copy assimp
+    add_custom_command(TARGET Engine POST_BUILD        
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+            "${LIBRARY_DIR}/assimp-vc140-mt.dll"      
+            $<TARGET_FILE_DIR:Engine>) 
