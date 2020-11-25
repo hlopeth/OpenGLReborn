@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <stdexcept>
 
 FirstPirsonPlayer::FirstPirsonPlayer():
 	physicsShape(glm::vec3(1.0), *this, 1),
