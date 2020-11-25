@@ -17,8 +17,8 @@ void WaterMaterial::draw(const Model& model, const RenderData& rd) const
 	shader.setUniform("time", time);
 
 
-	shader.setUniform("directinalLight.direction", rd.dirextinalLight->direction);
-	shader.setUniform("directinalLight.color", rd.dirextinalLight->color);
+	shader.setUniform("directionalLight.direction", rd.directionalLight->direction);
+	shader.setUniform("directionalLight.color", rd.directionalLight->color);
 	shader.setUniform("cameraPos", rd.camera.pos);
 
 	glBindVertexArray(model.getMesh()->getVAO());

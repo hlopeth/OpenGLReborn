@@ -4,12 +4,12 @@ in vec3 o_normal;
 in vec3 o_fragPos;
 in float o_noise;
 
-struct DirectinalLight {
+struct DirectionalLight {
 	vec3 direction;
 	vec3 color;
 };
 
-uniform DirectinalLight directinalLight;
+uniform DirectionalLight directionalLight;
 uniform vec3 cameraPos;
 uniform vec4 color;
 
@@ -23,9 +23,9 @@ float getSpecular(vec3 lightDir, vec3 normal, vec3 fragPos, vec3 cameraPos)
 }
 
 vec4 calcDirLightColor() {
-	vec3 diffuse = vec3(max(dot(o_normal, directinalLight.direction), 0.2f));
-	float specular = getSpecular(directinalLight.direction, o_normal, o_fragPos, cameraPos);
-	return vec4(diffuse * directinalLight.color + specular, 1.0);
+	vec3 diffuse = vec3(max(dot(o_normal, directionalLight.direction), 0.2f));
+	float specular = getSpecular(directionalLight.direction, o_normal, o_fragPos, cameraPos);
+	return vec4(diffuse * directionalLight.color + specular, 1.0);
 }
 
 void main()

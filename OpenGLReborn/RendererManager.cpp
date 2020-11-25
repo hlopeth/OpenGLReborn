@@ -1,6 +1,6 @@
 #include "RendererManager.h"
 #include "WindowManager.h"
-#include "InitialisationExeption.h"
+#include "InitializationException.h"
 #include "Renderer.h"
 #include "StereoRenderer.h"
 
@@ -13,7 +13,7 @@ void RendererManager::initialise()
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		renderer = nullptr;
-		throw InitialisationExeption("Failed to initialize GLAD");
+		throw InitializationException("Failed to initialize GLAD");
 	}
 	renderer = new StereoRenderer(window);
 }

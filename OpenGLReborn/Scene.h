@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "PointLight.h"
 #include "SkyBox.h"
-#include "DirectinalLight.h"
+#include "DirectionalLight.h"
 
 #define MAX_POINT_LIGHTS 16
 
@@ -20,13 +20,13 @@ public:
 	bool addPointLight(PointLight* pointLight);
 	void setSkyBox(SkyBox* skyBox);
 	const SkyBox* getSkyBox() const;
-	void setDirectinalLight(DirectinalLight* directinalLight);
-	const DirectinalLight* getDirectinalLight() const;
+	void setDirectionalLight(DirectionalLight* directionalLight);
+	const DirectionalLight* getDirectionalLight() const;
 
-	//DirectinalLight* directinalLight;
+	//DirectionalLight* directionalLight;
 private:
 	SkyBox* skyBox = nullptr;
-	DirectinalLight* directinalLight;
+	DirectionalLight* directionalLight;
 	vector<GameObject*> gameObjects;
 	vector<PointLight*> pointLights;
 };

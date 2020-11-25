@@ -7,7 +7,7 @@ in vec3 normal;
 in vec3 fragPos;
 in vec3 alphas;
 
-struct DirectinalLight {
+struct DirectionalLight {
 	vec3 direction;
 	vec3 color;
 	vec3 ambient;
@@ -34,7 +34,7 @@ uniform Material sandMaterial;
 uniform Material grassMaterial;
 uniform Material rockMaterial;
 
-uniform DirectinalLight directinalLight;
+uniform DirectionalLight directionalLight;
 uniform vec3 cameraPos;
 uniform int n_pointLights;
 uniform PointLight pointLights[max_pointLights];
@@ -85,8 +85,8 @@ vec4 calcPointLightsColor()
 }
 
 vec4 calcDirLightColor() {
-	vec3 diffuse = vec3(max(dot(normal, directinalLight.direction), 0.0f));
-	return vec4(diffuse * directinalLight.color + directinalLight.ambient, 1.0);
+	vec3 diffuse = vec3(max(dot(normal, directionalLight.direction), 0.0f));
+	return vec4(diffuse * directionalLight.color + directionalLight.ambient, 1.0);
 }
 
 void main()

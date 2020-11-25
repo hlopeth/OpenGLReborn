@@ -1,5 +1,5 @@
 #include "TextureFromFile.h"
-#include "TextureReadExeption.h"
+#include "TextureReadException.h"
 #include <string>
 #include <iostream>
 #include <libpng/png.h>
@@ -18,27 +18,27 @@ Texture TextureFromFile(
 	FILE *fp;
 	fopen_s(&fp, filename.c_str(), "rb");
 	if (!fp) {
-		throw TextureReadExeption(filename, "[read_png_file] File %s could not be opened for reading");
+		throw TextureReadException(filename, "[read_png_file] File %s could not be opened for reading");
 	}
 	char header[8];
 
 	fread(header, 1, 8, fp);
 	if (png_sig_cmp((png_const_bytep)header, 0, 8)) {
-		throw TextureReadExeption(filename, "[read_png_file] File %s is not recognized as a PNG file");
+		throw TextureReadException(filename, "[read_png_file] File %s is not recognized as a PNG file");
 	}
 
 	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
-		throw TextureReadExeption(filename, "[read_png_file] png_create_read_struct failed");
+		throw TextureReadException(filename, "[read_png_file] png_create_read_struct failed");
 	}
 
 	png_infop info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
-		throw TextureReadExeption(filename, "[read_png_file] png_create_info_struct failed");
+		throw TextureReadException(filename, "[read_png_file] png_create_info_struct failed");
 	}
 
 	if (setjmp(png_jmpbuf(png_ptr))) {
-		throw TextureReadExeption(filename, "[read_png_file] Error during init_io");
+		throw TextureReadException(filename, "[read_png_file] Error during init_io");
 	}
 
 	png_init_io(png_ptr, fp);
@@ -57,7 +57,7 @@ Texture TextureFromFile(
 
 	/* read file */
 	if (setjmp(png_jmpbuf(png_ptr))) {
-		throw TextureReadExeption(filename, "[read_png_file] Error during read_image");
+		throw TextureReadException(filename, "[read_png_file] Error during read_image");
 	}
 
 
@@ -69,7 +69,7 @@ Texture TextureFromFile(
 	if (image_data == NULL)
 	{
 		fclose(fp);
-		throw TextureReadExeption(filename, "error: could not allocate memory for PNG image data");
+		throw TextureReadException(filename, "error: could not allocate memory for PNG image data");
 	}
 
 	// row_pointers is for pointing to image_data for reading the png with libpng
@@ -78,7 +78,7 @@ Texture TextureFromFile(
 	{
 		free(image_data);
 		fclose(fp);
-		throw TextureReadExeption(filename, "error: could not allocate memory for PNG row pointers");
+		throw TextureReadException(filename, "error: could not allocate memory for PNG row pointers");
 	}
 
 	// set the individual row_pointers to point at the correct offsets of image_data
@@ -103,7 +103,7 @@ Texture TextureFromFile(
 	}
 	else
 	{
-		throw TextureReadExeption(filename, "Texture failed to load");
+		throw TextureReadException(filename, "Texture failed to load");
 	}
 	
 	return texture;

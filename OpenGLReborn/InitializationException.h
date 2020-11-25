@@ -3,10 +3,10 @@
 
 using std::string;
 
-class InitialisationExeption
+class InitializationException
 {
 public:
-	InitialisationExeption(string message);
+	InitializationException(string message);
 	const string& getMessage() const;
 private:
 	string message;

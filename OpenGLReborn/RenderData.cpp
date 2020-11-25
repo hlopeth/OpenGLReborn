@@ -3,10 +3,10 @@
 RenderData::RenderData(
 	const Camera& _camera, 
 	const vector<PointLight*>& _pointLights, 
-	const DirectinalLight* _dirextinalLight
+	const DirectionalLight* _directionalLight
 ):
 	camera(_camera), 
 	pointLights(_pointLights),
-	dirextinalLight(_dirextinalLight)
+	directionalLight(_directionalLight)
 {
 }

@@ -72,7 +72,7 @@ void StereoRenderer::draw(Level& level)
 
 	screenMaterial->textureLeft = leftEyeRenderTarget.getTexture();
 	screenMaterial->textureRight = rightEyeRenderTarget.getTexture();
-	RenderData renderData(leftEyeCamera, level.getScene().getPointLights(), level.getScene().getDirectinalLight());
+	RenderData renderData(leftEyeCamera, level.getScene().getPointLights(), level.getScene().getDirectionalLight());
 	screenRect.draw(renderData);
 
 	glfwSwapBuffers(&window);
@@ -100,7 +100,7 @@ void StereoRenderer::drawCommon(const Level& level, const Camera& camera)
 	glEnable(GL_DEPTH_TEST);
 	const Scene& scene = level.getScene();
 	auto gameObjects = scene.getGameObjects();
-	RenderData renderData(camera, scene.getPointLights(), scene.getDirectinalLight());
+	RenderData renderData(camera, scene.getPointLights(), scene.getDirectionalLight());
 
 
 	glStencilMask(0x00);

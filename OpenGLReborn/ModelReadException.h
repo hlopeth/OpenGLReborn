@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 
-class TextureReadExeption
+class ModelReadException
 {
 public:
-	TextureReadExeption(std::string _filename, std::string _message);
+	ModelReadException(std::string _filename, std::string _message);
 	const std::string& getMessage() const;
 	const std::string& getFilename() const;
 private:

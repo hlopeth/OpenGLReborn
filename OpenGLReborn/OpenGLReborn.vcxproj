@@ -165,7 +165,7 @@
     <ClCompile Include="MeshPrimitives.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="ModelLoaderManager.cpp" />
-    <ClCompile Include="ModelReadExeprion.cpp" />
+    <ClCompile Include="ModelReadException.cpp" />
     <ClCompile Include="MouseRightEvent.cpp" />
     <ClCompile Include="NanosuitMaterial.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -180,14 +180,14 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TerrainMaterial.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TextureReadExeption.cpp" />
+    <ClCompile Include="TextureReadException.cpp" />
     <ClCompile Include="Transform2DComponent.cpp" />
     <ClCompile Include="Transform3DComponent.cpp" />
     <ClCompile Include="UIEvent.cpp" />
     <ClCompile Include="UIRect.cpp" />
     <ClCompile Include="UIRoot.cpp" />
     <ClCompile Include="UIWiget.cpp" />
-    <ClCompile Include="InitialisationExeption.cpp" />
+    <ClCompile Include="InitializationException.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -258,7 +258,7 @@
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="DefaultFragment.glsl" />
-    <ClInclude Include="DirectinalLight.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventComponent.h" />
@@ -273,7 +273,7 @@
     <ClInclude Include="MeshPrimitives.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="ModelLoaderManager.h" />
-    <ClInclude Include="ModelReadExeprion.h" />
+    <ClInclude Include="ModelReadException.h" />
     <ClInclude Include="MouseClickEvent.h" />
     <ClInclude Include="AbstractPhysicsBody.h" />
     <ClInclude Include="NanosuitMaterial.h" />
@@ -288,11 +288,11 @@
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TerrainMaterial.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureReadExeption.h" />
+    <ClInclude Include="TextureReadException.h" />
     <ClInclude Include="UIEvent.h" />
     <ClInclude Include="UIRoot.h" />
     <ClInclude Include="UIWiget.h" />
-    <ClInclude Include="InitialisationExeption.h" />
+    <ClInclude Include="InitializationException.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Level.h" />

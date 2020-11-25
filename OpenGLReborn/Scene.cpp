@@ -42,14 +42,14 @@ void Scene::setSkyBox(SkyBox* skyBox)
 	this->skyBox = skyBox;
 }
 
-void Scene::setDirectinalLight(DirectinalLight* _directinalLight)
+void Scene::setDirectionalLight(DirectionalLight* _directionalLight)
 {
-	directinalLight = _directinalLight;
+	directionalLight = _directionalLight;
 }
 
-const DirectinalLight* Scene::getDirectinalLight() const
+const DirectionalLight* Scene::getDirectionalLight() const
 {
-	return directinalLight;
+	return directionalLight;
 }
 
 const SkyBox* Scene::getSkyBox() const

@@ -20,8 +20,8 @@ void SingleTextureMaterial::draw(const Model& model, const RenderData& rd) const
 	shader.setUniform("model", modelMatrix);
 	shader.setUniform("cameraPos", rd.camera.pos);
 
-	shader.setUniform("directinalLight.direction", rd.dirextinalLight->direction);
-	shader.setUniform("directinalLight.color", rd.dirextinalLight->color);
+	shader.setUniform("directionalLight.direction", rd.directionalLight->direction);
+	shader.setUniform("directionalLight.color", rd.directionalLight->color);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, diffuseTexture.getID());
