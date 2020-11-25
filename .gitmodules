@@ -5,3 +5,7 @@
 [submodule "thirdParty/zlib"]
 	path = thirdParty/zlib
 	url = https://github.com/madler/zlib
+[submodule "thirdParty/glfw"]
+	path = thirdParty/glfw
+	url = https://github.com/glfw/glfw
+	branch = 3.3-stable
