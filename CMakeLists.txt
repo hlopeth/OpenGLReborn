@@ -25,9 +25,6 @@ project(Engine)
     target_link_libraries(Engine PUBLIC ${OPENGL_LIBRARY})
 
     #glfw
-    # find_library(GLFW_LIBRARY NAMES glfw3.lib PATHS ${LIBRARY_DIR})
-    # target_link_libraries(Engine PUBLIC ${GLFW_LIBRARY})
-
     set(GLFW_DIR thirdParty/glfw)
     include_directories(${GLFW_DIR}/include/GLFW)
     add_subdirectory(${GLFW_DIR})
@@ -49,13 +46,18 @@ project(Engine)
     target_link_libraries(Engine PUBLIC png_static)
 
     #bullet
-    find_library(BULLET_LINEAR_MATH_LIBRARY NAMES LinearMath_Debug.lib PATHS ${LIBRARY_DIR})
-    target_link_libraries(Engine PUBLIC ${BULLET_LINEAR_MATH_LIBRARY})
-    find_library(BULLET_COLLISION_LIBRARY NAMES BulletCollision_Debug.lib PATHS ${LIBRARY_DIR})
-    target_link_libraries(Engine PUBLIC ${BULLET_COLLISION_LIBRARY})
-    find_library(BULLET_DYNAMICS_LIBRARY NAMES BulletDynamics_Debug.lib PATHS ${LIBRARY_DIR})
-    target_link_libraries(Engine PUBLIC ${BULLET_DYNAMICS_LIBRARY})
-
+    set(BUILD_CPU_DEMOS OFF)
+    set(BUILD_BULLET2_DEMOS OFF)
+    set(BUILD_EXTRAS OFF)
+    set(BUILD_UNIT_TESTS OFF)
+    set(BUILD_BULLET3 OFF)
+    set(BULLET_DIR thirdParty/bullet3)
+    include_directories(${BULLET_DIR}/src)
+    add_subdirectory(${BULLET_DIR})
+    target_link_libraries(Engine PUBLIC LinearMath)
+    target_link_libraries(Engine PUBLIC BulletCollision)
+    target_link_libraries(Engine PUBLIC BulletDynamics)
+    
     #assimp
     find_library(ASSIMP_LIBRARY NAMES assimp-vc140-mt.lib PATHS ${LIBRARY_DIR})
     target_link_libraries(Engine PUBLIC ${ASSIMP_LIBRARY})
