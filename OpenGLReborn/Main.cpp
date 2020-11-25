@@ -4,7 +4,7 @@
 #include "LevelManager.h"
 #include "PhysicsManager.h"
 #include "ModelLoaderManager.h"
-#include "InitialisationExeption.h"
+#include "InitializationException.h"
 #include "Trace.h"
 
 bool initialiseManagers();
@@ -33,7 +33,7 @@ bool initialiseManagers()
 		LevelManager().initialize();
 		ModelLoaderManager().initialize();
 	}
-	catch (InitialisationExeption ex)
+	catch (InitializationException ex)
 	{
 		trace(ex.getMessage());
 		return false;

@@ -19,7 +19,7 @@
 #include "SkyBox.h"
 #include "Terrain.h"
 #include "MeshPrimitives.h"
-#include "DirectinalLight.h"
+#include "DirectionalLight.h"
 #include "HeightfieldPhysicsBody.h"
 #include "TextureFromFile.h"
 #include "SingleTextureMaterial.h"
@@ -28,7 +28,7 @@
 #include "TerrainMaterial.h"
 #include "Water.h"
 
-SkyBox* createScyBox() 
+SkyBox* createSkyBox() 
 {
 	auto left	= TextureFromFile("left.png",	"assets/skybox");
 	auto right	= TextureFromFile("right.png",	"assets/skybox");
@@ -64,7 +64,7 @@ void setupUI(UIRoot& uiRoot)
 
 Terrain* loadTerrain(const string& filename, shared_ptr<TerrainMaterial> material, int i, int j)
 {
-	Texture heightMap = TextureFromFile(filename.c_str(), "assets/terrane");
+	Texture heightMap = TextureFromFile(filename.c_str(), "assets/terrain");
 	Terrain* terrain = new Terrain(heightMap, material);
 	float offset = terrain->getHightestPoint() - (terrain->getHightestPoint() - terrain->getLowestPoint()) / 2.0;
 	float scale = 1.0;
@@ -81,7 +81,7 @@ Level::Level():
 
 	auto singleTextureMaterial = createSingleTextureMaterial();
 
-	DirectinalLight* dirLight = new DirectinalLight(glm::normalize(vec3(0.0, 1.0, 1.0)), vec3(1.0, 1.0, 1.0));
+	DirectionalLight* dirLight = new DirectionalLight(glm::normalize(vec3(0.0, 1.0, 1.0)), vec3(1.0, 1.0, 1.0));
 	//уровень пока строится прямо в конструкторе
 	Nanosuit* nanosuit = new Nanosuit();
 	nanosuit->physicsBody = new BoxPhysicsShape(vec3(1.0), *nanosuit, 0.f);
@@ -111,11 +111,11 @@ Level::Level():
 		}
 	}
 	
-	SkyBox *skyBox = createScyBox();
+	SkyBox *skyBox = createSkyBox();
 
 	//Terrain
 	GLTexture sandTexture = GLTexture(
-		TextureFromFile("sand.png", "assets/terrane"),
+		TextureFromFile("sand.png", "assets/terrain"),
 		GL_RGB,
 		GL_MIRRORED_REPEAT,
 		GL_MIRRORED_REPEAT,
@@ -123,7 +123,7 @@ Level::Level():
 		GL_LINEAR
 	);
 	GLTexture grassTexture = GLTexture(
-		TextureFromFile("grass.png", "assets/terrane"),
+		TextureFromFile("grass.png", "assets/terrain"),
 		GL_RGB,
 		GL_MIRRORED_REPEAT,
 		GL_MIRRORED_REPEAT,
@@ -131,7 +131,7 @@ Level::Level():
 		GL_LINEAR
 	);
 	GLTexture rockTexture = GLTexture(
-		TextureFromFile("rock.png", "assets/terrane"),
+		TextureFromFile("rock.png", "assets/terrain"),
 		GL_RGB,
 		GL_MIRRORED_REPEAT,
 		GL_MIRRORED_REPEAT,
@@ -156,13 +156,13 @@ Level::Level():
 	}
 
 	//Water
-	shared_ptr<WaterMaterial> warerMaterial = make_shared<WaterMaterial>(glm::vec4(0, 0.467, 0.745, 0.8));
+	shared_ptr<WaterMaterial> waterMaterial = make_shared<WaterMaterial>(glm::vec4(0, 0.467, 0.745, 0.8));
 	//513 - размер heightmap
-	Water* water = new Water(513, 513, warerMaterial);
+	Water* water = new Water(513, 513, waterMaterial);
 	water->setPosition(vec3(-256.5, -90.5, -256.5));
 	water->setScale(vec3(4.0, 1.0, 4.0));
 	
-	scene.setDirectinalLight(dirLight);
+	scene.setDirectionalLight(dirLight);
 	scene.setSkyBox(skyBox);
 	scene.addGameObject(nanosuit);
 	scene.addGameObject(lampWhite);

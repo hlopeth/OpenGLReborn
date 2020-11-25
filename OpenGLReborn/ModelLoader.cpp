@@ -1,5 +1,5 @@
 #include "ModelLoader.h"
-#include "ModelReadExeprion.h"
+#include "ModelReadException.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -36,7 +36,7 @@ shared_ptr<ModelData> ModelLoader::loadModel(const string& path)
 	
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		throw new ModelReadExeption(path, importer.GetErrorString());
+		throw new ModelReadException(path, importer.GetErrorString());
 		return make_shared<ModelData>();
 	}
 	auto modelData = make_shared<ModelData>();

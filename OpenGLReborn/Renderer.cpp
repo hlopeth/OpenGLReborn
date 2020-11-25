@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "InitialisationExeption.h"
+#include "InitializationException.h"
 #include "ResizeEvent.h"
 #include "WindowManager.h"
 #include "Trace.h"
@@ -36,7 +36,7 @@ void Renderer::draw(Level& level)
 
 	Scene& scene = level.getScene();
 	vector<GameObject*> gameObjects = scene.getGameObjects();
-	RenderData renderData(level.getCamera(), scene.getPointLights(), scene.getDirectinalLight());
+	RenderData renderData(level.getCamera(), scene.getPointLights(), scene.getDirectionalLight());
 
 	
 	glStencilMask(0x00);

@@ -1,5 +1,5 @@
 #include "AbstractPhysicsBody.h"
-#include "InitialisationExeption.h"
+#include "InitializationException.h"
 #include "PhysicsManager.h"
 #include "GameObject.h"
 

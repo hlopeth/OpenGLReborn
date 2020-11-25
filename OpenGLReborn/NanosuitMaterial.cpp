@@ -48,9 +48,9 @@ void NanosuitMaterial::draw(const Model& model, const RenderData& rd) const
 	glBindTexture(GL_TEXTURE_2D, diffuseTexture.getID());
 	shaderProgram.setUniform("material.texture_diffuse0", 0);
 
-	shaderProgram.setUniform("directinalLight.direction", rd.dirextinalLight->direction);
-	shaderProgram.setUniform("directinalLight.color", rd.dirextinalLight->color);
-	shaderProgram.setUniform("directinalLight.ambient", rd.dirextinalLight->ambient);
+	shaderProgram.setUniform("directionalLight.direction", rd.directionalLight->direction);
+	shaderProgram.setUniform("directionalLight.color", rd.directionalLight->color);
+	shaderProgram.setUniform("directionalLight.ambient", rd.directionalLight->ambient);
 
 	if (useSpecular) 
 	{

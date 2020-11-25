@@ -32,9 +32,9 @@ void TerrainMaterial::draw(GLuint vao, int indicesSize, const glm::mat4& modelMa
 		shader.setUniform(string("pointLights[") + ch_i + "].farPlane", pointLight->farPlane);
 	}
 
-	shader.setUniform("directinalLight.direction", renderData.dirextinalLight->direction);
-	shader.setUniform("directinalLight.color", renderData.dirextinalLight->color);
-	shader.setUniform("directinalLight.ambient", renderData.dirextinalLight->ambient);
+	shader.setUniform("directionalLight.direction", renderData.directionalLight->direction);
+	shader.setUniform("directionalLight.color", renderData.directionalLight->color);
+	shader.setUniform("directionalLight.ambient", renderData.directionalLight->ambient);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, sandTexture.getID());

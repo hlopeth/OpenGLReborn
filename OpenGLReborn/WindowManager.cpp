@@ -1,5 +1,5 @@
 #include "WindowManager.h"
-#include "InitialisationExeption.h"
+#include "InitializationException.h"
 #include "Renderer.h"
 #include "Trace.h"
 
@@ -15,7 +15,7 @@ void WindowManager::initialise()
 {
 	if (!glfwInit())
 	{
-		throw InitialisationExeption("Failed to init GLFW");
+		throw InitializationException("Failed to init GLFW");
 	}
 	glfwSetErrorCallback(error_callback);
 
@@ -31,7 +31,7 @@ void WindowManager::initialise()
 	{
 		glfwTerminate();
 		window = nullptr;
-		throw InitialisationExeption("Failed to create GLFW window");
+		throw InitializationException("Failed to create GLFW window");
 	}
 }
 
