@@ -1,0 +1,7 @@
+[submodule "thirdParty/libpng"]
+	path = thirdParty/libpng
+	url = https://github.com/glennrp/libpng
+	branch = libpng16
+[submodule "thirdParty/zlib"]
+	path = thirdParty/zlib
+	url = https://github.com/madler/zlib
