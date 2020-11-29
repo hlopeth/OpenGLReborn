@@ -2,7 +2,7 @@
 #include "TextureReadException.h"
 #include <string>
 #include <iostream>
-#include <libpng/png.h>
+#include <png.h>
 #include <glad/glad.h>
 
 using std::string;

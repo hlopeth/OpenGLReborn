@@ -2,7 +2,7 @@
 #include <memory>
 #include "AbstractPhysicsBody.h"
 #include "Texture.h"
-#include <bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 
 class HeightfieldPhysicsBody : public AbstractPhysicsBody
 {

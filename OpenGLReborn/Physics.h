@@ -1,5 +1,5 @@
 #pragma once
-#include <bullet/btBulletDynamicsCommon.h>
+#include <btBulletDynamicsCommon.h>
 #include <map>
 #include "Transform3DComponent.h"
 

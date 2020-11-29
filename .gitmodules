@@ -1,0 +1,18 @@
+[submodule "thirdParty/libpng"]
+	path = thirdParty/libpng
+	url = https://github.com/glennrp/libpng
+	branch = libpng16
+[submodule "thirdParty/zlib"]
+	path = thirdParty/zlib
+	url = https://github.com/madler/zlib
+[submodule "thirdParty/glfw"]
+	path = thirdParty/glfw
+	url = https://github.com/glfw/glfw
+	branch = 3.3-stable
+[submodule "thirdParty/bullet3"]
+	path = thirdParty/bullet3
+	url = https://github.com/bulletphysics/bullet3
+[submodule "thirdParty/assimp"]
+	path = thirdParty/assimp
+	url = https://github.com/assimp/assimp
+	branch = assimp_5.0_release
