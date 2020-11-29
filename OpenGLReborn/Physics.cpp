@@ -1,6 +1,6 @@
 #include "Physics.h"
 #include "LevelManager.h"
-#include <bullet/btBulletCollisionCommon.h>
+#include <btBulletCollisionCommon.h>
 
 Physics::Physics()
 {
