@@ -1,5 +1,5 @@
 #pragma once
-#include "DrawComponent.h"
+#include "Components/DrawComponent.h"
 #include "CubeTexture.h"
 #include "Shader.h"
 

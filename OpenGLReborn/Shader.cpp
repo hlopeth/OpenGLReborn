@@ -65,7 +65,7 @@ string ShaderProgram::getSource(string fileName)
 	try
 	{
 		ifstream source_file;
-		source_file.open(fileName);
+		source_file.open("shaders/" + fileName);
 		std::stringstream shaderStream;
 		shaderStream << source_file.rdbuf();
 		source_file.close();

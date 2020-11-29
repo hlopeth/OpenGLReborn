@@ -1,8 +1,8 @@
 #pragma once
-#include "Transform3DComponent.h"
-#include "DrawComponent.h"
-#include "EventComponent.h"
-#include "AbstractPhysicsBody.h"
+#include "Components/Transform3DComponent.h"
+#include "Components/DrawComponent.h"
+#include "Components/EventComponent.h"
+#include "Physics/AbstractPhysicsBody.h"
 
 using glm::mat4;
 

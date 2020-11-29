@@ -1,10 +1,10 @@
 #pragma once
 #include "Scene.h"
 #include "Camera.h"
-#include "UIRoot.h"
-#include "EventComponent.h"
-#include "ExitEvent.h"
-#include "Model.h"
+#include "GameObjects/UIRoot.h"
+#include "Components/EventComponent.h"
+#include "Event/ExitEvent.h"
+#include "GameObjects/Model.h"
 
 class Level: public EventComponent
 {

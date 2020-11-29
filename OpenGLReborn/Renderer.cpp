@@ -1,7 +1,7 @@
 #include "Renderer.h"
-#include "InitializationException.h"
-#include "ResizeEvent.h"
-#include "WindowManager.h"
+#include "Exeptions/InitializationException.h"
+#include "Event/ResizeEvent.h"
+#include "Managers/WindowManager.h"
 #include "Trace.h"
 
 Renderer::Renderer( GLFWwindow &window) : window(window)

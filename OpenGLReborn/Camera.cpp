@@ -1,5 +1,5 @@
 #include "Camera.h"
-#include "MouseClickEvent.h"
+#include "Event/MouseClickEvent.h"
 #include "Trace.h"
 
 bool moveCamera = false;

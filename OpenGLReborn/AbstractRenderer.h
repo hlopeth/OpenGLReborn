@@ -1,7 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "Level.h"
-#include "EventComponent.h"
+#include "Components/EventComponent.h"
 #include "Trace.h"
 
 class AbstractRenderer: public EventComponent

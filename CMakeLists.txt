@@ -57,7 +57,7 @@ project(Engine)
     set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "ASSIMP_BUILD_ASSIMP_TOOLS")
     set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "ASSIMP_BUILD_TESTS")
     set(ASSIMP_DIR thirdParty/assimp)
-    include_directories(${ASSIMP_DIR}/include/assimp)
+    include_directories(${ASSIMP_DIR}/include)
     add_subdirectory(${ASSIMP_DIR})
     target_link_libraries(Engine PUBLIC assimp)
 
@@ -66,6 +66,7 @@ project(Engine)
         "${PROJECT_BINARY_DIR}"
         "${INCLUDE_DIR}"
     )
+    include_directories(${Engine_SRC_DIR})
 
     
     # set(ASSETS_DIR "${Engine_SRC_DIR}/assets")

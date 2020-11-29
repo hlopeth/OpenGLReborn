@@ -1,10 +1,10 @@
 #include "Input.h"
-#include "RendererManager.h"
-#include "ResizeEvent.h"
-#include "MouseMoveEvent.h"
-#include "KeyEvent.h"
-#include "MouseClickEvent.h"
-#include "LevelManager.h"
+#include "Managers/RendererManager.h"
+#include "Event/ResizeEvent.h"
+#include "Event/MouseMoveEvent.h"
+#include "Event/KeyEvent.h"
+#include "Event/MouseClickEvent.h"
+#include "Managers/LevelManager.h"
 
 float lastX = 0;
 float lastY = 0;

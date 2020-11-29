@@ -1,10 +1,10 @@
-#include "WindowManager.h"
-#include "RendererManager.h"
-#include "InputManager.h"
-#include "LevelManager.h"
-#include "PhysicsManager.h"
-#include "ModelLoaderManager.h"
-#include "InitializationException.h"
+#include "Managers/WindowManager.h"
+#include "Managers/RendererManager.h"
+#include "Managers/InputManager.h"
+#include "Managers/LevelManager.h"
+#include "Managers/PhysicsManager.h"
+#include "Managers/ModelLoaderManager.h"
+#include "Exeptions/InitializationException.h"
 #include "Trace.h"
 
 bool initialiseManagers();

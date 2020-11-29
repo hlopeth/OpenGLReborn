@@ -1,5 +1,5 @@
 #include "ModelLoader.h"
-#include "ModelReadException.h"
+#include "Exeptions/ModelReadException.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>

@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #endif
 #include "AbstractRenderer.h"
-#include "ResizeEvent.h"
+#include "Event/ResizeEvent.h"
 #include "Shader.h"
 
 class Renderer : public AbstractRenderer

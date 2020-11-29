@@ -3,11 +3,11 @@
 #include <glad/glad.h>
 #endif
 #include "AbstractRenderer.h"
-#include "ResizeEvent.h"
+#include "Event/ResizeEvent.h"
 #include "Camera.h"
 #include "TextureRenderTarget.h"
-#include "Model.h"
-#include "FullscreenTextureMaterial.h"
+#include "GameObjects/Model.h"
+#include "Material/FullscreenTextureMaterial.h"
 
 class StereoRenderer : public AbstractRenderer
 {

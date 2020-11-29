@@ -1,7 +1,7 @@
 #pragma once
 #include "Camera.h"
 #include "GameObject.h"
-#include "BoxPhysicsShape.h"
+#include "Physics/BoxPhysicsShape.h"
 
 class FirstPirsonPlayer : public GameObject
 {

@@ -1,5 +1,5 @@
 #include "TextureFromFile.h"
-#include "TextureReadException.h"
+#include "Exeptions/TextureReadException.h"
 #include <string>
 #include <iostream>
 #include <png.h>

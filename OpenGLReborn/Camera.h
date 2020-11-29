@@ -1,11 +1,11 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "WindowManager.h"
-#include "KeyEvent.h"
-#include "MouseMoveEvent.h"
-#include "MouseClickEvent.h"
-#include "EventComponent.h"
+#include "Managers/WindowManager.h"
+#include "Event/KeyEvent.h"
+#include "Event/MouseMoveEvent.h"
+#include "Event/MouseClickEvent.h"
+#include "Components/EventComponent.h"
 
 using glm::vec3;
 using glm::vec4;
